@@ -13,18 +13,16 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
-  double _headerHeight = 250;
-  Key _formKey = GlobalKey<FormState>();
+  final double _headerHeight = 250;
+  final Key _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
   void dispose() {
-
     super.dispose();
   }
 
@@ -32,7 +30,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             "Reset password",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -46,9 +44,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: <Color>[
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).colorScheme.secondary,
-                  ])),
+                Theme.of(context).primaryColor,
+                Theme.of(context).colorScheme.secondary,
+              ])),
         ),
         actions: [
           Container(
@@ -92,8 +90,8 @@ class _ChangePasswordState extends State<ChangePassword> {
           children: [
             Container(
               height: _headerHeight,
-              child: HeaderWidget(_headerHeight, true,
-                  Icons.lock_person_rounded), //let's create a common header widget
+              child:
+                  HeaderWidget(_headerHeight, true, Icons.lock_person_rounded),
             ),
             SafeArea(
               child: Container(
@@ -102,10 +100,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                 // This will be the login form
                 child: Column(
                   children: [
-
                     Text(
                       'Reset your password'.tr,
-                      style: TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.grey),
                     ),
                     const SizedBox(height: 30),
                     Form(
@@ -115,7 +112,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           const SizedBox(height: 15),
                           Container(
                             decoration:
-                            ThemeHelper().inputBoxDecorationShaddow(),
+                                ThemeHelper().inputBoxDecorationShaddow(),
                             child: TextField(
                               obscureText: true,
                               decoration: ThemeHelper().textInputDecoration(
@@ -126,7 +123,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           const SizedBox(height: 15),
                           Container(
                             decoration:
-                            ThemeHelper().inputBoxDecorationShaddow(),
+                                ThemeHelper().inputBoxDecorationShaddow(),
                             child: TextField(
                               obscureText: true,
                               decoration: ThemeHelper().textInputDecoration(
@@ -135,15 +132,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                             ),
                           ),
                           const SizedBox(height: 30),
-
                           Container(
                             decoration:
-                            ThemeHelper().buttonBoxDecoration(context),
+                                ThemeHelper().buttonBoxDecoration(context),
                             child: ElevatedButton(
                               style: ThemeHelper().buttonStyle(),
                               child: Padding(
                                 padding:
-                                const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                    const EdgeInsets.fromLTRB(40, 10, 40, 10),
                                 child: Text(
                                   'Reset password'.tr,
                                   style: const TextStyle(
@@ -152,10 +148,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                       color: Colors.white),
                                 ),
                               ),
-                              onPressed: () {
-
-
-                              },
+                              onPressed: () {},
                             ),
                           ),
                         ],

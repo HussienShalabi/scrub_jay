@@ -11,26 +11,17 @@ import 'DeleteDriver.dart';
 import 'DriversList.dart';
 import '../Driver/MakeATrip.dart';
 
-
-
-class AdminMainScreen extends StatefulWidget {
+class AdminMainScreen extends StatelessWidget {
   const AdminMainScreen({super.key});
 
-  @override
-  State<StatefulWidget> createState() {
-    return _AdminMainScreenState();
-  }
-}
-
-class _AdminMainScreenState extends State<AdminMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title:  Text(
+          title: Text(
             "Admin main page".tr,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -83,13 +74,13 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
             )
           ],
         ),
-        drawer: AdminDrawer(),
+        drawer: const AdminDrawer(),
         body: SingleChildScrollView(
           child: Stack(
             children: [
-              Container(
+              const SizedBox(
                 height: 100,
-                child: const HeaderWidget(100, false, Icons.house_rounded),
+                child: HeaderWidget(100, false, Icons.house_rounded),
               ),
               Container(
                 alignment: Alignment.center,
@@ -100,18 +91,7 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // ListView.builder(
-                    //   itemCount: 5,
-                    //   shrinkWrap: true,
-                    //   itemBuilder: (context, index) => const BioCard(
-                    //       leadingIcon: Icons.ios_share,
-                    //       title: "title",
-                    //       subTitle: "subTitle",
-                    //       driverPhoneNumber: 05975,
-                    //       trailing: Icons.ice_skating_rounded),
-                    // ),
                     GridView(
-
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -120,7 +100,6 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                       ),
                       shrinkWrap: true,
                       children: [
-                        
                         Container(
                           decoration:
                               ThemeHelper().buttonBoxDecoration(context),
@@ -130,22 +109,19 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                             style: ThemeHelper().buttonStyle(),
                             child: Text(
                               'driver\'s list'.tr,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
-                                  textAlign:TextAlign.center,
+                              textAlign: TextAlign.center,
                             ),
                             onPressed: () {
                               //After successful login we will redirect to profile page.
-                              // Navigator.pushReplacement(context,
-                              //     MaterialPageRoute(builder: (context) =>
-                              //         TripScreen()));
-                              Get.to(DriversList());
+                              Get.to( DriversList());
                             },
                           ),
                         ),
-                         Container(
+                        Container(
                           decoration:
                               ThemeHelper().buttonBoxDecoration(context),
                           margin: EdgeInsets.symmetric(
@@ -154,22 +130,19 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                             style: ThemeHelper().buttonStyle(),
                             child: Text(
                               'initial turn'.tr,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
-                                  textAlign:TextAlign.center,
+                              textAlign: TextAlign.center,
                             ),
                             onPressed: () {
                               //After successful login we will redirect to profile page.
-                              // Navigator.pushReplacement(context,
-                              //     MaterialPageRoute(builder: (context) =>
-                              //         TripScreen()));
-                              Get.to(MakeTurn());
+                              Get.to(const MakeTurn());
                             },
                           ),
                         ),
-                         Container(
+                        Container(
                           decoration:
                               ThemeHelper().buttonBoxDecoration(context),
                           margin: EdgeInsets.symmetric(
@@ -178,18 +151,16 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                             style: ThemeHelper().buttonStyle(),
                             child: Text(
                               'today\'s trip'.tr,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
-                                  textAlign:TextAlign.center,
+                              textAlign: TextAlign.center,
                             ),
-                            onPressed: () {
-
-                            },
+                            onPressed: () {},
                           ),
                         ),
-                         Container(
+                        Container(
                           decoration:
                               ThemeHelper().buttonBoxDecoration(context),
                           margin: EdgeInsets.symmetric(
@@ -198,31 +169,25 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                             style: ThemeHelper().buttonStyle(),
                             child: Text(
                               'add admin'.tr,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
-                                  textAlign:TextAlign.center,
+                              textAlign: TextAlign.center,
                             ),
                             onPressed: () {
                               //After successful login we will redirect to profile page.
-                              // Navigator.pushReplacement(context,
-                              //     MaterialPageRoute(builder: (context) =>
-                              //         TripScreen()));
-                              Get.to(AddAdmin());
+                              Get.to(const AddAdmin());
                             },
                           ),
                         ),
                         Container(
-                          
                           alignment: Alignment.center,
                           decoration:
                               ThemeHelper().buttonBoxDecoration(context),
                           margin: EdgeInsets.symmetric(
                               vertical: 10.h, horizontal: 10.w),
-                              
                           child: ElevatedButton(
-                            
                             style: ThemeHelper().buttonStyle(),
                             child: Text(
                               'Confirm Drivers'.tr,
@@ -234,14 +199,10 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                             ),
                             onPressed: () {
                               //After successful login we will redirect to profile page.
-                              // Navigator.pushReplacement(context,
-                              //     MaterialPageRoute(builder: (context) =>
-                              //         TripScreen()));
                               Get.to( ConfirmDriver());
                             },
                           ),
                         ),
-                        
                         Container(
                           decoration:
                               ThemeHelper().buttonBoxDecoration(context),
@@ -257,11 +218,8 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                                 textAlign: TextAlign.center),
                             onPressed: () {
                               //After successful login we will redirect to profile page.
-                              // Navigator.pushReplacement(context,
-                              //     MaterialPageRoute(builder: (context) =>
-                              //         TripScreen()));
-                              //
-                              Get.to(DeleteDriver());
+
+                              Get.to(const DeleteDriver());
                             },
                           ),
                         ),

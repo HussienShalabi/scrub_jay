@@ -6,17 +6,19 @@ import '../../controller/locale/localeController.dart';
 import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
-
 class chooseLang extends StatelessWidget {
+  const chooseLang({super.key});
+
   @override
   Widget build(BuildContext context) {
     MyLocaleController controllerlang = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child:  Text(
+          child: Text(
             "Change language".tr,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
         elevation: 0.5,
@@ -27,9 +29,9 @@ class chooseLang extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: <Color>[
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).colorScheme.secondary,
-                  ])),
+                Theme.of(context).primaryColor,
+                Theme.of(context).colorScheme.secondary,
+              ])),
         ),
         actions: [
           Container(
@@ -67,13 +69,12 @@ class chooseLang extends StatelessWidget {
           )
         ],
       ),
-
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Container(
+            const SizedBox(
               height: 100,
-              child: const HeaderWidget(100, false, Icons.house_rounded),
+              child: HeaderWidget(100, false, Icons.house_rounded),
             ),
             Container(
               alignment: Alignment.center,
@@ -82,13 +83,11 @@ class chooseLang extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    decoration:
-                    ThemeHelper().buttonBoxDecoration(context),
+                    decoration: ThemeHelper().buttonBoxDecoration(context),
                     child: ElevatedButton(
                       style: ThemeHelper().buttonStyle(),
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                            40, 10, 40, 10),
+                        padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
                         child: Text(
                           'Arabic'.tr.toUpperCase(),
                           style: const TextStyle(
@@ -99,21 +98,18 @@ class chooseLang extends StatelessWidget {
                       ),
                       onPressed: () {
                         controllerlang.changeLang('ar');
-
                       },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
-                    decoration:
-                    ThemeHelper().buttonBoxDecoration(context),
+                    decoration: ThemeHelper().buttonBoxDecoration(context),
                     child: ElevatedButton(
                       style: ThemeHelper().buttonStyle(),
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                            40, 10, 40, 10),
+                        padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
                         child: Text(
                           'English'.tr.toUpperCase(),
                           style: const TextStyle(
@@ -124,11 +120,9 @@ class chooseLang extends StatelessWidget {
                       ),
                       onPressed: () {
                         controllerlang.changeLang('en');
-
                       },
                     ),
                   ),
-
                 ],
               ),
             )

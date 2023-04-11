@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/widgets.dart';
-
 import '../widgets/DriverInfoCard.dart';
 import '../widgets/HeaderWidget.dart';
 import 'AdminDrawer.dart';
@@ -21,9 +20,9 @@ class _MakeTurnState extends State<MakeTurn> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title:  Text(
+          title: Text(
             'initial turn'.tr,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -76,13 +75,13 @@ class _MakeTurnState extends State<MakeTurn> {
             )
           ],
         ),
-        drawer: AdminDrawer(),
+        drawer: const AdminDrawer(),
         body: SingleChildScrollView(
           child: Stack(
             children: [
-              Container(
+              const SizedBox(
                 height: 100,
-                child: const HeaderWidget(100, false, Icons.house_rounded),
+                child: HeaderWidget(100, false, Icons.house_rounded),
               ),
               Container(
                 alignment: Alignment.center,
@@ -97,7 +96,7 @@ class _MakeTurnState extends State<MakeTurn> {
                         height: 600,
                         child: ReorderableListView.builder(
                           itemBuilder: (context, index) {
-                            return  DriverInfoCard(
+                            return DriverInfoCard(
                               key: Key(index.toString()),
                               leadingIcon: Icons.taxi_alert_rounded,
                               title: "data",

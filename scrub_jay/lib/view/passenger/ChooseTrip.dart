@@ -1,14 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../widgets/HeaderWidget.dart';
 import '../widgets/TripCard.dart';
 import '../widgets/myDrawer.dart';
 import 'PassengerDrawer.dart';
-
 
 class ChooseTrip extends StatefulWidget {
   const ChooseTrip({super.key});
@@ -25,9 +21,9 @@ class _ChooseTripState extends State<ChooseTrip> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title:  Text(
+          title: Text(
             "Available Trips".tr,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -40,9 +36,9 @@ class _ChooseTripState extends State<ChooseTrip> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).colorScheme.secondary,
-                    ])),
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).colorScheme.secondary,
+                ])),
           ),
           actions: [
             Container(
@@ -80,16 +76,15 @@ class _ChooseTripState extends State<ChooseTrip> {
             )
           ],
         ),
-        drawer: MyDrawer(),
+        drawer: const MyDrawer(),
         body: SingleChildScrollView(
           child: Stack(
             children: [
-              Container(
+              SizedBox(
                 height: 100,
-                child:  HeaderWidget(80.h, false, Icons.house_rounded),
+                child: HeaderWidget(80.h, false, Icons.house_rounded),
               ),
               Container(
-
                 alignment: Alignment.center,
                 margin: const EdgeInsets.fromLTRB(25, 80, 25, 10),
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -99,7 +94,7 @@ class _ChooseTripState extends State<ChooseTrip> {
                       height: 20,
                     ),
                     ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: 8,
                       shrinkWrap: true,
                       itemBuilder: (context, index) => TripCard(

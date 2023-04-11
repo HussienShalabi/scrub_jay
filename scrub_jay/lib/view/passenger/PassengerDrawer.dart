@@ -1,14 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/view/common_screens/EditPassword.dart';
-
 import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
-
-
-
-
 
 class PassengerDrawer extends StatefulWidget {
   const PassengerDrawer({super.key});
@@ -18,9 +12,9 @@ class PassengerDrawer extends StatefulWidget {
 }
 
 class _PassengerDrawerState extends State<PassengerDrawer> {
-  double _drawerIconSize = 18;
+  final double _drawerIconSize = 18;
 
-  double _drawerFontSize = 17;
+  final double _drawerFontSize = 17;
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +24,14 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                stops: [
-                  0.0,
-                  1.0
-                ],
+                stops: const [
+              0.0,
+              1.0
+            ],
                 colors: [
-                  Theme.of(context).primaryColor.withOpacity(0.2),
-                  Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                ])),
+              Theme.of(context).primaryColor.withOpacity(0.2),
+              Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+            ])),
         child: ListView(
           children: [
             DrawerHeader(
@@ -46,7 +40,7 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  stops: [0.0, 1.0],
+                  stops: const [0.0, 1.0],
                   colors: [
                     Theme.of(context).primaryColor,
                     Theme.of(context).colorScheme.secondary,
@@ -56,7 +50,7 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
               child: Container(
                 child: Center(
                   child: Column(
-                    children: [
+                    children: const [
                       CircleAvatar(
                         radius: 40,
                       ),
@@ -75,19 +69,6 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
                   ),
                 ),
               ),
-              // accountName: Text('blah blah'),
-              // child: Container(
-              //   alignment: Alignment.bottomLeft,
-              //   child:
-              //   const Text(
-              //     "Settings",
-              //     style: TextStyle(
-              //         fontSize: 25,
-              //         color: Colors.white,
-              //         fontWeight: FontWeight.bold),
-              //   ),
-              //
-              // ),
             ),
             ListTile(
               leading: Icon(Icons.person,
@@ -99,12 +80,7 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),
               ),
-              onTap: () {
-
-
-
-
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.lock_person_rounded,
@@ -117,7 +93,7 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.to(EditPassword());
+                Get.to(const EditPassword());
               },
             ),
             ListTile(
@@ -134,9 +110,6 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
                 Get.to(chooseLang());
               },
             ),
-
-
-
             ListTile(
               leading: Icon(
                 Icons.logout_rounded,
@@ -150,13 +123,12 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.off(Signin());
+                Get.off(const Signin());
               },
             ),
-            Divider(
+            const Divider(
               height: 1,
             ),
-
           ],
         ),
       ),

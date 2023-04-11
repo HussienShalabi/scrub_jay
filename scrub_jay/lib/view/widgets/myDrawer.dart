@@ -75,19 +75,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                 ),
               ),
-              // accountName: Text('blah blah'),
-              // child: Container(
-              //   alignment: Alignment.bottomLeft,
-              //   child:
-              //   const Text(
-              //     "Settings",
-              //     style: TextStyle(
-              //         fontSize: 25,
-              //         color: Colors.white,
-              //         fontWeight: FontWeight.bold),
-              //   ),
-              //
-              // ),
+
             ),
             ListTile(
               leading: Icon(

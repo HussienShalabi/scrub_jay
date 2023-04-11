@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../widgets/DriverInfoCard.dart';
 import '../widgets/HeaderWidget.dart';
 import 'DriverDrawer.dart';
-
 
 class ShowTurn extends StatefulWidget {
   const ShowTurn({super.key});
@@ -21,9 +19,9 @@ class _ShowTurnState extends State<ShowTurn> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title:  Text(
+          title: Text(
             'Driver\'s Turn'.tr,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -36,9 +34,9 @@ class _ShowTurnState extends State<ShowTurn> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).colorScheme.secondary,
-                    ])),
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).colorScheme.secondary,
+                ])),
           ),
           actions: [
             Container(
@@ -76,16 +74,16 @@ class _ShowTurnState extends State<ShowTurn> {
             )
           ],
         ),
-        drawer: DriverDrawer(),
+        drawer: const DriverDrawer(),
         body: SingleChildScrollView(
-          physics: ScrollPhysics(),
+          physics: const ScrollPhysics(),
           child: Column(
             children: [
               Stack(
                 children: [
-                  Container(
+                  const SizedBox(
                     height: 100,
-                    child: const HeaderWidget(100, false, Icons.house_rounded),
+                    child: HeaderWidget(100, false, Icons.house_rounded),
                   ),
                   Container(
                     alignment: Alignment.center,
@@ -97,28 +95,23 @@ class _ShowTurnState extends State<ShowTurn> {
                           height: 20,
                         ),
                         ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             itemCount: 7,
                             shrinkWrap: true,
-                            itemBuilder: (context, index) => DriverInfoCard(
-                              leadingIcon: Icons.person,
-                              title: 'Hejawi',
-                              driverPhoneNumber: 555258,
-
-                            )
-                        ),
-
+                            itemBuilder: (context, index) =>
+                                const DriverInfoCard(
+                                  leadingIcon: Icons.person,
+                                  title: 'Hejawi',
+                                  driverPhoneNumber: 555258,
+                                )),
                       ],
                     ),
                   ),
-
-
                 ],
               ),
             ],
           ),
-
         ));
   }
 }

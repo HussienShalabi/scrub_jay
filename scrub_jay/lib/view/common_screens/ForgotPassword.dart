@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +24,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: _headerHeight,
                 child:
                     HeaderWidget(_headerHeight, true, Icons.password_rounded),
@@ -42,36 +41,35 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  [
+                          children: [
                             Text(
                               "Forgot your password?".tr,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 35,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black54),
-                              // textAlign: TextAlign.center,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
-                              'Enter the phone number associated with your account.'.tr,
-                              style: TextStyle(
+                              'Enter the phone number associated with your account.'
+                                  .tr,
+                              style: const TextStyle(
                                   // fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black54),
-                              // textAlign: TextAlign.center,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
-                              'We will send to you a verification code to check your authenticity.'.tr,
-                              style: TextStyle(
+                              'We will send to you a verification code to check your authenticity.'
+                                  .tr,
+                              style: const TextStyle(
                                 color: Colors.black38,
                                 // fontSize: 20,
                               ),
-                              // textAlign: TextAlign.center,
                             ),
                           ],
                         ),
@@ -82,22 +80,20 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         child: Column(
                           children: <Widget>[
                             Container(
+                              decoration:
+                                  ThemeHelper().inputBoxDecorationShaddow(),
                               child: TextFormField(
                                 keyboardType: TextInputType.phone,
                                 decoration: ThemeHelper().textInputDecoration(
-                                    "Mobile Number".tr, "Enter your mobile number".tr),
+                                    "Mobile Number".tr,
+                                    "Enter your mobile number".tr),
                                 validator: (val) {
                                   if (val!.isEmpty) {
                                     return "phone can't be empty".tr;
                                   }
-                                  // else if(!RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
-                                  //   return "Enter a valid email address";
-                                  // }
                                   return null;
                                 },
                               ),
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShaddow(),
                             ),
                             const SizedBox(height: 40.0),
                             Container(
@@ -133,7 +129,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             Text.rich(
                               TextSpan(
                                 children: [
-                                   TextSpan(text: "Remember your password? ".tr),
+                                  TextSpan(text: "Remember your password? ".tr),
                                   TextSpan(
                                     text: 'Sign In'.tr,
                                     recognizer: TapGestureRecognizer()
@@ -141,7 +137,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => const Signin()),
+                                              builder: (context) =>
+                                                  const Signin()),
                                         );
                                       },
                                     style: TextStyle(

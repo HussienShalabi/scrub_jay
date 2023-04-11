@@ -1,11 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
 import '../widgets/RequestCard.dart';
 import 'DriverDrawer.dart';
-
 
 class MakeATrip extends StatefulWidget {
   const MakeATrip({super.key});
@@ -22,9 +20,9 @@ class _MakeATripState extends State<MakeATrip> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title:  Text(
+          title: Text(
             "Booked passengers".tr,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -37,9 +35,9 @@ class _MakeATripState extends State<MakeATrip> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).colorScheme.secondary,
-                    ])),
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).colorScheme.secondary,
+                ])),
           ),
           actions: [
             Container(
@@ -77,16 +75,16 @@ class _MakeATripState extends State<MakeATrip> {
             )
           ],
         ),
-        drawer: DriverDrawer(),
+        drawer: const DriverDrawer(),
         body: SingleChildScrollView(
-          physics: ScrollPhysics(),
+          physics: const ScrollPhysics(),
           child: Column(
             children: [
               Stack(
                 children: [
-                  Container(
+                  const SizedBox(
                     height: 100,
-                    child: const HeaderWidget(100, false, Icons.house_rounded),
+                    child: HeaderWidget(100, false, Icons.house_rounded),
                   ),
                   Container(
                     alignment: Alignment.center,
@@ -98,53 +96,46 @@ class _MakeATripState extends State<MakeATrip> {
                           height: 20,
                         ),
                         ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          itemCount: 4,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) => RequestCard(
-                            leadingIcon: Icons.clear,
-                              passengerName: 'Abu al-tayeb',
-                              passengerCount: 2,
-                              passengerPhoneNumber: 059954,
-                              passengerLocation: 'behind khaledyah ',
-                            trailing: Icons.check,
-                              )
-                        ),
-
+                            physics: const NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: 4,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => const RequestCard(
+                                  leadingIcon: Icons.clear,
+                                  passengerName: 'Abu al-tayeb',
+                                  passengerCount: 2,
+                                  passengerPhoneNumber: 059954,
+                                  passengerLocation: 'behind khaledyah ',
+                                  trailing: Icons.check,
+                                )),
                       ],
                     ),
                   ),
-
-
                 ],
               ),
               Container(
                 alignment: Alignment.bottomCenter,
-                decoration: ThemeHelper().buttonBoxDecoration(
-                    context),
+                decoration: ThemeHelper().buttonBoxDecoration(context),
                 child: ElevatedButton(
                   style: ThemeHelper().buttonStyle(),
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(
-                        40, 10, 40, 10),
-                    child: Text('Start the trip'.tr,
-                      style:  TextStyle(fontSize: 20,
+                    padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                    child: Text(
+                      'Start the trip'.tr,
+                      style: const TextStyle(
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white),),
+                          color: Colors.white),
+                    ),
                   ),
                   onPressed: () {
                     //After successful login we will redirect to profile page.
-                    // Navigator.pushReplacement(context,
-                    //     MaterialPageRoute(builder: (context) =>
-                    //         TripScreen()));
-                    Get.to( MakeATrip());
+                    Get.to(const MakeATrip());
                   },
                 ),
               ),
             ],
           ),
-
         ));
   }
 }

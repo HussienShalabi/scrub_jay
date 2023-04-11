@@ -6,15 +6,15 @@ import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
 class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _SignUpState();
   }
 }
 
-class _SignUpState extends State<SignUp>
-    with SingleTickerProviderStateMixin {
-  // final _formKey = GlobalKey<FormState>();
+class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
   bool checkedValue = false;
   bool checkboxValue = false;
   late TabController _tabController;
@@ -41,35 +41,34 @@ class _SignUpState extends State<SignUp>
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            const SizedBox(
               height: 150,
               child: HeaderWidget(150, false, Icons.person_add_alt_1_rounded),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(25, 0, 25, 10),
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              margin: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               alignment: Alignment.center,
               child: Column(
                 children: [
                   Form(
-                    // key: _formKey,
                     child: Column(
                       children: [
-
-                         Text(
+                        Text(
                           'Register as ...'.tr,
-                          style: TextStyle(
-                            fontSize: 20,),
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
                         ),
                         TabBar(
-                          onTap: (value) {
-                            setState(() {
-                              _selectedTab = value;
-                            });
-                          },
+                            onTap: (value) {
+                              setState(() {
+                                _selectedTab = value;
+                              });
+                            },
                             controller: _tabController,
                             indicatorColor: Colors.yellow.shade700,
-                            tabs:  [
+                            tabs: [
                               Tab(
                                 text: 'passenger'.tr,
                               ),
@@ -82,43 +81,49 @@ class _SignUpState extends State<SignUp>
                           children: [
                             Column(
                               children: [
-                                // SizedBox(
-                                //   height: 20,
-                                // ),
                                 Row(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.all(10),
-                                      child:  Text(
-                                        'Please fill in the following information : '.tr,
-                                        style: TextStyle(color: Colors.black54, fontSize: 15.sp),
+                                      padding: const EdgeInsets.all(10),
+                                      child: Text(
+                                        'Please fill in the following information : '
+                                            .tr,
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 15.sp),
                                       ),
                                     ),
                                   ],
                                 ),
                                 Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
-                                    decoration: ThemeHelper().textInputDecoration(
-                                        'First Name'.tr, 'Enter your first name'.tr),
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration('First Name'.tr,
+                                            'Enter your first name'.tr),
                                   ),
-                                  decoration: ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
-                                    decoration: ThemeHelper().textInputDecoration(
-                                        'Last Name'.tr, 'Enter your last name'.tr),
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration('Last Name'.tr,
+                                            'Enter your last name'.tr),
                                   ),
-                                  decoration: ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-
-                                SizedBox(height: 20.0),
+                                const SizedBox(height: 20.0),
                                 Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
-                                    decoration: ThemeHelper().textInputDecoration(
-                                        "Mobile Number".tr, "Enter your mobile number".tr),
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration("Mobile Number".tr,
+                                            "Enter your mobile number".tr),
                                     keyboardType: TextInputType.phone,
                                     validator: (val) {
                                       if (!(val!.isEmpty) &&
@@ -128,14 +133,16 @@ class _SignUpState extends State<SignUp>
                                       return null;
                                     },
                                   ),
-                                  decoration: ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(height: 20.0),
+                                const SizedBox(height: 20.0),
                                 Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
                                     obscureText: true,
-                                    decoration: ThemeHelper().textInputDecoration(
-                                        "Password*".tr, "Enter your password".tr),
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration("Password*".tr,
+                                            "Enter your password".tr),
                                     validator: (val) {
                                       if (val!.isEmpty) {
                                         return "Please enter your password".tr;
@@ -143,14 +150,17 @@ class _SignUpState extends State<SignUp>
                                       return null;
                                     },
                                   ),
-                                  decoration: ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(height: 20.0),
+                                const SizedBox(height: 20.0),
                                 Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
                                     obscureText: true,
-                                    decoration: ThemeHelper().textInputDecoration(
-                                        "ReEnter Password*".tr, "Enter your password".tr),
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration(
+                                            "ReEnter Password*".tr,
+                                            "Enter your password".tr),
                                     validator: (val) {
                                       if (val!.isEmpty) {
                                         return "Please enter your password".tr;
@@ -158,9 +168,8 @@ class _SignUpState extends State<SignUp>
                                       return null;
                                     },
                                   ),
-                                  decoration: ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(height: 15.0),
+                                const SizedBox(height: 15.0),
                                 FormField<bool>(
                                   builder: (state) {
                                     return Column(
@@ -176,8 +185,10 @@ class _SignUpState extends State<SignUp>
                                                   });
                                                 }),
                                             Text(
-                                              "I accept all terms and conditions.".tr,
-                                              style: TextStyle(color: Colors.grey),
+                                              "I accept all terms and conditions."
+                                                  .tr,
+                                              style: const TextStyle(
+                                                  color: Colors.grey),
                                             ),
                                           ],
                                         ),
@@ -187,8 +198,9 @@ class _SignUpState extends State<SignUp>
                                             state.errorText ?? '',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
-                                              color:
-                                              Theme.of(context).colorScheme.error,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .error,
                                               fontSize: 12,
                                             ),
                                           ),
@@ -198,66 +210,70 @@ class _SignUpState extends State<SignUp>
                                   },
                                   validator: (value) {
                                     if (!checkboxValue) {
-                                      return 'You need to accept terms and conditions'.tr;
+                                      return 'You need to accept terms and conditions'
+                                          .tr;
                                     } else {
                                       return null;
                                     }
                                   },
                                 ),
-                                SizedBox(height: 20.0),
+                                const SizedBox(height: 20.0),
                                 Container(
-                                  decoration:
-                                  ThemeHelper().buttonBoxDecoration(context),
+                                  decoration: ThemeHelper()
+                                      .buttonBoxDecoration(context),
                                   child: ElevatedButton(
                                     style: ThemeHelper().buttonStyle(),
                                     child: Padding(
-                                      padding:
-                                      const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          40, 10, 40, 10),
                                       child: Text(
                                         "Register".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                         ),
                                       ),
                                     ),
-                                    onPressed: () {
-
-
-                                    },
+                                    onPressed: () {},
                                   ),
                                 ),
                               ],
                             ),
                             Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
-                                    decoration: ThemeHelper().textInputDecoration(
-                                        'First Name'.tr, 'Enter your first name'.tr),
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration('First Name'.tr,
+                                            'Enter your first name'.tr),
                                   ),
-                                  decoration: ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
-                                    decoration: ThemeHelper().textInputDecoration(
-                                        'Last Name'.tr, 'Enter your last name'.tr),
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration('Last Name'.tr,
+                                            'Enter your last name'.tr),
                                   ),
-                                  decoration: ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-
-                                SizedBox(height: 20.0),
+                                const SizedBox(height: 20.0),
                                 Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
-                                    decoration: ThemeHelper().textInputDecoration(
-                                        "Mobile Number".tr, "Enter your mobile number".tr),
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration("Mobile Number".tr,
+                                            "Enter your mobile number".tr),
                                     keyboardType: TextInputType.phone,
                                     validator: (val) {
                                       if (!(val!.isEmpty) &&
@@ -267,14 +283,16 @@ class _SignUpState extends State<SignUp>
                                       return null;
                                     },
                                   ),
-                                  decoration: ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(height: 20.0),
+                                const SizedBox(height: 20.0),
                                 Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
                                     obscureText: true,
-                                    decoration: ThemeHelper().textInputDecoration(
-                                        "Password*".tr, "Enter your password".tr),
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration("Password*".tr,
+                                            "Enter your password".tr),
                                     validator: (val) {
                                       if (val!.isEmpty) {
                                         return "Please enter your password".tr;
@@ -282,14 +300,17 @@ class _SignUpState extends State<SignUp>
                                       return null;
                                     },
                                   ),
-                                  decoration: ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(height: 20.0),
+                                const SizedBox(height: 20.0),
                                 Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
                                     obscureText: true,
-                                    decoration: ThemeHelper().textInputDecoration(
-                                        "ReEnter Password*".tr, "Enter your password".tr),
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration(
+                                            "ReEnter Password*".tr,
+                                            "Enter your password".tr),
                                     validator: (val) {
                                       if (val!.isEmpty) {
                                         return "Please enter your password".tr;
@@ -297,10 +318,8 @@ class _SignUpState extends State<SignUp>
                                       return null;
                                     },
                                   ),
-                                  decoration: ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(height: 15),
-
+                                const SizedBox(height: 15),
                                 FormField<bool>(
                                   builder: (state) {
                                     return Column(
@@ -316,8 +335,10 @@ class _SignUpState extends State<SignUp>
                                                   });
                                                 }),
                                             Text(
-                                              "I accept all terms and conditions.".tr,
-                                              style: TextStyle(color: Colors.grey),
+                                              "I accept all terms and conditions."
+                                                  .tr,
+                                              style: const TextStyle(
+                                                  color: Colors.grey),
                                             ),
                                           ],
                                         ),
@@ -327,8 +348,9 @@ class _SignUpState extends State<SignUp>
                                             state.errorText ?? '',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
-                                              color:
-                                              Theme.of(context).colorScheme.error,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .error,
                                               fontSize: 12,
                                             ),
                                           ),
@@ -338,41 +360,38 @@ class _SignUpState extends State<SignUp>
                                   },
                                   validator: (value) {
                                     if (!checkboxValue) {
-                                      return 'You need to accept terms and conditions'.tr;
+                                      return 'You need to accept terms and conditions'
+                                          .tr;
                                     } else {
                                       return null;
                                     }
                                   },
                                 ),
-                                SizedBox(height: 20.0),
+                                const SizedBox(height: 20.0),
                                 Container(
-                                  decoration:
-                                  ThemeHelper().buttonBoxDecoration(context),
+                                  decoration: ThemeHelper()
+                                      .buttonBoxDecoration(context),
                                   child: ElevatedButton(
                                     style: ThemeHelper().buttonStyle(),
                                     child: Padding(
-                                      padding:
-                                      const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          40, 10, 40, 10),
                                       child: Text(
                                         "Register".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                         ),
                                       ),
                                     ),
-                                    onPressed: () {
-
-
-                                    },
+                                    onPressed: () {},
                                   ),
                                 ),
                               ],
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ),

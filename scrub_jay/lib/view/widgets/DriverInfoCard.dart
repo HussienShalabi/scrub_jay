@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-
 class DriverInfoCard extends StatefulWidget {
   final IconData leadingIcon;
   final String title;
@@ -13,10 +12,10 @@ class DriverInfoCard extends StatefulWidget {
 
   const DriverInfoCard(
       {required this.leadingIcon,
-        required this.title,
-        required this.driverPhoneNumber,
-        this.key,
-        this.BottomMargin = 0});
+      required this.title,
+      required this.driverPhoneNumber,
+      this.key,
+      this.BottomMargin = 0});
 
   @override
   State<DriverInfoCard> createState() => _DriverInfoCardState();
@@ -35,10 +34,9 @@ class _DriverInfoCardState extends State<DriverInfoCard> {
           widget.leadingIcon,
           color: Colors.white,
         ),
-
         title: Text(
           widget.title,
-          style:  TextStyle(
+          style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
@@ -49,16 +47,15 @@ class _DriverInfoCardState extends State<DriverInfoCard> {
           children: [
             Text(
               'phone: '.tr,
-              style:  TextStyle(
+              style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.white,
-                // fontFamily: ('Caveat'),
                 fontWeight: FontWeight.normal,
               ),
             ),
             Text(
               '${widget.driverPhoneNumber}',
-              style:  TextStyle(
+              style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.white,
                 // fontFamily: ('Caveat'),
@@ -67,7 +64,6 @@ class _DriverInfoCardState extends State<DriverInfoCard> {
             ),
           ],
         ),
-
       ),
     );
   }

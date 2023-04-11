@@ -1,11 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../widgets/DriverInfoCard.dart';
 import '../widgets/HeaderWidget.dart';
 import 'AdminDrawer.dart';
-
 
 class DriversList extends StatefulWidget {
   const DriversList({super.key});
@@ -22,9 +19,9 @@ class _DriversListState extends State<DriversList> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title:  Text(
+          title: Text(
             'driver\'s list'.tr,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -37,9 +34,9 @@ class _DriversListState extends State<DriversList> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).colorScheme.secondary,
-                    ])),
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).colorScheme.secondary,
+                ])),
           ),
           actions: [
             Container(
@@ -77,13 +74,13 @@ class _DriversListState extends State<DriversList> {
             )
           ],
         ),
-        drawer: AdminDrawer(),
+        drawer: const AdminDrawer(),
         body: SingleChildScrollView(
           child: Stack(
             children: [
-              Container(
+              const SizedBox(
                 height: 100,
-                child: const HeaderWidget(100, false, Icons.house_rounded),
+                child: HeaderWidget(100, false, Icons.house_rounded),
               ),
               Container(
                 alignment: Alignment.center,
@@ -97,9 +94,9 @@ class _DriversListState extends State<DriversList> {
                     ListView.builder(
                       itemCount: 5,
                       shrinkWrap: true,
-                      itemBuilder: (context, index) =>  DriverInfoCard(
+                      itemBuilder: (context, index) => const DriverInfoCard(
                         leadingIcon: Icons.taxi_alert_rounded,
-                        title:"data",
+                        title: "data",
                         driverPhoneNumber: 005975,
                       ),
                     ),

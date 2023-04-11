@@ -15,11 +15,9 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
-  double _headerHeight = 250;
-  Key _formKey = GlobalKey<FormState>();
+  final double _headerHeight = 250;
+  final Key _formKey = GlobalKey<FormState>();
   int? x;
-  String? _phoneError;
-  String? _passError;
 
   late TextEditingController _phoneTextController;
   late TextEditingController _passTextController;
@@ -45,7 +43,7 @@ class _SigninState extends State<Signin> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: _headerHeight,
               child: HeaderWidget(_headerHeight, true,
                   Icons.login_rounded), //let's create a common header widget
@@ -57,16 +55,16 @@ class _SigninState extends State<Signin> {
                   // This will be the login form
                   child: Column(
                     children: [
-                       Text(
+                      Text(
                         'Hello'.tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 60,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                       Text(
+                      Text(
                         'Sign in into your account'.tr,
-                        style: TextStyle(color: Colors.grey),
+                        style: const TextStyle(color: Colors.grey),
                       ),
                       const SizedBox(height: 30),
                       Form(
@@ -75,7 +73,7 @@ class _SigninState extends State<Signin> {
                             children: [
                               Container(
                                 decoration:
-                                ThemeHelper().inputBoxDecorationShaddow(),
+                                    ThemeHelper().inputBoxDecorationShaddow(),
                                 child: TextField(
                                   onChanged: (value) => x = value as int?,
                                   keyboardType: TextInputType.phone,
@@ -87,7 +85,7 @@ class _SigninState extends State<Signin> {
                               const SizedBox(height: 30.0),
                               Container(
                                 decoration:
-                                ThemeHelper().inputBoxDecorationShaddow(),
+                                    ThemeHelper().inputBoxDecorationShaddow(),
                                 child: TextField(
                                   obscureText: true,
                                   decoration: ThemeHelper().textInputDecoration(
@@ -97,7 +95,7 @@ class _SigninState extends State<Signin> {
                               const SizedBox(height: 15),
                               Container(
                                 margin:
-                                const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                                    const EdgeInsets.fromLTRB(10, 0, 10, 20),
                                 alignment: Alignment.topRight,
                                 child: GestureDetector(
                                   onTap: () {
@@ -105,12 +103,12 @@ class _SigninState extends State<Signin> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                          const ForgotPassword()),
+                                              const ForgotPassword()),
                                     );
                                   },
-                                  child:  Text(
+                                  child: Text(
                                     "Forgot your password?".tr,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.grey,
                                     ),
                                   ),
@@ -118,7 +116,7 @@ class _SigninState extends State<Signin> {
                               ),
                               Container(
                                 decoration:
-                                ThemeHelper().buttonBoxDecoration(context),
+                                    ThemeHelper().buttonBoxDecoration(context),
                                 child: ElevatedButton(
                                   style: ThemeHelper().buttonStyle(),
                                   child: Padding(
@@ -133,19 +131,15 @@ class _SigninState extends State<Signin> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    Get.off(ChooseTrip());
-                                    //After successful login we will redirect to profile page.
-
+                                    Get.off(const ChooseTrip());
                                   },
                                 ),
                               ),
                               Container(
                                 margin:
-                                const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                                //child: Text('Don\'t have an account? Create'),
+                                    const EdgeInsets.fromLTRB(10, 20, 10, 20),
                                 child: Text.rich(TextSpan(children: [
-                                   TextSpan(
-                                      text: "Don\'t have an account? ".tr),
+                                  TextSpan(text: "Don\'t have an account? ".tr),
                                   TextSpan(
                                       text: 'Create account'.tr,
                                       recognizer: TapGestureRecognizer()

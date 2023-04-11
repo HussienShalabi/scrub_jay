@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:sizer/sizer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 
 class DriverRequestCard extends StatefulWidget {
   final IconData leadingIcon;
@@ -11,12 +9,13 @@ class DriverRequestCard extends StatefulWidget {
   final IconData trailing;
   final double BottomMargin;
 
-  const DriverRequestCard(
-      {required this.leadingIcon,
-        required this.title,
-        required this.driverPhoneNumber,
-        required this.trailing,
-        this.BottomMargin = 0, });
+  const DriverRequestCard({
+    required this.leadingIcon,
+    required this.title,
+    required this.driverPhoneNumber,
+    required this.trailing,
+    this.BottomMargin = 0,
+  });
 
   @override
   State<DriverRequestCard> createState() => _DriverRequestCardState();
@@ -35,10 +34,9 @@ class _DriverRequestCardState extends State<DriverRequestCard> {
           widget.leadingIcon,
           color: Colors.white,
         ),
-
         title: Text(
           widget.title,
-          style:  TextStyle(
+          style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
@@ -49,7 +47,7 @@ class _DriverRequestCardState extends State<DriverRequestCard> {
           children: [
             Text(
               'phone: '.tr,
-              style:  TextStyle(
+              style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.white,
                 // fontFamily: ('Caveat'),
@@ -58,26 +56,23 @@ class _DriverRequestCardState extends State<DriverRequestCard> {
             ),
             Text(
               '${widget.driverPhoneNumber}',
-              style:  TextStyle(
+              style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.white,
                 // fontFamily: ('Caveat'),
                 fontWeight: FontWeight.normal,
               ),
             ),
-
           ],
         ),
-
         trailing: IconButton(
           //TODO Show attachments
           onPressed: () => {},
-          icon: Icon( widget.trailing,
+          icon: Icon(
+            widget.trailing,
             color: Colors.green,
           ),
-
         ),
-
       ),
     );
   }

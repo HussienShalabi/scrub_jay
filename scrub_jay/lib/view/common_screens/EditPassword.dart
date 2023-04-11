@@ -11,18 +11,16 @@ class EditPassword extends StatefulWidget {
 }
 
 class _EditPasswordState extends State<EditPassword> {
-  double _headerHeight = 250;
-  Key _formKey = GlobalKey<FormState>();
+  final double _headerHeight = 250;
+  final Key _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
   void dispose() {
-
     super.dispose();
   }
 
@@ -30,7 +28,7 @@ class _EditPasswordState extends State<EditPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             "Edit password",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -88,10 +86,10 @@ class _EditPasswordState extends State<EditPassword> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: _headerHeight,
-              child: HeaderWidget(_headerHeight, true,
-                  Icons.lock_person_rounded), //let's create a common header widget
+              child:
+                  HeaderWidget(_headerHeight, true, Icons.lock_person_rounded),
             ),
             SafeArea(
               child: Container(
@@ -100,10 +98,9 @@ class _EditPasswordState extends State<EditPassword> {
                 // This will be the login form
                 child: Column(
                   children: [
-
                     Text(
                       'Change your password'.tr,
-                      style: TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.grey),
                     ),
                     const SizedBox(height: 30),
                     Form(
@@ -124,7 +121,7 @@ class _EditPasswordState extends State<EditPassword> {
                           const SizedBox(height: 15),
                           Container(
                             decoration:
-                            ThemeHelper().inputBoxDecorationShaddow(),
+                                ThemeHelper().inputBoxDecorationShaddow(),
                             child: TextField(
                               obscureText: true,
                               decoration: ThemeHelper().textInputDecoration(
@@ -135,7 +132,7 @@ class _EditPasswordState extends State<EditPassword> {
                           const SizedBox(height: 15),
                           Container(
                             decoration:
-                            ThemeHelper().inputBoxDecorationShaddow(),
+                                ThemeHelper().inputBoxDecorationShaddow(),
                             child: TextField(
                               obscureText: true,
                               decoration: ThemeHelper().textInputDecoration(
@@ -144,7 +141,6 @@ class _EditPasswordState extends State<EditPassword> {
                             ),
                           ),
                           const SizedBox(height: 30),
-
                           Container(
                             decoration:
                                 ThemeHelper().buttonBoxDecoration(context),
@@ -161,10 +157,7 @@ class _EditPasswordState extends State<EditPassword> {
                                       color: Colors.white),
                                 ),
                               ),
-                              onPressed: () {
-
-
-                              },
+                              onPressed: () {},
                             ),
                           ),
                         ],
