@@ -27,6 +27,7 @@ class _DriverInfoCardState extends State<DriverInfoCard> {
     return Card(
       color: Colors.black54,
       margin: EdgeInsets.all(7.sp),
+
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       elevation: 5.sp,
       child: ListTile(

@@ -5,14 +5,14 @@ import 'package:scrub_jay/view/admin/AddAdmin.dart';
 import '../view/admin/DriversList.dart';
 
 abstract class AbstractAdminController extends GetxController {
-
-  void AddNewAdminButton();
   final controller = Get.put(AdminController);
+  void AddNewAdminButton();
+
 
 }
 
 
-class AdminController extends AbstractAdminController with GetSingleTickerProviderStateMixin{
+class AdminController extends AbstractAdminController {
 
   late TextEditingController firstName;
   late TextEditingController lastName;

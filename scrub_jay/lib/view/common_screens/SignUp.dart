@@ -15,8 +15,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
-  bool checkedValue = false;
-  bool checkboxValue = false;
+
   late TabController _tabController;
   int _selectedTab = 0;
 
@@ -100,23 +99,13 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                       ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
                                     decoration: ThemeHelper()
-                                        .textInputDecoration('First Name'.tr,
-                                            'Enter your first name'.tr),
+                                        .textInputDecoration('Full Name'.tr,
+                                            'Enter your Full name'.tr),
                                   ),
                                 ),
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                Container(
-                                  decoration:
-                                      ThemeHelper().inputBoxDecorationShaddow(),
-                                  child: TextFormField(
-                                    decoration: ThemeHelper()
-                                        .textInputDecoration('Last Name'.tr,
-                                            'Enter your last name'.tr),
-                                  ),
-                                ),
-                                const SizedBox(height: 20.0),
                                 Container(
                                   decoration:
                                       ThemeHelper().inputBoxDecorationShaddow(),
@@ -170,54 +159,6 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                   ),
                                 ),
                                 const SizedBox(height: 15.0),
-                                FormField<bool>(
-                                  builder: (state) {
-                                    return Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Checkbox(
-                                                value: checkboxValue,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    checkboxValue = value!;
-                                                    state.didChange(value);
-                                                  });
-                                                }),
-                                            Text(
-                                              "I accept all terms and conditions."
-                                                  .tr,
-                                              style: const TextStyle(
-                                                  color: Colors.grey),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            state.errorText ?? '',
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .error,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    );
-                                  },
-                                  validator: (value) {
-                                    if (!checkboxValue) {
-                                      return 'You need to accept terms and conditions'
-                                          .tr;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                                const SizedBox(height: 20.0),
                                 Container(
                                   decoration: ThemeHelper()
                                       .buttonBoxDecoration(context),
@@ -242,16 +183,27 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                             ),
                             Column(
                               children: [
-                                const SizedBox(
-                                  height: 20,
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Text(
+                                        'Please fill in the following information : '
+                                            .tr,
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 15.sp),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Container(
                                   decoration:
-                                      ThemeHelper().inputBoxDecorationShaddow(),
+                                  ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
                                     decoration: ThemeHelper()
-                                        .textInputDecoration('First Name'.tr,
-                                            'Enter your first name'.tr),
+                                        .textInputDecoration('Full Name'.tr,
+                                        'Enter your Full name'.tr),
                                   ),
                                 ),
                                 const SizedBox(
@@ -259,21 +211,11 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                 ),
                                 Container(
                                   decoration:
-                                      ThemeHelper().inputBoxDecorationShaddow(),
-                                  child: TextFormField(
-                                    decoration: ThemeHelper()
-                                        .textInputDecoration('Last Name'.tr,
-                                            'Enter your last name'.tr),
-                                  ),
-                                ),
-                                const SizedBox(height: 20.0),
-                                Container(
-                                  decoration:
-                                      ThemeHelper().inputBoxDecorationShaddow(),
+                                  ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
                                     decoration: ThemeHelper()
                                         .textInputDecoration("Mobile Number".tr,
-                                            "Enter your mobile number".tr),
+                                        "Enter your mobile number".tr),
                                     keyboardType: TextInputType.phone,
                                     validator: (val) {
                                       if (!(val!.isEmpty) &&
@@ -287,12 +229,12 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                 const SizedBox(height: 20.0),
                                 Container(
                                   decoration:
-                                      ThemeHelper().inputBoxDecorationShaddow(),
+                                  ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
                                     obscureText: true,
                                     decoration: ThemeHelper()
                                         .textInputDecoration("Password*".tr,
-                                            "Enter your password".tr),
+                                        "Enter your password".tr),
                                     validator: (val) {
                                       if (val!.isEmpty) {
                                         return "Please enter your password".tr;
@@ -304,13 +246,13 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                 const SizedBox(height: 20.0),
                                 Container(
                                   decoration:
-                                      ThemeHelper().inputBoxDecorationShaddow(),
+                                  ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
                                     obscureText: true,
                                     decoration: ThemeHelper()
                                         .textInputDecoration(
-                                            "ReEnter Password*".tr,
-                                            "Enter your password".tr),
+                                        "ReEnter Password*".tr,
+                                        "Enter your password".tr),
                                     validator: (val) {
                                       if (val!.isEmpty) {
                                         return "Please enter your password".tr;
@@ -319,55 +261,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                     },
                                   ),
                                 ),
-                                const SizedBox(height: 15),
-                                FormField<bool>(
-                                  builder: (state) {
-                                    return Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Checkbox(
-                                                value: checkboxValue,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    checkboxValue = value!;
-                                                    state.didChange(value);
-                                                  });
-                                                }),
-                                            Text(
-                                              "I accept all terms and conditions."
-                                                  .tr,
-                                              style: const TextStyle(
-                                                  color: Colors.grey),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            state.errorText ?? '',
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .error,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    );
-                                  },
-                                  validator: (value) {
-                                    if (!checkboxValue) {
-                                      return 'You need to accept terms and conditions'
-                                          .tr;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                                const SizedBox(height: 20.0),
+                                const SizedBox(height: 15.0),
                                 Container(
                                   decoration: ThemeHelper()
                                       .buttonBoxDecoration(context),
@@ -390,6 +284,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                 ),
                               ],
                             ),
+                            //here
                           ],
                         ),
                       ],
