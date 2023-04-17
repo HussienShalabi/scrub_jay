@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/bindings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controller/locale/locale.dart';
@@ -13,6 +15,7 @@ SharedPreferences? sharepref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharepref = await SharedPreferences.getInstance();
+  Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -40,6 +43,7 @@ class MyApp extends StatelessWidget {
           locale: Get.deviceLocale,
           translations: Mylocale(),
           initialRoute: '/SplashScreen',
+          initialBinding: Binding(),
           routes: {
             '/SplashScreen': (context) => const SplashScreen(
               title: 'Scrub Jay',

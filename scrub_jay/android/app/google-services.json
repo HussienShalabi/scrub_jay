@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "347271302887",
+    "project_id": "scrub-jay-2d537",
+    "storage_bucket": "scrub-jay-2d537.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347271302887:android:c513392c597e5e77e81c42",
+        "android_client_info": {
+          "package_name": "com.scrubJay.application.scrub_jay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347271302887-u7trhij24cv92s0iepantvttbp7kv1of.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scrubJay.application.scrub_jay",
+            "certificate_hash": "a2f61660bef67dc123f7fb0784ee714a8e9269dd"
+          }
+        },
+        {
+          "client_id": "347271302887-5nj9s7hscguoq72gcoehnvqef94ecge7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3BVmNZaHRWhv5Fn2cW8eZPdctxE6G340"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347271302887-5nj9s7hscguoq72gcoehnvqef94ecge7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

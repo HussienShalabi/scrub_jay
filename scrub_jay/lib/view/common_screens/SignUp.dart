@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/signup_controller.dart';
+import 'package:scrub_jay/core/app_functions.dart';
 import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
@@ -33,6 +36,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  final SignUpControllerImp signUpcontroler = Get.find<SignUpControllerImp>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +55,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
               child: Column(
                 children: [
                   Form(
+                    key: signUpcontroler.formKey,
                     child: Column(
                       children: [
                         Text(
@@ -98,6 +103,8 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                   decoration:
                                       ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
+                                    validator: (value) => formValidation(value, 'username'),
+                                    controller: signUpcontroler.fullname,
                                     decoration: ThemeHelper()
                                         .textInputDecoration('Full Name'.tr,
                                             'Enter your Full name'.tr),
@@ -114,13 +121,11 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                         .textInputDecoration("Mobile Number".tr,
                                             "Enter your mobile number".tr),
                                     keyboardType: TextInputType.phone,
-                                    validator: (val) {
-                                      if (!(val!.isEmpty) &&
-                                          !RegExp(r"^(\d+)*$").hasMatch(val)) {
-                                        return "Enter a valid phone number".tr;
-                                      }
-                                      return null;
-                                    },
+                                    controller: signUpcontroler.phoneNumber,
+                                    validator:(value) => formValidation(value, 'phone'),
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(10),
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(height: 20.0),
@@ -132,12 +137,8 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                     decoration: ThemeHelper()
                                         .textInputDecoration("Password*".tr,
                                             "Enter your password".tr),
-                                    validator: (val) {
-                                      if (val!.isEmpty) {
-                                        return "Please enter your password".tr;
-                                      }
-                                      return null;
-                                    },
+                                    controller: signUpcontroler.password  ,
+                                    validator: (value) => formValidation(value, 'password', 8,30),
                                   ),
                                 ),
                                 const SizedBox(height: 20.0),
@@ -146,13 +147,17 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                       ThemeHelper().inputBoxDecorationShaddow(),
                                   child: TextFormField(
                                     obscureText: true,
+                                    controller: signUpcontroler.rewritePassword,
                                     decoration: ThemeHelper()
                                         .textInputDecoration(
                                             "ReEnter Password*".tr,
                                             "Enter your password".tr),
                                     validator: (val) {
                                       if (val!.isEmpty) {
-                                        return "Please enter your password".tr;
+                                        return "this field is required".tr;
+                                      }
+                                      if (signUpcontroler.password.text.trim() != signUpcontroler.rewritePassword.text.trim()) {
+                                        return 'Passwords don\'t match';
                                       }
                                       return null;
                                     },
@@ -176,11 +181,12 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                                         ),
                                       ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () =>signUpcontroler.signup(),
                                   ),
                                 ),
                               ],
                             ),
+                            if(_selectedTab == 1)
                             Column(
                               children: [
                                 Row(
