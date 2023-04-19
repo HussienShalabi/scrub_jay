@@ -5,6 +5,7 @@ class Driver extends User {
   String? insuranceDriverImageURL;
   String? insuranceCarImageURL;
 
+  Driver({this.vehicleNumber, this.insuranceDriverImageURL, this.insuranceCarImageURL, super.fullname , super.phoneNumber, super.role});
 
   Driver.fromJson(Map<String, dynamic> json) {
     super.id = json['id'];

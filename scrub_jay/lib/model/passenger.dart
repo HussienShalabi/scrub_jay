@@ -20,7 +20,7 @@ Map<String, dynamic> toJson() {
   data['id'] =  super.id ;
   data['fullName'] =  super.fullname;
   data['phoneNumber'] =  super.phoneNumber ;
-    data['location'] = location;
+  data['location'] = location;
   data['numberOfPassenger'] = numberOfPassenger;
   data['role'] = super.role;
   return data;
