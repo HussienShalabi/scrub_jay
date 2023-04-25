@@ -75,11 +75,10 @@ class _SigninState extends State<Signin> {
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
                                 child: TextField(
-                                  onChanged: (value) => x = value as int?,
-                                  keyboardType: TextInputType.phone,
+                                  keyboardType: TextInputType.emailAddress,
                                   decoration: ThemeHelper().textInputDecoration(
-                                      "Mobile Number".tr,
-                                      "Enter your mobile number".tr),
+                                      "Email address".tr,
+                                      "Enter your email address".tr),
                                 ),
                               ),
                               const SizedBox(height: 30.0),
@@ -99,12 +98,7 @@ class _SigninState extends State<Signin> {
                                 alignment: Alignment.topRight,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ForgotPassword()),
-                                    );
+                                    Get.to(ForgotPassword());
                                   },
                                   child: Text(
                                     "Forgot your password?".tr,
@@ -144,11 +138,7 @@ class _SigninState extends State<Signin> {
                                       text: 'Create account'.tr,
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SignUpPassenger()));
+                                          Get.to(SignUpPassenger());
                                         },
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,

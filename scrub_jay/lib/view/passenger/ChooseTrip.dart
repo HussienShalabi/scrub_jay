@@ -86,8 +86,9 @@ class ChooseTrip extends StatelessWidget {
           ),
           Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.fromLTRB(25, 80, 25, 10),
+              margin: const EdgeInsets.fromLTRB(5, 80, 5, 10),
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+
               child: Column(children: [
                 const SizedBox(
                   height: 20,
@@ -100,8 +101,8 @@ class ChooseTrip extends StatelessWidget {
                           child: TripCard(
                             leadingIcon: Icons.taxi_alert_rounded,
                             driverPhoneNumber: 05975,
-                            trailing: Icons.arrow_forward_ios_rounded,
-                            driverName: 'lotfi',
+                            // trailing: Icons.arrow_forward_ios_rounded,
+                            driverName: 'lotfi hejawi',
                             availableSeats: 2,
                           ),
                           onTap: () {

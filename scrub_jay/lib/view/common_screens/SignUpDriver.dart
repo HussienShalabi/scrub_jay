@@ -22,6 +22,7 @@ class SignUpDriver extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+
             const SizedBox(
               height: 150,
               child: HeaderWidget(150, false, Icons.person_add_alt_1_rounded),

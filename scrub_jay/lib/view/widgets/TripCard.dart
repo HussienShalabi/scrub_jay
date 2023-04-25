@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../common_screens/theme_helper.dart';
@@ -7,14 +8,13 @@ class TripCard extends StatefulWidget {
   final IconData leadingIcon;
   final String driverName;
   final int driverPhoneNumber;
-  final IconData trailing;
+  // final IconData trailing;
   final double BottomMargin;
   final int availableSeats ;
 
   TripCard({
     required this.leadingIcon,
     required this.driverName,
-    required this.trailing,
     required this.availableSeats,
     required this.driverPhoneNumber,
     this.BottomMargin = 0,
@@ -25,7 +25,6 @@ class TripCard extends StatefulWidget {
 }
 
 class _TripCardState extends State<TripCard> {
-  // final _seatsController = Get.put(SeatsController());
 
   var selectedValue = 1;
 
@@ -33,7 +32,7 @@ class _TripCardState extends State<TripCard> {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.black45,
-      margin: const EdgeInsets.all(3),
+      margin:  EdgeInsets.symmetric(vertical: 7),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       elevation: 10,
       child: Container(
@@ -41,21 +40,23 @@ class _TripCardState extends State<TripCard> {
           leading: Icon(
             widget.leadingIcon,
             color: Colors.white,
+            size: 20.sp,
+
           ),
           title: Row(
             children: [
               Text(
                 "driver name: ".tr,
-                style: const TextStyle(
+                style:  TextStyle(
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: 18.sp,
                 ),
               ),
               Text(
                 "${widget.driverName}",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+                style:  TextStyle(
+                  color: Colors.yellow.shade700,
+                  fontSize: 18.sp,
                 ),
               ),
             ],
@@ -67,16 +68,16 @@ class _TripCardState extends State<TripCard> {
                 children: [
                   Text(
                     "phone: ".tr,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 18.sp,
                     ),
                   ),
                   Text(
                     "${widget.driverPhoneNumber}",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+                    style:  TextStyle(
+                      color: Colors.yellow.shade700,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ],
@@ -85,30 +86,30 @@ class _TripCardState extends State<TripCard> {
                 children: [
                   Text(
                     "available seats: ".tr,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 18.sp,
                     ),
                   ),
                   Text(
                     "${widget.availableSeats} ",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+                    style:  TextStyle(
+                      color: Colors.yellow.shade700,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ],
               ),
             ],
           ),
-          trailing: IconButton(
-            onPressed: () {
-            },
-            icon: Icon(
-              widget.trailing,
-              color: Colors.white,
-            ),
-          ),
+          // trailing: IconButton(
+          //   onPressed: () {
+          //   },
+          //   icon: Icon(
+          //     widget.trailing,
+          //     color: Colors.white,
+          //   ),
+          // ),
         ),
       ),
     );
