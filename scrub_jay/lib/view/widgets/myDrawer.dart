@@ -5,7 +5,7 @@ import '../admin/AdminMainScreen.dart';
 import '../common_screens/ForgotPassword.dart';
 import '../common_screens/ForgotPasswordVerification.dart';
 import '../common_screens/Signin.dart';
-import '../common_screens/SignUp.dart';
+import '../common_screens/SignUpPassenger.dart';
 import '../common_screens/SplashScreen.dart';
 import '../driver/DriverMainScreen.dart';
 
@@ -184,7 +184,7 @@ class _MyDrawerState extends State<MyDrawer> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignUp()),
+                  MaterialPageRoute(builder: (context) => SignUpPassenger()),
                 );
               },
             ),

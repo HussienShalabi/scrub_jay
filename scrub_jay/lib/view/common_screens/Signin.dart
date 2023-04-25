@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:scrub_jay/view/passenger/ChooseTrip.dart';
 import '../widgets/HeaderWidget.dart';
 import 'ForgotPassword.dart';
-import 'SignUp.dart';
+import 'SignUpPassenger.dart';
 import 'theme_helper.dart';
 
 class Signin extends StatefulWidget {
@@ -148,7 +148,7 @@ class _SigninState extends State<Signin> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      SignUp()));
+                                                      SignUpPassenger()));
                                         },
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
