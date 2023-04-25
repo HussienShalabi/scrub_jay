@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:scrub_jay/controller/signup_controller.dart';
+import 'package:scrub_jay/controller/passenger_controller.dart';
 import 'package:scrub_jay/core/app_functions.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/SignUpDriver.dart';
@@ -12,7 +12,7 @@ import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
 class SignUpPassenger extends StatelessWidget {
-  final SignUpControllerImp signUpcontroler = Get.find<SignUpControllerImp>();
+  final PassengerControllerImp passengercontroller = Get.find<PassengerControllerImp>();
 
   SignUpPassenger({super.key});
   @override
@@ -31,7 +31,7 @@ class SignUpPassenger extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 50),
               alignment: Alignment.center,
               child: Form(
-                key: signUpcontroler.formKey,
+                key: passengercontroller.formKey,
                 child: Column(
                   children: [
                     Text(
@@ -60,7 +60,7 @@ class SignUpPassenger extends StatelessWidget {
                           child: TextFormField(
                             validator: (value) =>
                                 formValidation(value, 'username'),
-                            controller: signUpcontroler.fullname,
+                            controller: passengercontroller.fullname,
                             decoration: ThemeHelper().textInputDecoration(
                                 'Full Name'.tr, 'Enter your Full name'.tr),
                           ),
@@ -71,7 +71,7 @@ class SignUpPassenger extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            controller: signUpcontroler.emailAddress,
+                            controller: passengercontroller.emailAddress,
                             validator: (value) =>
                                 formValidation(value, 'email'),
                             decoration: ThemeHelper().textInputDecoration(
@@ -84,7 +84,7 @@ class SignUpPassenger extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            controller: signUpcontroler.phoneNumber,
+                            controller: passengercontroller.phoneNumber,
                             validator: (value) =>
                                 formValidation(value, 'phone'),
                             inputFormatters: [
@@ -100,7 +100,7 @@ class SignUpPassenger extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            controller: signUpcontroler.password,
+                            controller: passengercontroller.password,
                             validator: (value) =>
                                 formValidation(value, 'password', 8, 30),
                             obscureText: true,
@@ -113,13 +113,13 @@ class SignUpPassenger extends StatelessWidget {
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
                             obscureText: true,
-                            controller: signUpcontroler.rewritePassword,
+                            controller: passengercontroller.rewritePassword,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "this field is required".tr;
                               }
-                              if (signUpcontroler.password.text.trim() !=
-                                  signUpcontroler.rewritePassword.text.trim()) {
+                              if (passengercontroller.password.text.trim() !=
+                                  passengercontroller.rewritePassword.text.trim()) {
                                 return 'Passwords don\'t match';
                               }
                               return null;
@@ -147,7 +147,7 @@ class SignUpPassenger extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            onPressed: () => signUpcontroler.signup(),
+                            onPressed: () => passengercontroller.passengerSignup(),
                           ),
                         ),
                         Container(

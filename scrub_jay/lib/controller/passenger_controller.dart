@@ -5,12 +5,12 @@ import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/passenger.dart';
 import 'package:scrub_jay/view/common_screens/SignUpPassenger.dart';
 
-abstract class SignUpController extends GetxController
+abstract class PassengerController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  Future<void> signup();
+  Future<void> passengerSignup();
 }
 
-class SignUpControllerImp extends SignUpController {
+class PassengerControllerImp extends PassengerController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final TextEditingController fullname = TextEditingController();
@@ -20,7 +20,7 @@ class SignUpControllerImp extends SignUpController {
   final TextEditingController rewritePassword = TextEditingController();
 
   @override
-  signup() async {
+  passengerSignup() async {
     final bool isValid = formKey.currentState!.validate();
 
     if (isValid) {

@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:scrub_jay/controller/signup_controller.dart';
+import 'package:scrub_jay/controller/driver_controller.dart';
+import 'package:scrub_jay/controller/passenger_controller.dart';
 import 'package:scrub_jay/core/app_functions.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
 class SignUpDriver extends StatelessWidget {
-  final SignUpControllerImp signUpcontroler = Get.find<SignUpControllerImp>();
+  final DriverControllerImp drivercontroler = Get.find<DriverControllerImp>();
 
   SignUpDriver({super.key});
   @override
@@ -30,7 +31,7 @@ class SignUpDriver extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 50),
               alignment: Alignment.center,
               child: Form(
-                key: signUpcontroler.formKey,
+                key: drivercontroler.formKey,
                 child: Column(
                   children: [
                     Text(
@@ -59,7 +60,7 @@ class SignUpDriver extends StatelessWidget {
                           child: TextFormField(
                             validator: (value) =>
                                 formValidation(value, 'username'),
-                            controller: signUpcontroler.fullname,
+                            controller: drivercontroler.fullname,
                             decoration: ThemeHelper().textInputDecoration(
                                 'Full Name'.tr, 'Enter your Full name'.tr),
                           ),
@@ -70,7 +71,7 @@ class SignUpDriver extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            controller: signUpcontroler.emailAddress,
+                            controller: drivercontroler.emailAddress,
                             validator: (value) =>
                                 formValidation(value, 'email'),
                             decoration: ThemeHelper().textInputDecoration(
@@ -83,7 +84,7 @@ class SignUpDriver extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            controller: signUpcontroler.phoneNumber,
+                            controller: drivercontroler.phoneNumber,
                             validator: (value) =>
                                 formValidation(value, 'phone'),
                             inputFormatters: [
@@ -99,7 +100,7 @@ class SignUpDriver extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            controller: signUpcontroler.password,
+                            controller: drivercontroler.password,
                             validator: (value) =>
                                 formValidation(value, 'password', 8, 30),
                             obscureText: true,
@@ -112,13 +113,13 @@ class SignUpDriver extends StatelessWidget {
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
                             obscureText: true,
-                            controller: signUpcontroler.rewritePassword,
+                            controller: drivercontroler.rewritePassword,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "this field is required".tr;
                               }
-                              if (signUpcontroler.password.text.trim() !=
-                                  signUpcontroler.rewritePassword.text.trim()) {
+                              if (drivercontroler.password.text.trim() !=
+                                  drivercontroler.rewritePassword.text.trim()) {
                                 return 'Passwords don\'t match';
                               }
                               return null;
@@ -146,7 +147,7 @@ class SignUpDriver extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            onPressed: () => signUpcontroler.signup(),
+                            onPressed: () => drivercontroler.driverSignup(),
                           ),
                         ),
                       ],
