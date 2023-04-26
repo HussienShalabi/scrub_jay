@@ -12,7 +12,6 @@ class FirebaseStorageApp {
               file,
             );
     final String fileUrl = await taskSnapshot.ref.getDownloadURL();
-
     return fileUrl;
   }
 }
