@@ -61,7 +61,7 @@ class SignUpDriver extends StatelessWidget {
                           child: TextFormField(
                             validator: (value) =>
                                 formValidation(value, 'username'),
-                            controller: drivercontroler.fullname,
+                            controller: drivercontroler.fullName,
                             decoration: ThemeHelper().textInputDecoration(
                                 'Full Name'.tr, 'Enter your Full name'.tr),
                           ),
@@ -134,21 +134,26 @@ class SignUpDriver extends StatelessWidget {
                         Container(
                           decoration:
                               ThemeHelper().buttonBoxDecoration(context),
-                          child: ElevatedButton(
-                            style: ThemeHelper().buttonStyle(),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                              child: Text(
-                                "Register".tr,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                          child: GetBuilder<DriverControllerImp>(
+                            init: DriverControllerImp(),
+                            builder: (controller) {
+                              return  controller.isLoading ? const Center(child: CircularProgressIndicator(),) : ElevatedButton(
+                                style: ThemeHelper().buttonStyle(),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                  child: Text(
+                                    "Register".tr,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            onPressed: () => drivercontroler.driverSignup(),
+                                onPressed: controller.isLoading ? () {} : () => drivercontroler.driverSignup(),
+                              );
+                            }
                           ),
                         ),
                       ],

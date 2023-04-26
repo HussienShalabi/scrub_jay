@@ -4,11 +4,12 @@ class Passenger extends User {
 Map<String, String>? location;
 int? numberOfPassenger;
 
-Passenger( {this.location, this.numberOfPassenger, super.fullname,  super.phoneNumber,  super.role});
+Passenger( {this.location, this.numberOfPassenger, super.fullname, super.emailAddress, super.phoneNumber,  super.role});
 
 Passenger.fromJson(Map<String, dynamic> json) {
   super.id = json['id'];
   super.fullname = json['fullName'];
+  super.emailAddress = json['emailAddress'];
   super.phoneNumber = json['phoneNumber'];
   super.role = json['role'];
   location = json['location'];
@@ -19,6 +20,7 @@ Map<String, dynamic> toJson() {
   final Map<String, dynamic> data =  Map<String, dynamic>();
   data['id'] =  super.id ;
   data['fullName'] =  super.fullname;
+  data['emailAddress'] = super.emailAddress;
   data['phoneNumber'] =  super.phoneNumber ;
   data['location'] = location;
   data['numberOfPassenger'] = numberOfPassenger;

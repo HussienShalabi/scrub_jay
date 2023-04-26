@@ -16,7 +16,7 @@ class FirebaseAuthApp {
 
     try {
       final UserCredential userCredential = await firebaseAuth
-          .createUserWithEmailAndPassword(email: 'example4@gmail.com', password: password);
+          .createUserWithEmailAndPassword(email: json['emailAddress'], password: password);
 
       Map<String, dynamic> userInformation = {
         'username': json['fullname'],
@@ -79,8 +79,7 @@ return userCredential.user!.uid;
     try {
       final UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-      // final UserCredential userCredential =
-      //     await firebaseAuth.signInWithPhoneNumber(phoneNumber);
+
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {
       getxSnackbar('error', error.code);

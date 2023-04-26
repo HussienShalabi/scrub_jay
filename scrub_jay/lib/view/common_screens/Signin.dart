@@ -1,40 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/signin_controller.dart';
+import 'package:scrub_jay/core/app_functions.dart';
 import 'package:scrub_jay/view/passenger/ChooseTrip.dart';
 import '../widgets/HeaderWidget.dart';
 import 'ForgotPassword.dart';
 import 'SignUpPassenger.dart';
 import 'theme_helper.dart';
 
-class Signin extends StatefulWidget {
+const double _headerHeight = 250;
+
+class Signin extends GetView<SignInControllerImp> {
   const Signin({Key? key}) : super(key: key);
 
-  @override
-  State<Signin> createState() => _SigninState();
-}
 
-class _SigninState extends State<Signin> {
-  final double _headerHeight = 250;
-  final Key _formKey = GlobalKey<FormState>();
-  int? x;
-
-  late TextEditingController _phoneTextController;
-  late TextEditingController _passTextController;
-
-  @override
-  void initState() {
-    super.initState();
-    _phoneTextController = TextEditingController();
-    _passTextController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _phoneTextController.dispose();
-    _passTextController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,25 +48,32 @@ class _SigninState extends State<Signin> {
                       ),
                       const SizedBox(height: 30),
                       Form(
-                          key: _formKey,
+                          key: controller.formKeySignIn,
                           child: Column(
                             children: [
                               Container(
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
-                                child: TextField(
+                                child: TextFormField(
+                                  validator: (value) => formValidation(value!, 'value'),
                                   keyboardType: TextInputType.emailAddress,
+                                  controller: controller.emailAddressSignin,
                                   decoration: ThemeHelper().textInputDecoration(
                                       "Email address".tr,
                                       "Enter your email address".tr),
+
                                 ),
+
                               ),
                               const SizedBox(height: 30.0),
                               Container(
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
-                                child: TextField(
+
+                                child: TextFormField(
                                   obscureText: true,
+                                  controller:  controller.passwordSignin,
+                                  validator: (value) => formValidation(value!, 'password'),
                                   decoration: ThemeHelper().textInputDecoration(
                                       'Password*'.tr, 'Enter your password'.tr),
                                 ),
@@ -111,22 +98,25 @@ class _SigninState extends State<Signin> {
                               Container(
                                 decoration:
                                     ThemeHelper().buttonBoxDecoration(context),
-                                child: ElevatedButton(
-                                  style: ThemeHelper().buttonStyle(),
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        40, 10, 40, 10),
-                                    child: Text(
-                                      'Sign In'.tr,
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Get.off( ChooseTrip());
-                                  },
+                                child: GetBuilder<SignInControllerImp>(
+                                  init: SignInControllerImp(),
+                                  builder: (signInController) {
+                                    return ElevatedButton(
+                                      style: ThemeHelper().buttonStyle(),
+                                      onPressed:signInController.isLoading ?  () {}: () => controller.signIn(),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            40, 10, 40, 10),
+                                        child: signInController.isLoading ? const Center(child: CircularProgressIndicator(),): Text(
+                                          'Sign In'.tr,
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    );
+                                  }
                                 ),
                               ),
                               Container(

@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/bindings.dart';
+import 'package:scrub_jay/core/app_midleware.dart';
+import 'package:scrub_jay/core/firebase_app_auth.dart';
+import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
+import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controller/locale/locale.dart';
@@ -15,7 +20,8 @@ SharedPreferences? sharepref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharepref = await SharedPreferences.getInstance();
-  Firebase.initializeApp();
+ await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -42,14 +48,15 @@ class MyApp extends StatelessWidget {
           ),
           locale: Get.deviceLocale,
           translations: Mylocale(),
+
           initialRoute: '/SplashScreen',
           initialBinding: Binding(),
-          routes: {
-            '/SplashScreen': (context) => const SplashScreen(
-              title: 'Scrub Jay',
-            ),
-            '/Signin': (context) => const Signin(),
-          },
+          getPages:[
+            GetPage(name: '/SplashScreen', page: () => const SplashScreen()),
+            GetPage(name: '/Signin', page: () => const Signin(), middlewares: [AppMiddleware()],),
+            GetPage(name: '/DriverMainScreen', page: () => const DriverMainScreen()),
+            GetPage(name: '/ChooseTrip', page: () =>  ChooseTrip()),
+          ],
         );
       },
 
