@@ -8,7 +8,6 @@ class Binding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => PassengerControllerImp(), fenix: true);
     Get.lazyPut(() => DriverControllerImp(), fenix: true);
-
     Get.lazyPut(() => SignInControllerImp(), fenix: true);
   }
 }

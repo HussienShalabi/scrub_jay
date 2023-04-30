@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controller/driver_controller.dart';
 import '../common_screens/EditPassword.dart';
 import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
@@ -142,7 +143,7 @@ class _DriverDrawerState extends State<DriverDrawer> {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.off(const Signin());
+                Get.find<DriverControllerImp>().driverSignout();
               },
             ),
           ],

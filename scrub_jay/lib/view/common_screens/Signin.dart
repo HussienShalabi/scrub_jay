@@ -11,13 +11,15 @@ import 'theme_helper.dart';
 
 const double _headerHeight = 250;
 
-class Signin extends GetView<SignInControllerImp> {
+class Signin extends StatelessWidget{
   const Signin({Key? key}) : super(key: key);
 
 
 
   @override
   Widget build(BuildContext context) {
+    final SignInControllerImp controller = Get.find<SignInControllerImp>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(

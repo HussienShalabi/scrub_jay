@@ -7,9 +7,10 @@ class FirebaseDatabaseApp {
 
   FirebaseDatabase initFirebaseDatabase() {
     return FirebaseDatabase.instance;
+
   }
 
-  Future<DatabaseReference> getDatabaseRefrence(String path) async {
+  Future<DatabaseReference> getDatabaseReference(String path) async {
     return FirebaseDatabase.instance.ref(path);
   }
 
@@ -29,7 +30,7 @@ class FirebaseDatabaseApp {
   // }
 
   Future<DataSnapshot> getData(String path, [String? child]) async {
-    final DatabaseReference ref = await getDatabaseRefrence(path);
+    final  ref = await getDatabaseReference(path);
     if (child != null) {
       return ref.child(child).get();
     }
@@ -37,12 +38,12 @@ class FirebaseDatabaseApp {
   }
 
   Future<void> addData(String path, Map<String, dynamic> data) async {
-    final DatabaseReference ref = await getDatabaseRefrence(path);
+    final DatabaseReference ref = await getDatabaseReference(path);
     await ref.set(data);
   }
 
   Future<void> updateData(String path, Map<String, dynamic> data) async {
-    final DatabaseReference ref = await getDatabaseRefrence(path);
+    final DatabaseReference ref = await getDatabaseReference(path);
     await ref.update(data);
   }
 }

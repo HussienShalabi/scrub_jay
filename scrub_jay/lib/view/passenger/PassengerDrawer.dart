@@ -1,17 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/passenger_controller.dart';
 import 'package:scrub_jay/view/common_screens/EditPassword.dart';
 import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
 
-class PassengerDrawer extends StatefulWidget {
+class PassengerDrawer extends StatelessWidget {
   const PassengerDrawer({super.key});
 
-  @override
-  State<PassengerDrawer> createState() => _PassengerDrawerState();
-}
-
-class _PassengerDrawerState extends State<PassengerDrawer> {
   final double _drawerIconSize = 18;
 
   final double _drawerFontSize = 17;
@@ -51,9 +49,6 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
                 child: Center(
                   child: Column(
                     children: const [
-                      CircleAvatar(
-                        radius: 40,
-                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -70,6 +65,12 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
                 ),
               ),
             ),
+
+
+
+
+
+
             ListTile(
               leading: Icon(Icons.person,
                   size: _drawerIconSize,
@@ -123,7 +124,8 @@ class _PassengerDrawerState extends State<PassengerDrawer> {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.off(const Signin());
+                Get.find<PassengerControllerImp>().passengerSignout();
+
               },
             ),
             const Divider(

@@ -40,7 +40,7 @@ class SplashControllerImp extends SplashController {
 
      await Future.delayed(const Duration(seconds: 2));
 
-       Get.off(() => const Signin());
+       Get.offNamed('/Signin');
   }
 
   @override

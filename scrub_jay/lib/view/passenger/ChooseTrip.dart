@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/view/passenger/PassengerDrawer.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
 import '../widgets/TripCard.dart';
@@ -77,7 +78,7 @@ class ChooseTrip extends StatelessWidget {
           )
         ],
       ),
-      drawer: const MyDrawer(),
+      drawer:  PassengerDrawer(),
       body: SingleChildScrollView(
         child: Stack(children: [
           SizedBox(

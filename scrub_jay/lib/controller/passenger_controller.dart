@@ -6,6 +6,8 @@ import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/passenger.dart';
 import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
 import 'package:scrub_jay/view/common_screens/SignUpPassenger.dart';
+import 'package:scrub_jay/view/common_screens/Signin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PassengerController extends GetxController {
   Future<void> passengerSignup();
@@ -20,7 +22,6 @@ class PassengerControllerImp extends PassengerController {
   final TextEditingController phoneNumber = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController rewritePassword = TextEditingController();
-
   final GlobalKey<FormState> formKeySignIn = GlobalKey<FormState>();
   final TextEditingController emailAddressSignin = TextEditingController();
   final TextEditingController passwordSignin = TextEditingController();
@@ -36,17 +37,20 @@ class PassengerControllerImp extends PassengerController {
       Passenger newPassenger = Passenger(
           fullname: fullName.text.trim(),
           emailAddress: emailAddress.text.trim(),
+          phoneNumber: phoneNumber.text.trim(),
           role: 2);
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
           .signup(2, newPassenger.toJson(), password.text);
 
-      final bool setData = await AppSharedPrefernces.appSharedPrefernces.setData('role', 2);
+      final bool setData = await AppSharedPrefernces.appSharedPrefernces.setData('role',2);
 
       if (uid != null && setData) {
         isLoading = false;
         update();
-        Get.offAll(ChooseTrip());
-      }else {
+
+        Get.offAll(() => ChooseTrip());
+      }
+      else {
         await FirebaseAuthApp.firebaseAuthApp.signout();
         isLoading = false;
         update();
@@ -57,4 +61,18 @@ class PassengerControllerImp extends PassengerController {
     isLoading = false;
     update();
   }
+  @override
+  Future passengerSignout() async {
+    await FirebaseAuthApp.firebaseAuthApp.signout(); // Sign out the user
+    await AppSharedPrefernces.appSharedPrefernces.deleteData('role');
+    Get.offAllNamed('/Signin'); // Navigate to the login page
+
+
+
+
+
+  }
+
+
+
 }

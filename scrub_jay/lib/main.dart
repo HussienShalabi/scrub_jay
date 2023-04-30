@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/bindings.dart';
 import 'package:scrub_jay/core/app_midleware.dart';
+import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
@@ -19,7 +20,7 @@ SharedPreferences? sharepref;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  sharepref = await SharedPreferences.getInstance();
+  await AppSharedPrefernces.appSharedPrefernces.initSharedPred();
  await Firebase.initializeApp();
 
   runApp(MyApp());

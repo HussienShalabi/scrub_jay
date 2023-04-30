@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/passenger_controller.dart';
 import '../admin/AdminMainScreen.dart';
 import '../common_screens/ForgotPassword.dart';
 import '../common_screens/ForgotPasswordVerification.dart';
@@ -10,14 +11,9 @@ import '../common_screens/SplashScreen.dart';
 import '../driver/DriverMainScreen.dart';
 
 
-class MyDrawer extends StatefulWidget {
+class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
-  @override
-  State<MyDrawer> createState() => _MyDrawerState();
-}
-
-class _MyDrawerState extends State<MyDrawer> {
   final double _drawerIconSize = 18;
 
   final double _drawerFontSize = 17;
@@ -254,10 +250,7 @@ class _MyDrawerState extends State<MyDrawer> {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Signin()),
-                );
+                Get.find<PassengerControllerImp>().passengerSignout();
               },
             ),
 

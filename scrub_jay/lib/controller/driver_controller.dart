@@ -5,6 +5,8 @@ import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/passenger.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/SignUpPassenger.dart';
+import 'package:scrub_jay/view/common_screens/Signin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/app_shared_preferences.dart';
 
@@ -15,7 +17,6 @@ abstract class DriverController extends GetxController {
 class DriverControllerImp extends DriverController {
   bool isLoading = false;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   final TextEditingController fullName = TextEditingController();
   final TextEditingController emailAddress = TextEditingController();
   final TextEditingController phoneNumber = TextEditingController();
@@ -54,4 +55,12 @@ class DriverControllerImp extends DriverController {
     isLoading = false;
     update();
     }
+  @override
+  Future driverSignout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // Clear all the shared preferences
+    await FirebaseAuthApp.firebaseAuthApp.signout(); // Sign out the user
+    Get.offAllNamed('/Signin'); // Navigate to the login page
+
+  }
 }

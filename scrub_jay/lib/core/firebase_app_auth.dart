@@ -1,10 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:scrub_jay/core/app_shared_preferences.dart';
+import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
+import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
+import '../view/Driver/DriverMainScreen.dart';
 import 'app_functions.dart';
 import 'firebase_database_app.dart';
 
 class FirebaseAuthApp {
   FirebaseAuthApp._();
   static FirebaseAuthApp firebaseAuthApp = FirebaseAuthApp._();
+
 
   // signup new user
   Future<String?> signup(
@@ -22,22 +29,10 @@ class FirebaseAuthApp {
         'username': json['fullname'],
         'phoneNumber': json['phoneNumber'],
         'email': ['email'],
+        'role': role,
       };
 
-      String? userType;
-
-      if(role == 0) {
-        userType = 'admins';
-      }
-      else if(role == 1) {
-        userType = 'drivers';
-      }
-      else {
-        userType = 'passengers';
-      }
-
-
-      await FirebaseDatabaseApp.firebaseDatabase.addData('users/$userType/${userCredential.user!.uid}', json);
+      await FirebaseDatabaseApp.firebaseDatabase.addData('users/${userCredential.user!.uid}', json);
 
 
       await firebaseAuth.verifyPhoneNumber(
@@ -75,13 +70,38 @@ return userCredential.user!.uid;
   // signin user
   Future<String?> signin(String email, String password) async {
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    // FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
     try {
       final UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
+       return userCredential.user!.uid;
+      // final UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      // AppSharedPrefernces.appSharedPrefernces.getDate('role') as int?;
+      // DocumentSnapshot userDoc = await _firestore.collection('users').doc('users/${userCredential.user!.uid}').get();
+      // final userData = userDoc.data()as Map<String, dynamic>?; // Navigate to the appropriate screen based on the user role
+      // if (userData != null) {
+      //   final role = userData['role'] as int?;
+      // if (role!=null){
+      // switch (role) {
+      //   case 0:
+      //   // Admin screen
+      //     Get.offAll(() => AdminMainScreen());
+      //     break;
+      //   case 1:
+      //   // Regular user screen
+      //     Get.offAll(() => DriverMainScreen());
+      //     break;
+      //   default:
+      //   // Unknown user role
+      //    Get.offAll(()=>ChooseTrip());
+      // }}
+      // else {}}
+      // return userCredential.user!.uid;
 
-      return userCredential.user!.uid;
-    } on FirebaseAuthException catch (error) {
+
+    }
+    on FirebaseAuthException catch (error) {
       getxSnackbar('error', error.code);
     }
 
@@ -91,6 +111,7 @@ return userCredential.user!.uid;
   // signout
   Future<void> signout() async {
     await FirebaseAuth.instance.signOut();
+
   }
 
   // current user
@@ -99,4 +120,7 @@ return userCredential.user!.uid;
 
     return currentUser;
   }
+
+
+
 }
