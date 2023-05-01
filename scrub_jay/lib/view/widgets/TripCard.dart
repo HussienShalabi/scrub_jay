@@ -10,7 +10,7 @@ class TripCard extends StatefulWidget {
   final int driverPhoneNumber;
   // final IconData trailing;
   final double BottomMargin;
-  final int availableSeats ;
+  final int availableSeats;
 
   TripCard({
     required this.leadingIcon,
@@ -25,36 +25,34 @@ class TripCard extends StatefulWidget {
 }
 
 class _TripCardState extends State<TripCard> {
-
   var selectedValue = 1;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.black45,
-      margin:  EdgeInsets.symmetric(vertical: 7),
+      margin: const EdgeInsets.symmetric(vertical: 7),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       elevation: 10,
-      child: Container(
+      child: SizedBox(
         child: ListTile(
           leading: Icon(
             widget.leadingIcon,
             color: Colors.white,
             size: 20.sp,
-
           ),
           title: Row(
             children: [
               Text(
                 "driver name: ".tr,
-                style:  TextStyle(
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.sp,
                 ),
               ),
               Text(
                 "${widget.driverName}",
-                style:  TextStyle(
+                style: TextStyle(
                   color: Colors.yellow.shade700,
                   fontSize: 18.sp,
                 ),
@@ -68,14 +66,14 @@ class _TripCardState extends State<TripCard> {
                 children: [
                   Text(
                     "phone: ".tr,
-                    style:  TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 18.sp,
                     ),
                   ),
                   Text(
                     "${widget.driverPhoneNumber}",
-                    style:  TextStyle(
+                    style: TextStyle(
                       color: Colors.yellow.shade700,
                       fontSize: 18.sp,
                     ),
@@ -86,14 +84,14 @@ class _TripCardState extends State<TripCard> {
                 children: [
                   Text(
                     "available seats: ".tr,
-                    style:  TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 18.sp,
                     ),
                   ),
                   Text(
                     "${widget.availableSeats} ",
-                    style:  TextStyle(
+                    style: TextStyle(
                       color: Colors.yellow.shade700,
                       fontSize: 18.sp,
                     ),

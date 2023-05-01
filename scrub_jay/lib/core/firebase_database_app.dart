@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:scrub_jay/core/app_functions.dart';
 
 class FirebaseDatabaseApp {
   FirebaseDatabaseApp._();
@@ -7,7 +8,6 @@ class FirebaseDatabaseApp {
 
   FirebaseDatabase initFirebaseDatabase() {
     return FirebaseDatabase.instance;
-
   }
 
   Future<DatabaseReference> getDatabaseReference(String path) async {
@@ -30,16 +30,23 @@ class FirebaseDatabaseApp {
   // }
 
   Future<DataSnapshot> getData(String path, [String? child]) async {
-    final  ref = await getDatabaseReference(path);
+    final ref = await getDatabaseReference(path);
     if (child != null) {
       return ref.child(child).get();
     }
     return ref.get();
   }
 
-  Future<void> addData(String path, Map<String, dynamic> data) async {
-    final DatabaseReference ref = await getDatabaseReference(path);
-    await ref.set(data);
+  Future<bool> addData(String path, Map<String, dynamic> data) async {
+    try {
+      final DatabaseReference ref = await getDatabaseReference(path);
+      await ref.set(data);
+
+      return true;
+    } catch (e) {
+      getxSnackbar('Error', 'An error occurred');
+      return false;
+    }
   }
 
   Future<void> updateData(String path, Map<String, dynamic> data) async {

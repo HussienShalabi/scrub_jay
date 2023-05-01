@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/signin_controller.dart';
 import 'package:scrub_jay/core/app_functions.dart';
-import 'package:scrub_jay/view/passenger/ChooseTrip.dart';
+import 'package:scrub_jay/view/passenger/chooseTrip.dart';
 import '../widgets/HeaderWidget.dart';
 import 'ForgotPassword.dart';
 import 'SignUpPassenger.dart';
@@ -11,10 +11,8 @@ import 'theme_helper.dart';
 
 const double _headerHeight = 250;
 
-class Signin extends StatelessWidget{
+class Signin extends StatelessWidget {
   const Signin({Key? key}) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,25 +55,24 @@ class Signin extends StatelessWidget{
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
                                 child: TextFormField(
-                                  validator: (value) => formValidation(value!, 'value'),
+                                  validator: (value) =>
+                                      formValidation(value!, 'value'),
                                   keyboardType: TextInputType.emailAddress,
                                   controller: controller.emailAddressSignin,
                                   decoration: ThemeHelper().textInputDecoration(
                                       "Email address".tr,
                                       "Enter your email address".tr),
-
                                 ),
-
                               ),
                               const SizedBox(height: 30.0),
                               Container(
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
-
                                 child: TextFormField(
                                   obscureText: true,
-                                  controller:  controller.passwordSignin,
-                                  validator: (value) => formValidation(value!, 'password'),
+                                  controller: controller.passwordSignin,
+                                  validator: (value) =>
+                                      formValidation(value!, 'password'),
                                   decoration: ThemeHelper().textInputDecoration(
                                       'Password*'.tr, 'Enter your password'.tr),
                                 ),
@@ -101,25 +98,32 @@ class Signin extends StatelessWidget{
                                 decoration:
                                     ThemeHelper().buttonBoxDecoration(context),
                                 child: GetBuilder<SignInControllerImp>(
-                                  init: SignInControllerImp(),
-                                  builder: (signInController) {
-                                    return ElevatedButton(
-                                      style: ThemeHelper().buttonStyle(),
-                                      onPressed:signInController.isLoading ?  () {}: () => controller.signIn(),
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            40, 10, 40, 10),
-                                        child: signInController.isLoading ? const Center(child: CircularProgressIndicator(),): Text(
-                                          'Sign In'.tr,
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
+                                    init: SignInControllerImp(),
+                                    builder: (signInController) {
+                                      return ElevatedButton(
+                                        style: ThemeHelper().buttonStyle(),
+                                        onPressed: signInController.isLoading
+                                            ? () {}
+                                            : () => controller.signIn(),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              40, 10, 40, 10),
+                                          child: signInController.isLoading
+                                              ? const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                )
+                                              : Text(
+                                                  'Sign In'.tr,
+                                                  style: const TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                ),
                                         ),
-                                      ),
-                                    );
-                                  }
-                                ),
+                                      );
+                                    }),
                               ),
                               Container(
                                 margin:
