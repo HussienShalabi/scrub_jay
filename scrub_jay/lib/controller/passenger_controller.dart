@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/app_shared_preferences.dart';
@@ -27,10 +28,12 @@ class PassengerControllerImp extends PassengerController {
 
   @override
   Future<void> orderTrip() async {
+    final User? user = await FirebaseAuthApp.firebaseAuthApp.currentUser();
+
     Trip trip = Trip.fromJson({
-      'passengerId': 'uid',
+      'passengerId': user!.uid,
       'driverId': 'uid',
-      'numberOfPassenger': 5,
+      'numOfPassengers': 5,
       'date': DateTime.now().toString(),
     });
 

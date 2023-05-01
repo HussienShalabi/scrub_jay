@@ -12,18 +12,18 @@ class FirebaseAuthApp {
   FirebaseAuthApp._();
   static FirebaseAuthApp firebaseAuthApp = FirebaseAuthApp._();
 
-
   // signup new user
   Future<String?> signup(
-      int role,
-      Map<String, dynamic> json,
-      String password,
+    int role,
+    Map<String, dynamic> json,
+    String password,
   ) async {
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
     try {
-      final UserCredential userCredential = await firebaseAuth
-          .createUserWithEmailAndPassword(email: json['emailAddress'], password: password);
+      final UserCredential userCredential =
+          await firebaseAuth.createUserWithEmailAndPassword(
+              email: json['emailAddress'], password: password);
 
       Map<String, dynamic> userInformation = {
         'username': json['fullname'],
@@ -32,8 +32,8 @@ class FirebaseAuthApp {
         'role': role,
       };
 
-      await FirebaseDatabaseApp.firebaseDatabase.addData('users/${userCredential.user!.uid}', json);
-
+      await FirebaseDatabaseApp.firebaseDatabase
+          .addDataWithKey('users/${userCredential.user!.uid}', json);
 
       await firebaseAuth.verifyPhoneNumber(
         phoneNumber: '+97${json['phoneNumber']}',
@@ -45,7 +45,6 @@ class FirebaseAuthApp {
             // print('The provided phone number is not valid.');
           }
         },
-
         codeSent: (String verificationId, int? forceResendingToken) async {
           String smsCode = '123456';
 
@@ -60,7 +59,7 @@ class FirebaseAuthApp {
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
-return userCredential.user!.uid;
+      return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {
       getxSnackbar('error', error.code);
     }
@@ -75,7 +74,7 @@ return userCredential.user!.uid;
     try {
       final UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-       return userCredential.user!.uid;
+      return userCredential.user!.uid;
       // final UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       // AppSharedPrefernces.appSharedPrefernces.getDate('role') as int?;
       // DocumentSnapshot userDoc = await _firestore.collection('users').doc('users/${userCredential.user!.uid}').get();
@@ -98,10 +97,7 @@ return userCredential.user!.uid;
       // }}
       // else {}}
       // return userCredential.user!.uid;
-
-
-    }
-    on FirebaseAuthException catch (error) {
+    } on FirebaseAuthException catch (error) {
       getxSnackbar('error', error.code);
     }
 
@@ -111,7 +107,6 @@ return userCredential.user!.uid;
   // signout
   Future<void> signout() async {
     await FirebaseAuth.instance.signOut();
-
   }
 
   // current user
@@ -120,7 +115,4 @@ return userCredential.user!.uid;
 
     return currentUser;
   }
-
-
-
 }

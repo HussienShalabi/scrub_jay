@@ -19,15 +19,15 @@ class Trip {
     Map<String, dynamic> json = {};
 
     json['id'] = id;
-    json['passengerId'] = json['passengerId'];
-    json['driverId'] = json['driverId'];
-    json['numOfPassengers'] = json['numOfPassengers'];
-    json['date'] = json['date'].toString();
+    json['passengerId'] = passengerId;
+    json['driverId'] = driverId;
+    json['numOfPassengers'] = numOfPassengers;
+    json['date'] = date.toString();
 
     return json;
   }
 
   static Future<bool> addTrip(Trip trip) async =>
       await FirebaseDatabaseApp.firebaseDatabase
-          .addData('trips', trip.toJson());
+          .addDataWithoutKey('trips', trip.toJson());
 }

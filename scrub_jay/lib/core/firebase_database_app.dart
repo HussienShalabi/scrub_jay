@@ -37,10 +37,22 @@ class FirebaseDatabaseApp {
     return ref.get();
   }
 
-  Future<bool> addData(String path, Map<String, dynamic> data) async {
+  Future<bool> addDataWithKey(String path, Map<String, dynamic> data) async {
     try {
       final DatabaseReference ref = await getDatabaseReference(path);
       await ref.set(data);
+
+      return true;
+    } catch (e) {
+      getxSnackbar('Error', 'An error occurred');
+      return false;
+    }
+  }
+
+  Future<bool> addDataWithoutKey(String path, Map<String, dynamic> data) async {
+    try {
+      final DatabaseReference ref = await getDatabaseReference(path);
+      await ref.push().set(data);
 
       return true;
     } catch (e) {
