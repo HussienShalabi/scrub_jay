@@ -13,6 +13,7 @@ import 'package:scrub_jay/model/passenger.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
 import 'package:scrub_jay/view/common_screens/SignUpPassenger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/app_shared_preferences.dart';
 import '../view/admin/AdminMainScreen.dart';
@@ -47,17 +48,19 @@ class SignInControllerImp extends SignInController {
         // Get user data from Firestore
         // DocumentSnapshot userDoc = await _usersCollection.doc(uid).get();
         // Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
-        Map<String, dynamic> userData = FirebaseDatabaseApp.firebaseDatabase.getData('users/uid') as Map<String, dynamic> ;
+        DataSnapshot userData = await FirebaseDatabaseApp.firebaseDatabase.getData('users/$uid')  ;
+        Map data = json.decode(json.encode(userData.value ));
+        print(data);
 
         // Store user role number in Shared Preferences
-        AppSharedPrefernces.appSharedPrefernces.initSharedPred();
-     final bool setData = await AppSharedPrefernces.appSharedPrefernces.setData('role', userData['role']);
+     final bool setData = await AppSharedPrefernces.appSharedPrefernces.setData('role', data['role']);
+     // print(setData);
 
 
         // Navigate to appropriate screen based on user role number
-        if ( setData && userData['role'] == 1) {
+        if ( setData && data['role']== 1) {
           Get.offAll(()=>DriverMainScreen());
-        } else if ( setData && userData['role']==2){
+        } else if ( setData && data['role']==2){
           Get.offAll(()=>ChooseTrip());
         }
 
