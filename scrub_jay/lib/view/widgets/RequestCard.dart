@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class RequestCard extends StatefulWidget {
@@ -6,19 +7,17 @@ class RequestCard extends StatefulWidget {
   final String passengerName;
   final int passengerPhoneNumber;
   final int passengerCount;
-  final IconData trailing;
   final String passengerLocation;
 
   final double BottomMargin;
 
   const RequestCard({
-    required this.leadingIcon,
+    this.leadingIcon = Icons.person,
     required this.passengerName,
     required this.passengerCount,
     required this.passengerPhoneNumber,
     required this.passengerLocation,
     this.BottomMargin = 0,
-    required this.trailing,
   });
 
   @override
@@ -28,106 +27,95 @@ class RequestCard extends StatefulWidget {
 class _RequestCardState extends State<RequestCard> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0),
-      child: Card(
-        color: Colors.black54,
-        margin: const EdgeInsets.all(3),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-        elevation: 10,
-        child: ListTile(
-          minLeadingWidth: 10,
-          leading: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              widget.leadingIcon,
-              color: Colors.red,
+    return Card(
+      color: Colors.black54,
+      margin: const EdgeInsets.symmetric(vertical: 5 , horizontal: 10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      // margin: const EdgeInsets.all(3),
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      elevation: 10,
+      child: ListTile(
+        leading: Icon(
+            widget.leadingIcon,
+            color: Colors.white,
+            size: 30,
+        ),
+        title: Row(
+          children: [
+            Text(
+              "name: ".tr,
+              style:  TextStyle(
+                color: Colors.white,
+                fontSize: 18.sp,
+              ),
             ),
-          ),
-          title: Row(
-            children: [
-              Text(
-                "name: ".tr,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
+            Text(
+              widget.passengerName,
+              style:  TextStyle(
+                color: Colors.white,
+                fontSize: 18.sp,
               ),
-              Text(
-                widget.passengerName,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-              ),
-            ],
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "phone: ".tr,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Text(
-                    "${widget.passengerPhoneNumber}",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "seats: ".tr,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Text(
-                    "${widget.passengerCount} ",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Location: ".tr,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Text(
-                    "${widget.passengerLocation} ",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          trailing: IconButton(
-            onPressed: () => {} ,
-            icon: Icon(
-              widget.trailing,
-              color: Colors.green,
             ),
-          ),
+          ],
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Text(
+                  "phone: ".tr,
+                  style:  TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                  ),
+                ),
+                Text(
+                  "${widget.passengerPhoneNumber}",
+                  style:  TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  "seats: ".tr,
+                  style:  TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                  ),
+                ),
+                Text(
+                  "${widget.passengerCount} ",
+                  style:  TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  "Location: ".tr,
+                  style:  TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                  ),
+                ),
+                Text(
+                  "${widget.passengerLocation} ",
+                  style:  TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

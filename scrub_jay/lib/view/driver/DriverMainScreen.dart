@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:scrub_jay/view/widgets/myDrawer.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
 import 'DriverDrawer.dart';
@@ -7,16 +8,9 @@ import 'MakeATrip.dart';
 import '../Passenger/ChooseTrip.dart';
 import 'ShowTurn.dart';
 
-class DriverMainScreen extends StatefulWidget {
+class DriverMainScreen extends StatelessWidget {
   const DriverMainScreen({super.key});
 
-  @override
-  State<StatefulWidget> createState() {
-    return _DriverMainScreenState();
-  }
-}
-
-class _DriverMainScreenState extends State<DriverMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +71,7 @@ class _DriverMainScreenState extends State<DriverMainScreen> {
             )
           ],
         ),
-        drawer: const DriverDrawer(),
+        drawer:  DriverDrawer(),
         body: SingleChildScrollView(
           child: Stack(
             children: [

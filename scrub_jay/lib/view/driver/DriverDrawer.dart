@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/view/driver/DriverMap.dart';
 import '../../controller/driver_controller.dart';
 import '../common_screens/EditPassword.dart';
 import '../common_screens/Signin.dart';
@@ -84,6 +85,21 @@ class _DriverDrawerState extends State<DriverDrawer> {
               ),
               onTap: () {},
             ),
+            ListTile(
+              leading: Icon(Icons.person,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).colorScheme.secondary),
+              title: Text(
+                'Driver Map'.tr,
+                style: TextStyle(
+                    fontSize: _drawerFontSize,
+                    color: Theme.of(context).colorScheme.secondary),
+              ),
+              onTap: () {
+                Get.to(const DriverMap());
+              },
+            ),
+
             Divider(
               color: Theme.of(context).primaryColor,
               height: 1,
@@ -127,7 +143,7 @@ class _DriverDrawerState extends State<DriverDrawer> {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.to(chooseLang());
+                Get.to(const chooseLang());
               },
             ),
             ListTile(

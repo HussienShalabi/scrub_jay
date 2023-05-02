@@ -27,7 +27,7 @@ class ChooseTrip extends StatelessWidget {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.yellow.shade700,
         onPressed: () => passengerControllerImp.orderTrip(),
         child: const Icon(Icons.add),
       ),

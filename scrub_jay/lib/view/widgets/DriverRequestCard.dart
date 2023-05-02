@@ -10,7 +10,7 @@ class DriverRequestCard extends StatefulWidget {
   final double BottomMargin;
 
   const DriverRequestCard({
-    required this.leadingIcon,
+    this.leadingIcon =  Icons.person ,
     required this.title,
     required this.driverPhoneNumber,
     required this.trailing,
@@ -36,10 +36,10 @@ class _DriverRequestCardState extends State<DriverRequestCard> {
         ),
         title: Text(
           widget.title,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 20.sp,
+            fontSize: 15,
             // fontFamily: ('Caveat'),
           ),
         ),

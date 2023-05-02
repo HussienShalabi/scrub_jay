@@ -1,20 +1,14 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:scrub_jay/view/driver/DriverMap.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
 import '../widgets/RequestCard.dart';
 import 'DriverDrawer.dart';
 
-class MakeATrip extends StatefulWidget {
+class MakeATrip extends StatelessWidget {
   const MakeATrip({super.key});
 
-  @override
-  State<StatefulWidget> createState() {
-    return _MakeATripState();
-  }
-}
-
-class _MakeATripState extends State<MakeATrip> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,12 +95,11 @@ class _MakeATripState extends State<MakeATrip> {
                             itemCount: 4,
                             shrinkWrap: true,
                             itemBuilder: (context, index) => const RequestCard(
-                                  leadingIcon: Icons.clear,
                                   passengerName: 'Abu al-tayeb',
                                   passengerCount: 2,
                                   passengerPhoneNumber: 059954,
-                                  passengerLocation: 'behind khaledyah ',
-                                  trailing: Icons.check,
+                                  passengerLocation: 'khaledyah ',
+                                 // trailing: Icons.check,
                                 )),
                       ],
                     ),
@@ -130,7 +123,7 @@ class _MakeATripState extends State<MakeATrip> {
                   ),
                   onPressed: () {
                     //After successful login we will redirect to profile page.
-                    Get.to(const MakeATrip());
+                    Get.to(const DriverMap());
                   },
                 ),
               ),
