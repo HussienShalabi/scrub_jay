@@ -7,6 +7,7 @@ import 'package:scrub_jay/bindings.dart';
 import 'package:scrub_jay/core/app_midleware.dart';
 import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
+import 'package:scrub_jay/firebase_options.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +22,9 @@ SharedPreferences? sharepref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppSharedPrefernces.appSharedPrefernces.initSharedPred();
- await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(MyApp());
 }
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
     Get.put(MyLocaleController());
     return ScreenUtilInit(
       designSize: const Size(360, 690),
-      builder: (context , child) {
+      builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Scrub_Jay',
@@ -49,19 +52,22 @@ class MyApp extends StatelessWidget {
           ),
           locale: Get.deviceLocale,
           translations: Mylocale(),
-
           initialRoute: '/SplashScreen',
           initialBinding: Binding(),
-          getPages:[
+          getPages: [
             GetPage(name: '/SplashScreen', page: () => const SplashScreen()),
-            GetPage(name: '/Signin', page: () => const Signin(), middlewares: [AppMiddleware()],),
-            GetPage(name: '/DriverMainScreen', page: () => const DriverMainScreen()),
-            GetPage(name: '/ChooseTrip', page: () =>  ChooseTrip()),
+            GetPage(
+              name: '/Signin',
+              page: () => const Signin(),
+              middlewares: [AppMiddleware()],
+            ),
+            GetPage(
+                name: '/DriverMainScreen',
+                page: () => const DriverMainScreen()),
+            GetPage(name: '/ChooseTrip', page: () => ChooseTrip()),
           ],
         );
       },
-
     );
   }
 }
-

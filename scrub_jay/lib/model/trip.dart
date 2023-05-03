@@ -1,28 +1,29 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:scrub_jay/core/firebase_database_app.dart';
 
 class Trip {
   String? id;
-  String? passengerId;
+  String? phone;
   String? driverId;
-  int? numOfPassengers;
-  DateTime? date;
+  String? driverName;
+  List? passengers;
 
   Trip.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    passengerId = json['passengerId'];
+    phone = json['phone'];
     driverId = json['driverId'];
-    numOfPassengers = json['numOfPassengers'];
-    date = DateTime.tryParse(json['date']);
+    passengers = json['passengers'];
+    driverName = json['driverName'];
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
 
     json['id'] = id;
-    json['passengerId'] = passengerId;
+    json['phone'] = phone;
     json['driverId'] = driverId;
-    json['numOfPassengers'] = numOfPassengers;
-    json['date'] = date.toString();
+    json['passengers'] = passengers;
+    json['driverName'] = driverName;
 
     return json;
   }
@@ -30,4 +31,7 @@ class Trip {
   static Future<bool> addTrip(Trip trip) async =>
       await FirebaseDatabaseApp.firebaseDatabase
           .addDataWithoutKey('trips', trip.toJson());
+
+  static Future<DataSnapshot> trips() async =>
+      await FirebaseDatabaseApp.firebaseDatabase.getData('trips');
 }

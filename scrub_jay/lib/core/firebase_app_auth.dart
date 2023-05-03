@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -74,6 +76,7 @@ class FirebaseAuthApp {
     try {
       final UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
+
       return userCredential.user!.uid;
       // final UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       // AppSharedPrefernces.appSharedPrefernces.getDate('role') as int?;

@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 
 import '../common_screens/theme_helper.dart';
 
-class TripCard extends StatefulWidget {
+class TripCard extends StatelessWidget {
   final IconData leadingIcon;
   final String driverName;
-  final int driverPhoneNumber;
+  final String driverPhoneNumber;
   // final IconData trailing;
-  final double BottomMargin;
+  final double bottomMargin;
   final int availableSeats;
 
   TripCard({
@@ -17,14 +17,9 @@ class TripCard extends StatefulWidget {
     required this.driverName,
     required this.availableSeats,
     required this.driverPhoneNumber,
-    this.BottomMargin = 0,
+    this.bottomMargin = 0,
   });
 
-  @override
-  State<TripCard> createState() => _TripCardState();
-}
-
-class _TripCardState extends State<TripCard> {
   var selectedValue = 1;
 
   @override
@@ -37,7 +32,7 @@ class _TripCardState extends State<TripCard> {
       child: SizedBox(
         child: ListTile(
           leading: Icon(
-            widget.leadingIcon,
+            leadingIcon,
             color: Colors.white,
             size: 20.sp,
           ),
@@ -51,7 +46,7 @@ class _TripCardState extends State<TripCard> {
                 ),
               ),
               Text(
-                "${widget.driverName}",
+                "$driverName",
                 style: TextStyle(
                   color: Colors.yellow.shade700,
                   fontSize: 18.sp,
@@ -72,7 +67,7 @@ class _TripCardState extends State<TripCard> {
                     ),
                   ),
                   Text(
-                    "${widget.driverPhoneNumber}",
+                    driverPhoneNumber,
                     style: TextStyle(
                       color: Colors.yellow.shade700,
                       fontSize: 18.sp,
@@ -90,7 +85,7 @@ class _TripCardState extends State<TripCard> {
                     ),
                   ),
                   Text(
-                    "${widget.availableSeats} ",
+                    "$availableSeats ",
                     style: TextStyle(
                       color: Colors.yellow.shade700,
                       fontSize: 18.sp,
