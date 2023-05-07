@@ -9,11 +9,6 @@ import '../widgets/tripCard.dart';
 import '../widgets/myDrawer.dart';
 
 class ChooseTrip extends StatelessWidget {
-  // final List<int> options =
-  //     [1, 2, 3, 4].obs; // Create a GetX observable list of integers
-
-  // final RxInt selectedOption =
-  //     1.obs; // Create a GetX observable integer and set it to the first option
 
   ChooseTrip({super.key});
 
@@ -28,7 +23,76 @@ class ChooseTrip extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.yellow.shade700,
-        onPressed: () => passengerControllerImp.orderTrip(),
+        onPressed: () {
+          Get.defaultDialog(
+              title: "booking",
+              content: SingleChildScrollView(
+                  child: Column(
+                children: [
+
+                  const SizedBox(width: 15),
+                  DropdownButtonFormField<int>(
+                    decoration: ThemeHelper()
+                        .textInputDecoration(
+                        'Number of passengers'.tr,
+                        ),
+                    items: [1, 2, 3, 4].map((passenger) {
+                      return DropdownMenuItem<int>(
+                        value: passenger,
+                        child: Text('$passenger'),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+
+                    },
+                  ),
+
+                  const SizedBox(height: 10),
+
+
+                  GetBuilder<PassengerControllerImp>(
+                    builder: (controller) => Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const SizedBox(
+                          child: Text('Your location:',style: TextStyle(fontWeight: FontWeight.bold , )),
+                        ),
+                        SizedBox(
+                          height: 40,
+                          child: RadioListTile(
+                            title: const Text('Current location'),
+                            value: 0,
+                            groupValue:controller.selectedValue.value,
+                            onChanged: (value) {
+                              controller.updateSelectedValue(value!);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                          child: RadioListTile(
+                            title: const Text('Choose from map'),
+                            value: 1,
+                            groupValue: controller.selectedValue.value,
+                            onChanged: (value) {
+                              controller.updateSelectedValue(value!);
+
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20,),
+
+
+
+
+                ],
+              )),
+              textConfirm: "book now");
+          passengerControllerImp.orderTrip();
+        },
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(

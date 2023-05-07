@@ -120,6 +120,12 @@ class PassengerControllerImp extends PassengerController {
     Get.offAllNamed('/Signin'); // Navigate to the login page
   }
 
+  RxInt selectedValue = RxInt(0);
+  void updateSelectedValue(int value) {
+    selectedValue.value = value;
+    update();
+  }
+
   @override
   void onInit() {
     super.onInit();

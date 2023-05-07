@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/passenger_controller.dart';
 import 'package:scrub_jay/view/common_screens/EditPassword.dart';
+import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
 import 'package:scrub_jay/view/passenger/PassengerMap.dart';
 import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
@@ -51,7 +52,7 @@ class PassengerDrawer extends StatelessWidget {
                   child: Column(
                     children: const [
                       SizedBox(
-                        height: 10,
+                        height: 50,
                       ),
                       Text(
                         'user name',
@@ -72,30 +73,46 @@ class PassengerDrawer extends StatelessWidget {
 
 
 
+            // ListTile(
+            //   leading: Icon(Icons.person,
+            //       size: _drawerIconSize,
+            //       color: Theme.of(context).colorScheme.secondary),
+            //   title: Text(
+            //     'Profile Page'.tr,
+            //     style: TextStyle(
+            //         fontSize: _drawerFontSize,
+            //         color: Theme.of(context).colorScheme.secondary),
+            //   ),
+            //   onTap: () {},
+            // ),
+            // ListTile(
+            //   leading: Icon(Icons.lock_person_rounded,
+            //       size: _drawerIconSize,
+            //       color: Theme.of(context).colorScheme.secondary),
+            //   title: Text(
+            //     'Edit password'.tr,
+            //     style: TextStyle(
+            //         fontSize: _drawerFontSize,
+            //         color: Theme.of(context).colorScheme.secondary),
+            //   ),
+            //   onTap: () {
+            //     Get.to( EditPassword());
+            //   },
+            // ),
+
+
             ListTile(
-              leading: Icon(Icons.person,
+              leading: Icon(Icons.settings,
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
               title: Text(
-                'Profile Page'.tr,
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).colorScheme.secondary),
-              ),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.lock_person_rounded,
-                  size: _drawerIconSize,
-                  color: Theme.of(context).colorScheme.secondary),
-              title: Text(
-                'Edit password'.tr,
+                'Account settings'.tr,
                 style: TextStyle(
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.to(const EditPassword());
+                Get.to(SettingsScreen());
               },
             ),
             ListTile(
@@ -114,6 +131,23 @@ class PassengerDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(
+                Icons.map,
+                size: _drawerIconSize,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              title: Text(
+                ' Passenger Map'.tr,
+                style: TextStyle(
+                    fontSize: _drawerFontSize,
+                    color: Theme.of(context).colorScheme.secondary),
+              ),
+              onTap: () {
+                Get.to(const PassengerMap());
+
+              },
+            ),
+            ListTile(
+              leading: Icon(
                 Icons.logout_rounded,
                 size: _drawerIconSize,
                 color: Theme.of(context).colorScheme.secondary,
@@ -128,27 +162,6 @@ class PassengerDrawer extends StatelessWidget {
                 Get.find<PassengerControllerImp>().passengerSignout();
 
               },
-            ),
-            const SizedBox(height: 20),
-            ListTile(
-              leading: Icon(
-                Icons.logout_rounded,
-                size: _drawerIconSize,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-              title: Text(
-                'Map Passenger'.tr,
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).colorScheme.secondary),
-              ),
-              onTap: () {
-                Get.to(const PassengerMap());
-
-              },
-            ),
-            const Divider(
-              height: 1,
             ),
           ],
         ),
