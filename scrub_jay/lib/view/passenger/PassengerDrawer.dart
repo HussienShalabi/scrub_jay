@@ -95,7 +95,7 @@ class PassengerDrawer extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.to(const EditPassword());
+                Get.to( EditPassword());
               },
             ),
             ListTile(
