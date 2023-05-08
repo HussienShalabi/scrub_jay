@@ -7,7 +7,7 @@ import 'package:scrub_jay/core/app_midleware.dart';
 import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/firebase_options.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
-import '../view/passenger/choose_trip.dart';
+import 'package:scrub_jay/view/passenger/choose_trip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controller/locale/locale.dart';
