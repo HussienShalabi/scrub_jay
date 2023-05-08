@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:scrub_jay/view/admin/DriversList.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/headerWidget.dart';
 import 'AdminDrawer.dart';
@@ -74,10 +72,9 @@ class AddAdmin extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            const SizedBox(
               height: 100,
-              child: const HeaderWidget(
-                  100, false, Icons.person_add_alt_1_rounded),
+              child: HeaderWidget(100, false, Icons.person_add_alt_1_rounded),
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(25, 0, 25, 10),

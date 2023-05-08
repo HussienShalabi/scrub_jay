@@ -3,26 +3,12 @@ import 'package:get/get.dart';
 import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
-class EditPassword extends StatefulWidget {
-  const EditPassword({Key? key}) : super(key: key);
+class EditPassword extends StatelessWidget {
+   EditPassword({Key? key}) : super(key: key);
 
-  @override
-  State<EditPassword> createState() => _EditPasswordState();
-}
-
-class _EditPasswordState extends State<EditPassword> {
   final double _headerHeight = 250;
+
   final Key _formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

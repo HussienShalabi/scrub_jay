@@ -1,17 +1,20 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
+import 'package:scrub_jay/model/order.dart';
 import 'package:scrub_jay/model/user.dart' as user;
 import 'package:scrub_jay/model/passenger.dart';
 import 'package:scrub_jay/model/trip.dart';
-import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
-import '../core/app_permissions.dart';
+import '../view/passenger/choose_trip.dart';
+import '../model/map.dart' as map;
 
 abstract class PassengerController extends GetxController {
   Future<void> passengerSignup();
@@ -21,8 +24,6 @@ abstract class PassengerController extends GetxController {
 }
 
 class PassengerControllerImp extends PassengerController {
-  bool isLoading = false;
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController fullName = TextEditingController();
   final TextEditingController emailAddress = TextEditingController();
@@ -33,11 +34,14 @@ class PassengerControllerImp extends PassengerController {
   final TextEditingController emailAddressSignin = TextEditingController();
   final TextEditingController passwordSignin = TextEditingController();
 
+  bool isLoading = false;
+  int numberOfPassengers = 1;
   List<Trip> trips = [];
+  LatLng? currentLocation;
 
   @override
   Future<void> getTrips() async {
-    await Trip.trips().then(
+    await Trip.getTrips().then(
       (value) async {
         for (DataSnapshot child in value.children) {
           final Map<String, dynamic> trip =
@@ -46,6 +50,9 @@ class PassengerControllerImp extends PassengerController {
           final DataSnapshot dataSnapshot =
               await user.User.getUser(trip['driverId']);
 
+          log(dataSnapshot.value.toString());
+
+          trip['id'] = child.key;
           trip['driverName'] =
               (dataSnapshot.value as Map<dynamic, dynamic>)['fullName'];
 
@@ -61,20 +68,32 @@ class PassengerControllerImp extends PassengerController {
   Future<void> orderTrip() async {
     final User? user = await FirebaseAuthApp.firebaseAuthApp.currentUser();
 
-    final Position position = await determinePosition();
+    if (currentLocation == null) {
+      await map.Map.getCurrentLocation().then(
+          (value) => currentLocation = LatLng(value.latitude, value.longitude));
+    }
 
-    Trip trip = Trip.fromJson({
+    Order order = Order.fromJson({
       'passengerId': user!.uid,
-      'driverId': 'uid',
-      'numOfPassengers': 5,
-      'date': DateTime.now().toString(),
       'location': {
-        'longitude': position.longitude,
-        'latitude': position.latitude,
+        'longitude': currentLocation!.longitude,
+        'latitude': currentLocation!.latitude,
       },
+      'numOfPassengers': numberOfPassengers,
     });
 
-    await Trip.addTrip(trip);
+    // Trip trip = Trip.fromJson({
+    //   'passengerId': user!.uid,
+    //   'driverId': 'uid',
+    //   'numOfPassengers': numberOfPassengers,
+    //   'date': DateTime.now().toString(),
+    //   'location': {
+    //     'longitude': currentLocation!.longitude,
+    //     'latitude': currentLocation!.latitude,
+    //   },
+    // });
+
+    await Order.addOrder(order);
   }
 
   @override
@@ -118,6 +137,18 @@ class PassengerControllerImp extends PassengerController {
     await FirebaseAuthApp.firebaseAuthApp.signout(); // Sign out the user
     await AppSharedPrefernces.appSharedPrefernces.deleteData('role');
     Get.offAllNamed('/Signin'); // Navigate to the login page
+  }
+
+  void selectNumberOfPassenger(value) {
+    numberOfPassengers = value;
+    update();
+  }
+
+  RxInt optionMapSelected = RxInt(0);
+
+  void updateSelectedValue(int value) {
+    optionMapSelected.value = value;
+    update();
   }
 
   @override

@@ -1,11 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:scrub_jay/view/widgets/myDrawer.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
 import 'DriverDrawer.dart';
 import 'MakeATrip.dart';
-import '../Passenger/ChooseTrip.dart';
 import 'ShowTurn.dart';
 
 class DriverMainScreen extends StatelessWidget {
@@ -71,7 +69,7 @@ class DriverMainScreen extends StatelessWidget {
             )
           ],
         ),
-        drawer:  DriverDrawer(),
+        drawer: const DriverDrawer(),
         body: SingleChildScrollView(
           child: Stack(
             children: [

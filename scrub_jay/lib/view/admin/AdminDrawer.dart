@@ -113,7 +113,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.to(const EditPassword());
+                Get.to( EditPassword());
               },
             ),
             ListTile(
