@@ -11,7 +11,6 @@ import 'package:scrub_jay/firebase_options.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'controller/locale/locale.dart';
 import 'controller/locale/localeController.dart';
 import 'view/common_screens/Signin.dart';

@@ -4,9 +4,13 @@ import 'package:get/get.dart';
 import 'package:scrub_jay/view/common_screens/EditPassword.dart';
 import 'package:scrub_jay/view/common_screens/theme_helper.dart';
 
+import '../../controller/account_controller.dart';
+import '../../core/app_functions.dart';
 import '../widgets/HeaderWidget.dart';
 
 class SettingsScreen extends StatelessWidget {
+  final AccountManagement accountcontroller = Get.find<AccountManagement>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,118 +76,169 @@ class SettingsScreen extends StatelessWidget {
             height: 100,
             child: HeaderWidget(100, false, Icons.house_rounded),
           ),
-
-
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.person_rounded),
-                  minLeadingWidth: 20,
-                  title: Text('Edit full name: '),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        obscureText: true,
-                        decoration: ThemeHelper().textInputDecoration(
-                            'New full name'.tr, 'Enter new full name'.tr),
+            child: Form(
+              key: accountcontroller.formKeyEdit,
+              child: Column(
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.person_rounded),
+                    minLeadingWidth: 20,
+                    title: Text('Edit full name: '),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          keyboardType: TextInputType.text,
+                          controller: accountcontroller.fullName,
+                          validator: (value) => formValidation(value, 'username'),
+                          decoration: ThemeHelper().textInputDecoration(
+                              'New full name'.tr, 'Enter new full name'.tr),
+                        ),
                       ),
-                    ),
+                      // Container(
+                      //   child: GetBuilder<AccountManagement>(
+                      //       builder: (controller) {
+                      //         return ElevatedButton(
+                      //           style: ThemeHelper().buttonStyle(),
+                      //           onPressed:controller.isLoading ? () {} :()
+                      //           => accountcontroller.changeFullName(),
+                      //           // icon: const Icon(Icons.save),
+                      //           child: controller.isLoading ? const Center(child: CircularProgressIndicator(),) :
+                      //           Text(
+                      //             "Save".tr,
+                      //             style: const TextStyle(
+                      //               fontSize: 20,
+                      //               fontWeight: FontWeight.bold,
+                      //               color: Colors.white,
+                      //             ),
+                      //           ),
+                      //         );
+                      //       }
+                      //   ),
+                      // ),
 
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.save),
-                    ),
-                  ],
-                ),
-                const Divider(height: 8),
-                const ListTile(
-                  leading: Icon(Icons.email),
-                  minLeadingWidth: 20,
-                  title: Text('Edit email address: '),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        obscureText: true,
-                        decoration: ThemeHelper().textInputDecoration(
-                            'New email address'.tr, 'Enter New email address'.tr),
+                      // IconButton(
+                      //   onPressed: () {},
+                      //   icon: const Icon(Icons.save),
+                      // ),
+                    ],
+                  ),
+                  const ListTile(
+                    leading: Icon(Icons.email),
+                    minLeadingWidth: 20,
+                    title: Text('Edit email address: '),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) => formValidation(value, 'email'),
+                          controller: accountcontroller.emailAddress,
+                          decoration: ThemeHelper().textInputDecoration(
+                              'New email address'.tr,
+                              'Enter New email address'.tr),
+                        ),
                       ),
-                    ),
-
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.save),
-                    ),
-                  ],
-                ),
-                const Divider(height: 8),
-                const ListTile(
-                  leading: Icon(Icons.phone),
-                  minLeadingWidth: 20,
-                  title: Text('Edit phone number: '),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        obscureText: true,
-                        decoration: ThemeHelper().textInputDecoration(
-                            'New phone number'.tr, 'Enter new phone number'.tr),
+                    ],
+                  ),
+                  const ListTile(
+                    leading: Icon(Icons.phone),
+                    minLeadingWidth: 20,
+                    title: Text('Edit phone number: '),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          keyboardType: TextInputType.phone,
+                          controller: accountcontroller.phoneNumber,
+                          validator: (value) => formValidation(value, 'phone'),
+                          decoration: ThemeHelper().textInputDecoration(
+                              'New phone number'.tr, 'Enter new phone number'.tr),
+                        ),
                       ),
-                    ),
-
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.save),
-                    ),
-                  ],
-                ),
-                const Divider(height: 8),
-
-                const ListTile(
-                  minLeadingWidth: 20,
-                  leading: Icon(Icons.lock_person_rounded),
-                  title: Text('Edit password: '),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        obscureText: true,
-                        decoration: ThemeHelper().textInputDecoration(
-                            'New password'.tr, 'Enter new password'.tr),
+                    ],
+                  ),
+                  const ListTile(
+                    minLeadingWidth: 20,
+                    leading: Icon(Icons.lock_person_rounded),
+                    title: Text('Edit password: '),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: accountcontroller.password,
+                          validator: (value) => formValidation(value, 'password',8,30),
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: true,
+                          decoration: ThemeHelper().textInputDecoration(
+                              'New password'.tr, 'Enter new password'.tr),
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.save),
-                    ),
-                  ],
-                ),
-                const Divider(height: 8),
-                Container(
-                  margin:
-                  const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                  child: Text.rich(TextSpan(children: [
-                    TextSpan(text: "Do you want to deactivate your account? ".tr),
-                    TextSpan(
-                        text: 'Click here'.tr,
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-
-                          },
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.yellow.shade700,
-                        )),
-                  ])),
-                ),
-              ],
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Container(
+                        decoration: ThemeHelper().buttonBoxDecoration(context),
+                        child: GetBuilder<AccountManagement>(
+                          init: AccountManagement(),
+                          builder: (accountManagement) {
+                            return ElevatedButton(
+                              style: ThemeHelper().buttonStyle(),
+                              onPressed: accountManagement.isLoading
+                                  ? () {}
+                                  : () => accountcontroller.editData(),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                child: Text(
+                                  'Save changes'.tr,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            );
+                          }
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        child: ElevatedButton(
+                          style: ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                          ),
+                            minimumSize: MaterialStateProperty.all(const Size(50, 50)),
+                            backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                            shadowColor: MaterialStateProperty.all(Colors.transparent),),
+                          onPressed: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                            child: Text(
+                              'Delete account'.tr,
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

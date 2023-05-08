@@ -23,7 +23,7 @@ class Signin extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: _headerHeight,
               child: HeaderWidget(_headerHeight, true,
                   Icons.login_rounded), //let's create a common header widget
@@ -84,7 +84,7 @@ class Signin extends StatelessWidget {
                                 alignment: Alignment.topRight,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Get.to(ForgotPassword());
+                                    Get.to(const ForgotPassword());
                                   },
                                   child: Text(
                                     "Forgot your password?".tr,
@@ -95,8 +95,7 @@ class Signin extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                decoration:
-                                    ThemeHelper().buttonBoxDecoration(context),
+                                decoration: ThemeHelper().buttonBoxDecoration(context),
                                 child: GetBuilder<SignInControllerImp>(
                                     init: SignInControllerImp(),
                                     builder: (signInController) {
