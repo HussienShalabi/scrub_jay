@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/signin_controller.dart';
 import 'package:scrub_jay/core/app_functions.dart';
-import 'package:scrub_jay/view/passenger/chooseTrip.dart';
+import '../../view/passenger/choose_trip.dart';
 import '../widgets/HeaderWidget.dart';
 import 'ForgotPassword.dart';
 import 'SignUpPassenger.dart';

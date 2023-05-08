@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/core/firebase_database_app.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
-import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
+import '../view/passenger/choose_trip.dart';
 
 import '../core/app_shared_preferences.dart';
 

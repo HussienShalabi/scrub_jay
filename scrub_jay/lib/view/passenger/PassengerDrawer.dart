@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/passenger_controller.dart';
-import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
 import 'package:scrub_jay/view/common_screens/EditPassword.dart';
 import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
 import 'package:scrub_jay/view/passenger/PassengerMap.dart';
@@ -114,20 +113,6 @@ class PassengerDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Get.to(SettingsScreen());
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings,
-                  size: _drawerIconSize,
-                  color: Theme.of(context).colorScheme.secondary),
-              title: Text(
-                'Main screen'.tr,
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).colorScheme.secondary),
-              ),
-              onTap: () {
-                Get.to(ChooseTrip());
               },
             ),
             ListTile(

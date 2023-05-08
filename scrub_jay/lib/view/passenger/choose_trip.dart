@@ -3,16 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/passenger_controller.dart';
 import 'package:scrub_jay/view/passenger/PassengerDrawer.dart';
+import 'package:scrub_jay/view/passenger/PassengerMap.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
 import '../widgets/tripCard.dart';
 import '../widgets/myDrawer.dart';
 
 class ChooseTrip extends StatelessWidget {
-
   ChooseTrip({super.key});
-
-  String? val;
 
   final PassengerControllerImp passengerControllerImp =
       Get.put(PassengerControllerImp());
@@ -25,44 +23,44 @@ class ChooseTrip extends StatelessWidget {
         backgroundColor: Colors.yellow.shade700,
         onPressed: () {
           Get.defaultDialog(
-              title: "booking",
-              content: SingleChildScrollView(
-                  child: Column(
+            title: "booking",
+            content: SingleChildScrollView(
+              child: Column(
                 children: [
-
                   const SizedBox(width: 15),
                   DropdownButtonFormField<int>(
-                    decoration: ThemeHelper()
-                        .textInputDecoration(
-                        'Number of passengers'.tr,
-                        ),
+                    decoration: ThemeHelper().textInputDecoration(
+                      'Number of passengers'.tr,
+                    ),
                     items: [1, 2, 3, 4].map((passenger) {
                       return DropdownMenuItem<int>(
                         value: passenger,
                         child: Text('$passenger'),
                       );
                     }).toList(),
-                    onChanged: (value) {
-
-                    },
+                    value: passengerControllerImp.numberOfPassengers,
+                    onChanged: (value) =>
+                        passengerControllerImp.selectNumberOfPassenger(value),
                   ),
-
                   const SizedBox(height: 10),
-
-
                   GetBuilder<PassengerControllerImp>(
                     builder: (controller) => Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         const SizedBox(
-                          child: Text('Your location:',style: TextStyle(fontWeight: FontWeight.bold , )),
+                          child: Text(
+                            'Your location:',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height: 40,
                           child: RadioListTile(
                             title: const Text('Current location'),
                             value: 0,
-                            groupValue:controller.selectedValue.value,
+                            groupValue: controller.optionMapSelected.value,
                             onChanged: (value) {
                               controller.updateSelectedValue(value!);
                             },
@@ -73,25 +71,32 @@ class ChooseTrip extends StatelessWidget {
                           child: RadioListTile(
                             title: const Text('Choose from map'),
                             value: 1,
-                            groupValue: controller.selectedValue.value,
+                            groupValue: controller.optionMapSelected.value,
                             onChanged: (value) {
                               controller.updateSelectedValue(value!);
-
                             },
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20,),
-
-
-
-
+                  const SizedBox(
+                    height: 20,
+                  ),
                 ],
-              )),
-              textConfirm: "book now");
-          passengerControllerImp.orderTrip();
+              ),
+            ),
+            textConfirm: "book now",
+            onConfirm: () {
+              if (passengerControllerImp.optionMapSelected.value == 1) {
+                Get.to(() => const PassengerMap());
+              } else {
+                passengerControllerImp.orderTrip();
+                Get.back();
+              }
+            },
+          );
+          // passengerControllerImp.orderTrip();
         },
         child: const Icon(Icons.add),
       ),
@@ -104,17 +109,21 @@ class ChooseTrip extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        elevation: 0.5,
+        elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
+            gradient: LinearGradient(
+              colors: [
                 Theme.of(context).primaryColor,
                 Theme.of(context).colorScheme.secondary,
-              ])),
+              ],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 0.0),
+              stops: const [0.0, 1.0],
+              tileMode: TileMode.clamp,
+            ),
+          ),
         ),
         actions: [
           Container(

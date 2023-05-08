@@ -37,7 +37,7 @@ class FirebaseDatabaseApp {
     return ref.get();
   }
 
-  Future<bool> addDataWithKey(String path, Map<String, dynamic> data) async {
+  Future<bool> addDataWithoutKey(String path, Map<String, dynamic> data) async {
     try {
       final DatabaseReference ref = await getDatabaseReference(path);
       await ref.set(data);
@@ -49,7 +49,7 @@ class FirebaseDatabaseApp {
     }
   }
 
-  Future<bool> addDataWithoutKey(String path, Map<String, dynamic> data) async {
+  Future<bool> addDataWithKey(String path, Map<String, dynamic> data) async {
     try {
       final DatabaseReference ref = await getDatabaseReference(path);
       await ref.push().set(data);
