@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,10 +5,9 @@ import 'package:get/get.dart';
 import 'package:scrub_jay/bindings.dart';
 import 'package:scrub_jay/core/app_midleware.dart';
 import 'package:scrub_jay/core/app_shared_preferences.dart';
-import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/firebase_options.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
-import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
+import '../view/passenger/choose_trip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controller/locale/locale.dart';

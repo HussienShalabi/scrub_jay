@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/passenger_controller.dart';
-import 'package:scrub_jay/view/common_screens/EditPassword.dart';
 import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
 import 'package:scrub_jay/view/passenger/PassengerMap.dart';
-import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
 
 class PassengerDrawer extends StatelessWidget {
@@ -68,11 +64,6 @@ class PassengerDrawer extends StatelessWidget {
               ),
             ),
 
-
-
-
-
-
             // ListTile(
             //   leading: Icon(Icons.person,
             //       size: _drawerIconSize,
@@ -99,7 +90,6 @@ class PassengerDrawer extends StatelessWidget {
             //     Get.to( EditPassword());
             //   },
             // ),
-
 
             ListTile(
               leading: Icon(Icons.settings,
@@ -143,7 +133,6 @@ class PassengerDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Get.to(const PassengerMap());
-
               },
             ),
             ListTile(
@@ -160,7 +149,6 @@ class PassengerDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Get.find<PassengerControllerImp>().passengerSignout();
-
               },
             ),
           ],

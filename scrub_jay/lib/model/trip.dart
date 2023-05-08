@@ -6,14 +6,26 @@ class Trip {
   String? phone;
   String? driverId;
   String? driverName;
-  List? passengers;
+  Map<String, dynamic>? passengers;
+
+  Trip({this.id, this.phone, this.driverId, this.driverName, this.passengers});
+
+  static List<Trip> trips = [];
 
   Trip.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     phone = json['phone'];
     driverId = json['driverId'];
-    passengers = json['passengers'];
+    passengers = json['passengers'] ?? {};
     driverName = json['driverName'];
+
+    trips.add(Trip(
+      id: id,
+      phone: phone,
+      driverId: driverId,
+      passengers: passengers,
+      driverName: driverName,
+    ));
   }
 
   Map<String, dynamic> toJson() {
@@ -23,15 +35,14 @@ class Trip {
     json['phone'] = phone;
     json['driverId'] = driverId;
     json['passengers'] = passengers;
-    json['driverName'] = driverName;
 
     return json;
   }
 
   static Future<bool> addTrip(Trip trip) async =>
       await FirebaseDatabaseApp.firebaseDatabase
-          .addDataWithoutKey('trips', trip.toJson());
+          .addDataWithKey('trips', trip.toJson());
 
-  static Future<DataSnapshot> trips() async =>
+  static Future<DataSnapshot> getTrips() async =>
       await FirebaseDatabaseApp.firebaseDatabase.getData('trips');
 }

@@ -1,12 +1,4 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
-import 'package:scrub_jay/core/app_shared_preferences.dart';
-import 'package:scrub_jay/view/Passenger/ChooseTrip.dart';
-import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
-import '../view/Driver/DriverMainScreen.dart';
 import 'app_functions.dart';
 import 'firebase_database_app.dart';
 
