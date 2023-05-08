@@ -15,7 +15,7 @@ class AccountManagement extends GetxController{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> formKeyEdit = GlobalKey<FormState>();
   final TextEditingController fullName = TextEditingController();
-  final TextEditingController emailAddress = TextEditingController() ;
+  final TextEditingController emailAddress = TextEditingController();
   final TextEditingController phoneNumber = TextEditingController();
   final TextEditingController password = TextEditingController();
 
