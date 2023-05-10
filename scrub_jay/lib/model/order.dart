@@ -25,10 +25,25 @@ class Order {
   }
 
   static Future<void> addOrder(Order order) async {
-    // logic
+    String? tripId;
+    int totalPassengers = 0;
+
+    for (var trip in Trip.trips) {
+      if (order.numOfPassengers! <= (7 - trip.passengers!.length) ){
+        tripId = trip.id;
+        totalPassengers = (order.numOfPassengers ?? 1) + (trip.totalPassengers ?? 0);
+      }
+    }
     await FirebaseDatabaseApp.firebaseDatabase.addDataWithKey(
-      'trips/${Trip.trips[0].id}/passengers',
+      'trips/$tripId/passengers',
       order.toJson(),
+    );
+
+     await FirebaseDatabaseApp.firebaseDatabase.updateData(
+      'trips/$tripId',
+      {
+        'totalPassengers': totalPassengers,
+      },
     );
   }
 }

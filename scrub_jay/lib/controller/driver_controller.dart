@@ -1,17 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/model/driver.dart';
-import 'package:scrub_jay/model/passenger.dart';
+import 'package:scrub_jay/model/trip.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
-import 'package:scrub_jay/view/common_screens/SignUpPassenger.dart';
-import 'package:scrub_jay/view/common_screens/Signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/app_shared_preferences.dart';
+import '../core/firebase_app_auth.dart';
 
 abstract class DriverController extends GetxController {
   Future<void> driverSignup();
+  Future<void> addTrip();
+  Future<void> getDriverData();
 }
 
 class DriverControllerImp extends DriverController {
@@ -62,5 +65,20 @@ class DriverControllerImp extends DriverController {
     await FirebaseAuthApp.firebaseAuthApp.signout(); // Sign out the user
     Get.offAllNamed('/Signin'); // Navigate to the login page
 
+  }
+  
+  @override
+  Future<void> addTrip() async {
+    Trip newTrip = Trip(
+    //driverId: getDriverData
+    ); 
+    
+  }
+  
+  @override
+  Future<void> getDriverData() async {
+    String DriverId=FirebaseAuth.instance.currentUser!.uid;
+    
+    
   }
 }

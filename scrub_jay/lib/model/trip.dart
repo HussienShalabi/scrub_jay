@@ -6,9 +6,10 @@ class Trip {
   String? phone;
   String? driverId;
   String? driverName;
+  int? totalPassengers;
   Map<String, dynamic>? passengers;
 
-  Trip({this.id, this.phone, this.driverId, this.driverName, this.passengers});
+  Trip({this.id, this.phone, this.driverId, this.driverName, this.passengers, this.totalPassengers});
 
   static List<Trip> trips = [];
 
@@ -18,6 +19,8 @@ class Trip {
     driverId = json['driverId'];
     passengers = json['passengers'] ?? {};
     driverName = json['driverName'];
+    totalPassengers = json['totalPassengers'];
+
 
     trips.add(Trip(
       id: id,
@@ -25,6 +28,7 @@ class Trip {
       driverId: driverId,
       passengers: passengers,
       driverName: driverName,
+      totalPassengers: totalPassengers, 
     ));
   }
 
@@ -35,6 +39,7 @@ class Trip {
     json['phone'] = phone;
     json['driverId'] = driverId;
     json['passengers'] = passengers;
+    json['totalPassengers'] = totalPassengers;
 
     return json;
   }

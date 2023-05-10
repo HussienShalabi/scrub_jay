@@ -196,7 +196,7 @@ class ChooseTrip extends StatelessWidget {
                               driverPhoneNumber: controller.trips[index].phone!,
                               driverName: controller.trips[index].driverName!,
                               availableSeats: 7 -
-                                  controller.trips[index].passengers!.length,
+                                  (controller.trips[index].totalPassengers ?? 0),
                             ),
                             onTap: () {
                               // Get.defaultDialog(
