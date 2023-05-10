@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
@@ -20,7 +21,7 @@ abstract class DriverController extends GetxController {
 
 class DriverControllerImp extends DriverController {
   bool isLoading = false;
-  user.User? currentUser;
+  Driver? currentUser;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController fullName = TextEditingController();
   final TextEditingController emailAddress = TextEditingController();
@@ -72,23 +73,43 @@ class DriverControllerImp extends DriverController {
 
   @override
   Future<void> addTrip() async {
-    Trip newTrip = Trip(
-      driverId: currentUser!.id,
-      driverName: currentUser!.fullname,
-      phone: currentUser!.phoneNumber,
-      totalPassengers: 0,
-    );
+    if (!isLoading) {
+      Trip newTrip = Trip(
+        driverId: currentUser!.id,
+        driverName: currentUser!.fullname,
+        phone: currentUser!.phoneNumber,
+        totalPassengers: 0,
+      );
+
+      await Trip.addTrip(newTrip).then((value) {
+        print(value);
+      });
+    }
   }
 
   @override
   Future<void> getDriverData() async {
     String driverId = FirebaseAuth.instance.currentUser!.uid;
+    isLoading = true;
+    update();
 
-    await user.User.getUser(driverId).then((value) {
-      value.onValue.listen((event) {
+    final DatabaseReference databaseReference =
+        await user.User.getUser(driverId);
+
+    databaseReference.onValue.listen(
+      (event) {
         currentUser =
             Driver.fromJson(json.decode(json.encode(event.snapshot.value)));
-      });
-    });
+
+        currentUser!.id = event.snapshot.key;
+        isLoading = false;
+      },
+    );
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getDriverData();
   }
 }

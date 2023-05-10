@@ -44,6 +44,7 @@ class Trip {
     json['phone'] = phone;
     json['driverId'] = driverId;
     json['passengers'] = passengers;
+    json['driverName'] = driverName;
     json['totalPassengers'] = totalPassengers;
 
     return json;

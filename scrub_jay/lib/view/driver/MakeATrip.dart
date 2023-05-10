@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:scrub_jay/controller/driver_controller.dart';
 import 'package:scrub_jay/view/driver/DriverMap.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
@@ -99,34 +100,40 @@ class MakeATrip extends StatelessWidget {
                                   passengerCount: 2,
                                   passengerPhoneNumber: 059954,
                                   passengerLocation: 'khaledyah ',
-                                 // trailing: Icons.check,
+                                  // trailing: Icons.check,
                                 )),
                       ],
                     ),
                   ),
                 ],
               ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                decoration: ThemeHelper().buttonBoxDecoration(context),
-                child: ElevatedButton(
-                  style: ThemeHelper().buttonStyle(),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                    child: Text(
-                      'Start the trip'.tr,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ),
-                  onPressed: () {
-                    //After successful login we will redirect to profile page.
-                    Get.to(const DriverMap());
-                  },
-                ),
-              ),
+              GetBuilder<DriverControllerImp>(
+                  init: DriverControllerImp(),
+                  builder: (controller) {
+                    return Container(
+                      alignment: Alignment.bottomCenter,
+                      decoration: ThemeHelper().buttonBoxDecoration(context),
+                      child: ElevatedButton(
+                        style: ThemeHelper().buttonStyle(),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                          child: Text(
+                            'Start the trip'.tr,
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () async {
+                          await controller.addTrip();
+
+                          //After successful login we will redirect to profile page.
+                          // Get.to(const DriverMap());
+                        },
+                      ),
+                    );
+                  }),
             ],
           ),
         ));

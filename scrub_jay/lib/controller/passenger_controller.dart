@@ -48,6 +48,7 @@ class PassengerControllerImp extends PassengerController {
       (value) async {
         value.onValue.listen(
           (event) async {
+            trips = [];
             final Iterable<DataSnapshot> data = event.snapshot.children;
             for (DataSnapshot child in data) {
               final Map<String, dynamic> trip =
