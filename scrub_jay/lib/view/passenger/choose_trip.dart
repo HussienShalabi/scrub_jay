@@ -179,85 +179,31 @@ class ChooseTrip extends StatelessWidget {
                 GetBuilder<PassengerControllerImp>(
                     init: PassengerControllerImp(),
                     builder: (controller) {
+                      if (controller.trips.isEmpty) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      print(controller.trips.length);
+
                       return ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: controller.trips.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          if (controller.trips.isEmpty) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-
                           return GestureDetector(
                             child: TripCard(
                               leadingIcon: Icons.taxi_alert_rounded,
-                              driverPhoneNumber: controller.trips[index].phone!,
-                              driverName: controller.trips[index].driverName!,
+                              driverPhoneNumber:
+                                  controller.trips[index].phone ?? '',
+                              driverName:
+                                  controller.trips[index].driverName ?? '',
                               availableSeats: 7 -
-                                  (controller.trips[index].totalPassengers ?? 0),
+                                  (controller.trips[index].totalPassengers ??
+                                      0),
                             ),
-                            onTap: () {
-                              // Get.defaultDialog(
-                              //     title: "booking",
-                              //     content: SingleChildScrollView(
-                              //         child: ListBody(
-                              //       children: [
-                              //         Row(
-                              //           children: [
-                              //             const SizedBox(
-                              //               width: 15,
-                              //             ),
-                              //             const Text("Enter number of passngers",
-                              //                 textAlign: TextAlign.center),
-                              //             const SizedBox(
-                              //               width: 10,
-                              //             ),
-                              //             Obx(() => DropdownButton<int>(
-                              //                   alignment: Alignment.center,
-                              //                   value: selectedOption.value,
-                              //                   icon: const Icon(
-                              //                       Icons.arrow_downward),
-                              //                   iconSize: 20,
-                              //                   elevation: 16,
-                              //                   style: const TextStyle(
-                              //                       color: Colors.black),
-                              //                   underline: Container(
-                              //                     height: 2,
-                              //                     color: Colors.yellow.shade700,
-                              //                   ),
-                              //                   onChanged: (var newValue) {
-                              //                     selectedOption.value =
-                              //                         newValue!; // Update the selectedOption observable when the user selects a new value
-                              //                   },
-                              //                   items: options
-                              //                       .map<DropdownMenuItem<int>>(
-                              //                           (int value) {
-                              //                     return DropdownMenuItem<int>(
-                              //                       value: value,
-                              //                       child: Text(value.toString()),
-                              //                     );
-                              //                   }).toList(),
-                              //                 )),
-                              //           ],
-                              //         ),
-                              //         const SizedBox(
-                              //           height: 10,
-                              //         ),
-                              //         Expanded(
-                              //           child: TextFormField(
-                              //             textAlign: TextAlign.center,
-                              //             decoration: ThemeHelper()
-                              //                 .textInputDecoration(
-                              //                     'passenger  location'.tr,
-                              //                     'Enter passenger  location'.tr),
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     )),
-                              //     textConfirm: "book now");
-                            },
+                            // onTap: () {
+                            // },
                           );
                         },
                       );

@@ -10,6 +10,6 @@ class User {
 
   User({this.fullname, this.emailAddress, this.phoneNumber, this.role});
 
-  static Future<DataSnapshot> getUser(String uid) async =>
+  static Future<DatabaseReference> getUser(String uid) async =>
       await FirebaseDatabaseApp.firebaseDatabase.getData('users/$uid');
 }

@@ -9,7 +9,13 @@ class Trip {
   int? totalPassengers;
   Map<String, dynamic>? passengers;
 
-  Trip({this.id, this.phone, this.driverId, this.driverName, this.passengers, this.totalPassengers});
+  Trip(
+      {this.id,
+      this.phone,
+      this.driverId,
+      this.driverName,
+      this.passengers,
+      this.totalPassengers});
 
   static List<Trip> trips = [];
 
@@ -21,14 +27,13 @@ class Trip {
     driverName = json['driverName'];
     totalPassengers = json['totalPassengers'];
 
-
     trips.add(Trip(
       id: id,
       phone: phone,
       driverId: driverId,
       passengers: passengers,
       driverName: driverName,
-      totalPassengers: totalPassengers, 
+      totalPassengers: totalPassengers,
     ));
   }
 
@@ -48,6 +53,6 @@ class Trip {
       await FirebaseDatabaseApp.firebaseDatabase
           .addDataWithKey('trips', trip.toJson());
 
-  static Future<DataSnapshot> getTrips() async =>
+  static Future<DatabaseReference> getTrips() async =>
       await FirebaseDatabaseApp.firebaseDatabase.getData('trips');
 }

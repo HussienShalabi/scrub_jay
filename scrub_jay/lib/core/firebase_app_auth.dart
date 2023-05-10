@@ -19,40 +19,9 @@ class FirebaseAuthApp {
           await firebaseAuth.createUserWithEmailAndPassword(
               email: json['emailAddress'], password: password);
 
-      Map<String, dynamic> userInformation = {
-        'username': json['fullname'],
-        'phoneNumber': json['phoneNumber'],
-        'email': ['email'],
-        'role': role,
-      };
-
       await FirebaseDatabaseApp.firebaseDatabase
           .addDataWithKey('users/${userCredential.user!.uid}', json);
 
-      await firebaseAuth.verifyPhoneNumber(
-        phoneNumber: '+97${json['phoneNumber']}',
-        verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
-          await firebaseAuth.signInWithCredential(phoneAuthCredential);
-        },
-        verificationFailed: (FirebaseAuthException error) {
-          if (error.code == 'invalid-phone-number') {
-            // print('The provided phone number is not valid.');
-          }
-        },
-        codeSent: (String verificationId, int? forceResendingToken) async {
-          String smsCode = '123456';
-
-          // Create a PhoneAuthCredential with the code
-          PhoneAuthCredential credential = PhoneAuthProvider.credential(
-            verificationId: verificationId,
-            smsCode: smsCode,
-          );
-
-          // Sign the user in (or link) with the credential
-          await firebaseAuth.signInWithCredential(credential);
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {},
-      );
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {
       getxSnackbar('error', error.code);

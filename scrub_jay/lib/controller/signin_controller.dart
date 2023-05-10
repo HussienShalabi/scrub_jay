@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/core/firebase_database_app.dart';
+import 'package:scrub_jay/model/user.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import '../view/passenger/choose_trip.dart';
 
@@ -23,7 +24,6 @@ class SignInControllerImp extends SignInController {
 
   @override
   signIn() async {
-    // CollectionReference _usersCollection = FirebaseFirestore.instance.collection('users/uid');
     final bool isValid = formKeySignIn.currentState!.validate();
     isLoading = true;
     update();
@@ -31,27 +31,19 @@ class SignInControllerImp extends SignInController {
     if (isValid) {
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
           .signin(emailAddressSignin.text.trim(), passwordSignin.text);
-      // AppSharedPrefernces.appSharedPrefernces.setData('role', 2);
 
       if (uid != null) {
         isLoading = false;
         update();
-        // Get user data from Firestore
-        // DocumentSnapshot userDoc = await _usersCollection.doc(uid).get();
-        // Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
-        DataSnapshot userData =
-            await FirebaseDatabaseApp.firebaseDatabase.getData('users/$uid');
-        Map data = json.decode(json.encode(userData.value));
 
-        // Store user role number in Shared Preferences
+        DataSnapshot data = await (await User.getUser(uid)).get();
         final bool setData = await AppSharedPrefernces.appSharedPrefernces
-            .setData('role', data['role']);
-        // print(setData);
+            .setData('role', (data.value as Map<dynamic, dynamic>)['role']);
 
-        // Navigate to appropriate screen based on user role number
-        if (setData && data['role'] == 1) {
+        if (setData && (data.value as Map<dynamic, dynamic>)['role'] == 1) {
           Get.offAll(() => const DriverMainScreen());
-        } else if (setData && data['role'] == 2) {
+        } else if (setData &&
+            (data.value as Map<dynamic, dynamic>)['role'] == 2) {
           Get.offAll(() => ChooseTrip());
         }
 

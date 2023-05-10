@@ -1,24 +1,26 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/trip.dart';
+import 'package:scrub_jay/model/user.dart' as user;
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../core/app_shared_preferences.dart';
-import '../core/firebase_app_auth.dart';
 
 abstract class DriverController extends GetxController {
   Future<void> driverSignup();
   Future<void> addTrip();
   Future<void> getDriverData();
+  Future<void> driverSignout();
 }
 
 class DriverControllerImp extends DriverController {
   bool isLoading = false;
+  user.User? currentUser;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController fullName = TextEditingController();
   final TextEditingController emailAddress = TextEditingController();
@@ -28,7 +30,7 @@ class DriverControllerImp extends DriverController {
 
   @override
   driverSignup() async {
-     isLoading = false;
+    isLoading = false;
 
     final bool isValid = formKey.currentState!.validate();
 
@@ -41,13 +43,14 @@ class DriverControllerImp extends DriverController {
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
           .signup(1, newDriver.toJson(), password.text);
 
-      final bool setData = await AppSharedPrefernces.appSharedPrefernces.setData('role', 1);
+      final bool setData =
+          await AppSharedPrefernces.appSharedPrefernces.setData('role', 1);
 
       if (uid != null && setData) {
         isLoading = false;
         update();
         Get.offAll(() => const DriverMainScreen());
-      }else {
+      } else {
         await FirebaseAuthApp.firebaseAuthApp.signout();
         isLoading = false;
         update();
@@ -57,28 +60,35 @@ class DriverControllerImp extends DriverController {
 
     isLoading = false;
     update();
-    }
+  }
+
   @override
   Future driverSignout() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear(); // Clear all the shared preferences
     await FirebaseAuthApp.firebaseAuthApp.signout(); // Sign out the user
     Get.offAllNamed('/Signin'); // Navigate to the login page
-
   }
-  
+
   @override
   Future<void> addTrip() async {
     Trip newTrip = Trip(
-    //driverId: getDriverData
-    ); 
-    
+      driverId: currentUser!.id,
+      driverName: currentUser!.fullname,
+      phone: currentUser!.phoneNumber,
+      totalPassengers: 0,
+    );
   }
-  
+
   @override
   Future<void> getDriverData() async {
-    String DriverId=FirebaseAuth.instance.currentUser!.uid;
-    
-    
+    String driverId = FirebaseAuth.instance.currentUser!.uid;
+
+    await user.User.getUser(driverId).then((value) {
+      value.onValue.listen((event) {
+        currentUser =
+            Driver.fromJson(json.decode(json.encode(event.snapshot.value)));
+      });
+    });
   }
 }

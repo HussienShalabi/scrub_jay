@@ -29,12 +29,12 @@ class FirebaseDatabaseApp {
   //   return uid;
   // }
 
-  Future<DataSnapshot> getData(String path, [String? child]) async {
+  Future<DatabaseReference> getData(String path, [String? child]) async {
     final ref = await getDatabaseReference(path);
     if (child != null) {
-      return ref.child(child).get();
+      return ref.child(child);
     }
-    return ref.get();
+    return ref;
   }
 
   Future<bool> addDataWithoutKey(String path, Map<String, dynamic> data) async {

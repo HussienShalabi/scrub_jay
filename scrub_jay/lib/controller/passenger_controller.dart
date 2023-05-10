@@ -41,27 +41,34 @@ class PassengerControllerImp extends PassengerController {
 
   @override
   Future<void> getTrips() async {
+    isLoading = true;
+    update();
+
     await Trip.getTrips().then(
       (value) async {
-        for (DataSnapshot child in value.children) {
-          final Map<String, dynamic> trip =
-              json.decode(json.encode(child.value));
+        value.onValue.listen(
+          (event) async {
+            final Iterable<DataSnapshot> data = event.snapshot.children;
+            for (DataSnapshot child in data) {
+              final Map<String, dynamic> trip =
+                  json.decode(json.encode(child.value));
 
-          final DataSnapshot dataSnapshot =
-              await user.User.getUser(trip['driverId']);
+              (await user.User.getUser(trip['driverId']))
+                  .onValue
+                  .listen((event) {
+                trip['id'] = child.key;
+                trip['driverName'] =
+                    (event.snapshot.value as Map<dynamic, dynamic>)['fullName'];
+              });
 
-          log(dataSnapshot.value.toString());
-
-          trip['id'] = child.key;
-          trip['driverName'] =
-              (dataSnapshot.value as Map<dynamic, dynamic>)['fullName'];
-
-          trips.add(Trip.fromJson(trip));
-        }
+              trips.add(Trip.fromJson(trip));
+            }
+            isLoading = false;
+            update();
+          },
+        );
       },
     );
-
-    update();
   }
 
   @override
