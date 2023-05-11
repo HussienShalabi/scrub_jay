@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/view/common_screens/EditPassword.dart';
 import 'package:scrub_jay/view/common_screens/theme_helper.dart';
@@ -10,6 +11,8 @@ import '../widgets/HeaderWidget.dart';
 
 class SettingsScreen extends StatelessWidget {
   final AccountManagement accountcontroller = Get.find<AccountManagement>();
+
+   SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +96,7 @@ class SettingsScreen extends StatelessWidget {
                         child: TextFormField(
                           keyboardType: TextInputType.text,
                           controller: accountcontroller.fullName,
-                          validator: (value) => formValidation(value, 'username'),
+                          // validator: (value) => formValidation(value, 'username'),
                           decoration: ThemeHelper().textInputDecoration(
                               'New full name'.tr, 'Enter new full name'.tr),
                         ),
@@ -136,7 +139,7 @@ class SettingsScreen extends StatelessWidget {
                       Expanded(
                         child: TextFormField(
                           keyboardType: TextInputType.emailAddress,
-                          validator: (value) => formValidation(value, 'email'),
+                          // validator: (value) => formValidation(value, 'email'),
                           controller: accountcontroller.emailAddress,
                           decoration: ThemeHelper().textInputDecoration(
                               'New email address'.tr,
@@ -154,9 +157,12 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextFormField(
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(10),
+                          ],
                           keyboardType: TextInputType.phone,
                           controller: accountcontroller.phoneNumber,
-                          validator: (value) => formValidation(value, 'phone'),
+                          // validator: (value) => formValidation(value, 'phone'),
                           decoration: ThemeHelper().textInputDecoration(
                               'New phone number'.tr, 'Enter new phone number'.tr),
                         ),
@@ -173,7 +179,7 @@ class SettingsScreen extends StatelessWidget {
                       Expanded(
                         child: TextFormField(
                           controller: accountcontroller.password,
-                          validator: (value) => formValidation(value, 'password',8,30),
+                          // validator: (value) => formValidation(value, 'password',8,30),
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           decoration: ThemeHelper().textInputDecoration(
@@ -183,59 +189,75 @@ class SettingsScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Container(
-                        decoration: ThemeHelper().buttonBoxDecoration(context),
-                        child: GetBuilder<AccountManagement>(
-                          init: AccountManagement(),
-                          builder: (accountManagement) {
-                            return ElevatedButton(
-                              style: ThemeHelper().buttonStyle(),
-                              onPressed: accountManagement.isLoading
-                                  ? () {}
-                                  : () => accountcontroller.editData(),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: Text(
-                                  'Save changes'.tr,
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
+                  Container(
+                    decoration: ThemeHelper().buttonBoxDecoration(context),
+                    child: GetBuilder<AccountManagement>(
+                      init: AccountManagement(),
+                      builder: (accountManagement) {
+                        return SizedBox(
+                          width: 200,
+                          child: ElevatedButton(
+                            style: ThemeHelper().buttonStyle(),
+                            onPressed: accountManagement.isLoading
+                                ? () {}
+                                : () => accountcontroller.editData(),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              child: Text(
+                                'Save changes'.tr,
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
-                            );
-                          }
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        child: ElevatedButton(
-                          style: ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
                             ),
                           ),
-                            minimumSize: MaterialStateProperty.all(const Size(50, 50)),
-                            backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                            shadowColor: MaterialStateProperty.all(Colors.transparent),),
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
-                            child: Text(
-                              'Delete account'.tr,
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                        );
+                      }
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  // Container(
+                  //   child: ElevatedButton(
+                  //     style: ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  //       RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(30.0),
+                  //       ),
+                  //     ),
+                  //       minimumSize: MaterialStateProperty.all(const Size(50, 50)),
+                  //       backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                  //       shadowColor: MaterialStateProperty.all(Colors.transparent),),
+                  //     onPressed: () {},
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                  //       child: Text(
+                  //         'Delete account'.tr,
+                  //         style: const TextStyle(
+                  //             fontSize: 18,
+                  //             fontWeight: FontWeight.bold,
+                  //             color: Colors.red),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  Container(
+                    margin:
+                    const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                    child: Text.rich(TextSpan(children: [
+                      TextSpan(text: "To deactivate your account, ".tr),
+                      TextSpan(
+                          text: 'Press here'.tr,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                             print('hiiiiiiiiiiiii');
+                            },
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.yellow.shade800,
+                          )),
+                    ])),
                   ),
                 ],
               ),

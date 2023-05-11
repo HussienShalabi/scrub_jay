@@ -63,7 +63,7 @@ class PassengerMap extends StatelessWidget {
                 ),
               );
             }
-
+print(controller.currentLocation.toString());
             return SizedBox(
               child: FlutterMap(
                 options: MapOptions(
@@ -84,9 +84,16 @@ class PassengerMap extends StatelessWidget {
                       'id': 'mapbox.mapbox-streets-v8',
                     },
                   ),
-                  if (controller.selectedLocation != null)
                     MarkerLayer(
                       markers: [
+                        if(controller.currentLocation != null)
+                          Marker(point:  LatLng(controller.currentLocation!.latitude,
+                              controller.currentLocation!.longitude), builder: (context) => const Icon(
+                            Icons.location_history,
+                            size: 50,
+                            color: Colors.red,
+                          ),),
+                        if (controller.selectedLocation != null)
                         Marker(
                           point: controller.selectedLocation!,
                           builder: (context) => const Icon(

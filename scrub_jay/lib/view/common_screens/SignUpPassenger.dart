@@ -12,7 +12,7 @@ import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
 class SignUpPassenger extends StatelessWidget {
-  final PassengerControllerImp passengercontroller = Get.find<PassengerControllerImp>();
+  final PassengerControllerImp passengercontroller = Get.put(PassengerControllerImp());
 
   SignUpPassenger({super.key});
   @override
@@ -136,18 +136,21 @@ class SignUpPassenger extends StatelessWidget {
                           child: GetBuilder<PassengerControllerImp>(
                             init:PassengerControllerImp(),
                             builder: (controller) {
-                              return ElevatedButton(
-                                style: ThemeHelper().buttonStyle(),
-                                onPressed: controller.isLoading ? () {} :() =>  passengercontroller.passengerSignup(),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                  child:controller.isLoading ? const Center(child: CircularProgressIndicator(),) : Text(
-                                    "Register".tr,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                              return SizedBox(
+                                width: 200,
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  onPressed: controller.isLoading ? () {} :() =>  passengercontroller.passengerSignup(),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                    child:controller.isLoading ? const Center(child: CircularProgressIndicator(),) : Text(
+                                      "Register".tr,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
