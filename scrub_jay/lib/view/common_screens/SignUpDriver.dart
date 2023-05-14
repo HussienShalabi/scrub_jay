@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/driver_controller.dart';
-import 'package:scrub_jay/controller/passenger_controller.dart';
 import 'package:scrub_jay/core/app_functions.dart';
-import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
@@ -22,7 +18,6 @@ class SignUpDriver extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-
             const SizedBox(
               height: 150,
               child: HeaderWidget(150, false, Icons.person_add_alt_1_rounded),
@@ -129,7 +124,6 @@ class SignUpDriver extends StatelessWidget {
                                 "ReEnter Password*".tr,
                                 "Enter your password".tr),
                           ),
-
                         ),
                         const SizedBox(height: 20.0),
                         Container(
@@ -164,7 +158,6 @@ class SignUpDriver extends StatelessWidget {
 
                               return null;
                             },
-
                             decoration: ThemeHelper().textInputDecoration(
                                 "Vehicle number".tr,
                                 "Enter your vehicle number".tr),
@@ -192,33 +185,38 @@ class SignUpDriver extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20.0),
-
                         SizedBox(
                           width: 200,
                           child: Container(
                             decoration:
                                 ThemeHelper().buttonBoxDecoration(context),
                             child: GetBuilder<DriverControllerImp>(
-                              init: DriverControllerImp(),
-                              builder: (controller) {
-                                return  controller.isLoading ? const Center(child: CircularProgressIndicator(),) : ElevatedButton(
-                                  style: ThemeHelper().buttonStyle(),
-                                  onPressed: controller.isLoading ? () {} : () => drivercontroler.driverSignup(),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                    child: Text(
-                                      "Register".tr,
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-                            ),
+                                init: DriverControllerImp(),
+                                builder: (controller) {
+                                  return controller.isLoading
+                                      ? const Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : ElevatedButton(
+                                          style: ThemeHelper().buttonStyle(),
+                                          onPressed: controller.isLoading
+                                              ? () {}
+                                              : () => drivercontroler
+                                                  .driverSignup(),
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                40, 10, 40, 10),
+                                            child: Text(
+                                              "Register".tr,
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                }),
                           ),
                         ),
                       ],

@@ -9,8 +9,7 @@ import 'package:scrub_jay/core/firebase_database_app.dart';
 import '../model/user.dart' as user;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-class AccountManagement extends GetxController{
+class AccountManagement extends GetxController {
   bool isLoading = false;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -22,40 +21,42 @@ class AccountManagement extends GetxController{
 
   user.User? currentUser;
 
-
   Future<void> editData() async {
     user.User? editedUser = user.User();
 
-    editedUser!.fullname = currentUser!.fullname == fullName.text.trim() ? null: fullName.text.trim();
-    editedUser!.phoneNumber = currentUser!.phoneNumber == phoneNumber.text.trim() ? null: phoneNumber.text.trim();
-    editedUser!.emailAddress = currentUser!.emailAddress == emailAddress.text.trim() ? null: emailAddress.text.trim();
-
+    editedUser.fullname = currentUser!.fullname == fullName.text.trim()
+        ? null
+        : fullName.text.trim();
+    editedUser.phoneNumber = currentUser!.phoneNumber == phoneNumber.text.trim()
+        ? null
+        : phoneNumber.text.trim();
+    editedUser.emailAddress =
+        currentUser!.emailAddress == emailAddress.text.trim()
+            ? null
+            : emailAddress.text.trim();
 
     final bool isValid = formKeyEdit.currentState!.validate();
     isLoading = true;
     if (isValid) {
       try {
         // Update the user's email
-        User? userauth =await  FirebaseAuthApp.firebaseAuthApp.currentUser();
+        User? userauth = await FirebaseAuthApp.firebaseAuthApp.currentUser();
         if (userauth != null && editedUser.emailAddress != null) {
           await userauth.updateEmail(emailAddress.text.trim());
           // await userauth.updatePassword(password.text);
         }
 
-
         // Update the user's password
         await FirebaseAuth.instance.currentUser!.updatePassword(password.text);
 
-
         User? user = _auth.currentUser;
         // await FirebaseAuth.instance.
-        await FirebaseDatabaseApp.firebaseDatabase.updateData(
-            'users/${user!.uid}', {
-              'fullName': editedUser.fullname,
+        await FirebaseDatabaseApp.firebaseDatabase
+            .updateData('users/${user!.uid}', {
+          'fullName': editedUser.fullname,
           'emailAddress': editedUser.emailAddress,
           'phoneNumber': editedUser.phoneNumber,
-            });
-
+        });
 
         isLoading = false;
         update();
@@ -72,7 +73,6 @@ class AccountManagement extends GetxController{
         Get.snackbar('Error', e.toString());
       }
     }
-
   }
 
   // @override
@@ -103,9 +103,4 @@ class AccountManagement extends GetxController{
   //   }
   //
   // }
-
-
-
-
-
 }

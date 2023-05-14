@@ -28,6 +28,10 @@ class DriverControllerImp extends DriverController {
   final TextEditingController phoneNumber = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController rewritePassword = TextEditingController();
+  final TextEditingController vehicleNumber = TextEditingController();
+  final TextEditingController driverIdentityNumber = TextEditingController();
+  final TextEditingController licenseNumber = TextEditingController();
+
   Driver? currentDriver;
   List<Trip> trips = [];
 
@@ -74,6 +78,9 @@ class DriverControllerImp extends DriverController {
       Driver newDriver = Driver(
           fullname: fullName.text.trim(),
           emailAddress: emailAddress.text.trim(),
+          vehicleNumber: vehicleNumber.text,
+          driverIdentityNumber: driverIdentityNumber.text,
+          licenseNumber: licenseNumber.text,
           role: 1);
 
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
