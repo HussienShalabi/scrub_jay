@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
-import 'package:scrub_jay/core/firebase_database_app.dart';
 import 'package:scrub_jay/model/user.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import '../view/passenger/choose_trip.dart';

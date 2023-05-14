@@ -134,7 +134,6 @@ class DriverMainScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              //After successful login we will redirect to profile page.
                               Get.to(const ShowTurn());
                             },
                           ),

@@ -7,7 +7,6 @@ import 'package:scrub_jay/view/passenger/PassengerMap.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
 import '../widgets/tripCard.dart';
-import '../widgets/myDrawer.dart';
 
 class ChooseTrip extends StatelessWidget {
   ChooseTrip({super.key});
@@ -185,7 +184,6 @@ class ChooseTrip extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                       }
-                      print(controller.trips.length);
 
                       return ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),

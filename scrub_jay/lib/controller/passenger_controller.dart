@@ -1,14 +1,13 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
+import 'package:scrub_jay/core/firebase_database_app.dart';
 import 'package:scrub_jay/model/order.dart';
 import 'package:scrub_jay/model/user.dart' as user;
 import 'package:scrub_jay/model/passenger.dart';
@@ -30,14 +29,49 @@ class PassengerControllerImp extends PassengerController {
   final TextEditingController phoneNumber = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController rewritePassword = TextEditingController();
-  final GlobalKey<FormState> formKeySignIn = GlobalKey<FormState>();
   final TextEditingController emailAddressSignin = TextEditingController();
   final TextEditingController passwordSignin = TextEditingController();
+  RxInt optionMapSelected = RxInt(0);
 
   bool isLoading = false;
   int numberOfPassengers = 1;
   List<Trip> trips = [];
   LatLng? currentLocation;
+  LatLng? destinationLocation;
+  Passenger? currentPassenger;
+
+  bool done = false;
+
+  void isDone(bool value) {
+    done = value;
+    update();
+  }
+
+  Future<void> getInformation() async {
+    isLoading = true;
+    update();
+
+    final User? user = await FirebaseAuthApp.firebaseAuthApp.currentUser();
+
+    final DatabaseReference databaseReference = await FirebaseDatabaseApp
+        .firebaseDatabase
+        .getData('users/${user!.uid}');
+    await databaseReference.get().then((value) {
+      final Map<String, dynamic> data = jsonDecode(jsonEncode(value.value));
+
+      data['id'] = user.uid;
+
+      currentPassenger = Passenger.fromJson(data);
+    });
+    isLoading = false;
+    update();
+  }
+
+  Future<void> determineCurrentLocation() async =>
+      await map.Map.getCurrentLocation().then((value) {
+        currentLocation = LatLng(value.latitude, value.longitude);
+        update();
+      });
 
   @override
   Future<void> getTrips() async {
@@ -57,10 +91,10 @@ class PassengerControllerImp extends PassengerController {
               (await user.User.getUser(trip['driverId']))
                   .onValue
                   .listen((event) {
-                trip['id'] = child.key;
                 trip['driverName'] =
                     (event.snapshot.value as Map<dynamic, dynamic>)['fullName'];
               });
+              trip['id'] = child.key;
 
               trips.add(Trip.fromJson(trip));
             }
@@ -72,36 +106,34 @@ class PassengerControllerImp extends PassengerController {
     );
   }
 
+  Future<void> selectDestination(LatLng position) async {
+    destinationLocation = position;
+    update();
+  }
+
   @override
   Future<void> orderTrip() async {
-    final User? user = await FirebaseAuthApp.firebaseAuthApp.currentUser();
-
-    if (currentLocation == null) {
-      await map.Map.getCurrentLocation().then(
-          (value) => currentLocation = LatLng(value.latitude, value.longitude));
-    }
+    isLoading = true;
+    update();
 
     Order order = Order.fromJson({
-      'passengerId': user!.uid,
+      'passengerId': currentPassenger!.id,
       'location': {
-        'longitude': currentLocation!.longitude,
-        'latitude': currentLocation!.latitude,
+        'longitude': optionMapSelected.value == 0
+            ? currentLocation!.longitude
+            : destinationLocation!.longitude,
+        'latitude': optionMapSelected.value == 0
+            ? currentLocation!.latitude
+            : destinationLocation!.latitude,
       },
       'numOfPassengers': numberOfPassengers,
+      'phone': currentPassenger!.phoneNumber,
     });
 
-    // Trip trip = Trip.fromJson({
-    //   'passengerId': user!.uid,
-    //   'driverId': 'uid',
-    //   'numOfPassengers': numberOfPassengers,
-    //   'date': DateTime.now().toString(),
-    //   'location': {
-    //     'longitude': currentLocation!.longitude,
-    //     'latitude': currentLocation!.latitude,
-    //   },
-    // });
-
     await Order.addOrder(order);
+    isLoading = false;
+    update();
+    Get.back();
   }
 
   @override
@@ -152,8 +184,6 @@ class PassengerControllerImp extends PassengerController {
     update();
   }
 
-  RxInt optionMapSelected = RxInt(0);
-
   void updateSelectedValue(int value) {
     optionMapSelected.value = value;
     update();
@@ -162,6 +192,8 @@ class PassengerControllerImp extends PassengerController {
   @override
   void onInit() {
     super.onInit();
+    getInformation();
     getTrips();
+    determineCurrentLocation();
   }
 }
