@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/widgets.dart';
+import '../common_screens/theme_helper.dart';
 import '../widgets/DriverInfoCard.dart';
 import '../widgets/headerWidget.dart';
 import 'AdminDrawer.dart';
@@ -110,6 +111,28 @@ class _MakeTurnState extends State<MakeTurn> {
                             });
                           },
                         )),
+                    SizedBox(
+                      width: 200 ,
+                      child: Container(
+                        decoration: ThemeHelper().buttonBoxDecoration(context),
+                        child: ElevatedButton(
+                          style: ThemeHelper().buttonStyle(),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                            child: Text(
+                              'Save'.tr.toUpperCase(),
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          onPressed: () {
+
+                          },
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -11,12 +11,18 @@ import 'package:scrub_jay/model/user.dart' as user;
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../core/app_shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
+
+
+
 
 abstract class DriverController extends GetxController {
   Future<void> driverSignup();
   Future<void> addTrip();
   Future<void> getDriverData();
   Future<void> driverSignout();
+
+
 }
 
 class DriverControllerImp extends DriverController {
@@ -28,6 +34,9 @@ class DriverControllerImp extends DriverController {
   final TextEditingController phoneNumber = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController rewritePassword = TextEditingController();
+  final TextEditingController vehicleNumber = TextEditingController();
+  final TextEditingController driverIdentityNumber = TextEditingController();
+  final TextEditingController licenseNumber = TextEditingController();
 
   @override
   driverSignup() async {
@@ -39,7 +48,11 @@ class DriverControllerImp extends DriverController {
       Driver newDriver = Driver(
           fullname: fullName.text.trim(),
           emailAddress: emailAddress.text.trim(),
-          role: 1);
+          vehicleNumber: vehicleNumber.text,
+          driverIdentityNumber: driverIdentityNumber.text,
+          licenseNumber: licenseNumber.text,
+          role: 1
+      );
 
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
           .signup(1, newDriver.toJson(), password.text);
@@ -62,6 +75,8 @@ class DriverControllerImp extends DriverController {
     isLoading = false;
     update();
   }
+
+
 
   @override
   Future driverSignout() async {

@@ -99,9 +99,9 @@ print(controller.currentLocation.toString());
                           builder: (context) => const Icon(
                             Icons.location_history,
                             size: 50,
-                            color: Colors.red,
+                            color: Colors.amber,
                           ),
-                        )
+                        ),
                       ],
                     ),
                 ],
