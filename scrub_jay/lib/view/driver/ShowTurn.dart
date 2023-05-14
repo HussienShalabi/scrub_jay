@@ -107,7 +107,7 @@ class _ShowTurnState extends State<ShowTurn> {
                                 leadingIcon: Icons.person,
                                 title: controller.trips[index].driverName!,
                                 driverPhoneNumber:
-                                    controller.trips[index].phone!,
+                                    controller.trips[index].phone ?? '00',
                               ),
                             );
                           },
