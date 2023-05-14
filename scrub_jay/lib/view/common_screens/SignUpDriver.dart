@@ -135,7 +135,7 @@ class SignUpDriver extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            // controller: drivercontroler.phoneNumber,
+                            controller: drivercontroler.driverIdentityNumber,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "this field is required".tr;
@@ -156,7 +156,7 @@ class SignUpDriver extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            // controller: drivercontroler.phoneNumber,
+                            controller: drivercontroler.vehicleNumber,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "this field is required".tr;
@@ -175,7 +175,7 @@ class SignUpDriver extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            // controller: drivercontroler.phoneNumber,
+                            controller: drivercontroler.licenseNumber,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "this field is required".tr;
