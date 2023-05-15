@@ -120,7 +120,7 @@ class SignUpPassenger extends StatelessWidget {
                               }
                               if (passengercontroller.password.text.trim() !=
                                   passengercontroller.rewritePassword.text.trim()) {
-                                return 'Passwords don\'t match';
+                                return 'Passwords don\'t match'.tr;
                               }
                               return null;
                             },

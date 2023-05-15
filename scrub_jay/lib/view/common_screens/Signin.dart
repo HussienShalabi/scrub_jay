@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/signin_controller.dart';
 import 'package:scrub_jay/core/app_functions.dart';
@@ -100,7 +101,7 @@ class Signin extends StatelessWidget {
                                     init: SignInControllerImp(),
                                     builder: (signInController) {
                                       return SizedBox(
-                                        width: 200,
+                                        width: 250.w,
                                         child: ElevatedButton(
                                           style: ThemeHelper().buttonStyle(),
                                           onPressed: signInController.isLoading
