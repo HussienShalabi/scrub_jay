@@ -16,7 +16,7 @@ class Signin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SignInControllerImp controller = Get.find<SignInControllerImp>();
+    final SignInControllerImp controller = Get.put(SignInControllerImp());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -99,27 +99,30 @@ class Signin extends StatelessWidget {
                                 child: GetBuilder<SignInControllerImp>(
                                     init: SignInControllerImp(),
                                     builder: (signInController) {
-                                      return ElevatedButton(
-                                        style: ThemeHelper().buttonStyle(),
-                                        onPressed: signInController.isLoading
-                                            ? () {}
-                                            : () => controller.signIn(),
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              40, 10, 40, 10),
-                                          child: signInController.isLoading
-                                              ? const Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                )
-                                              : Text(
-                                                  'Sign In'.tr,
-                                                  style: const TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
-                                                ),
+                                      return SizedBox(
+                                        width: 200,
+                                        child: ElevatedButton(
+                                          style: ThemeHelper().buttonStyle(),
+                                          onPressed: signInController.isLoading
+                                              ? () {}
+                                              : () => controller.signIn(),
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                40, 10, 40, 10),
+                                            child: signInController.isLoading
+                                                ? const Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  )
+                                                : Text(
+                                                    'Sign In'.tr,
+                                                    style: const TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white),
+                                                  ),
+                                          ),
                                         ),
                                       );
                                     }),

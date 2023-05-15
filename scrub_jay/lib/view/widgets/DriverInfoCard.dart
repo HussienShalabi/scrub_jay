@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class DriverInfoCard extends StatefulWidget {
   final IconData leadingIcon;
   final String title;
-  final int driverPhoneNumber;
+  final String driverPhoneNumber;
   final double BottomMargin;
   final Key? key;
 
@@ -27,7 +27,6 @@ class _DriverInfoCardState extends State<DriverInfoCard> {
     return Card(
       color: Colors.black54,
       margin: EdgeInsets.all(7.sp),
-
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       elevation: 5.sp,
       child: ListTile(
@@ -55,7 +54,7 @@ class _DriverInfoCardState extends State<DriverInfoCard> {
               ),
             ),
             Text(
-              '${widget.driverPhoneNumber}',
+              widget.driverPhoneNumber,
               style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.white,

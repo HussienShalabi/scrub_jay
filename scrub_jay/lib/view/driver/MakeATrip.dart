@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:scrub_jay/controller/driver_controller.dart';
-import 'package:scrub_jay/view/driver/DriverMap.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
 import '../widgets/RequestCard.dart';
@@ -91,17 +90,18 @@ class MakeATrip extends StatelessWidget {
                           height: 20,
                         ),
                         ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            itemCount: 4,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) => const RequestCard(
-                                  passengerName: 'Abu al-tayeb',
-                                  passengerCount: 2,
-                                  passengerPhoneNumber: 059954,
-                                  passengerLocation: 'khaledyah ',
-                                  // trailing: Icons.check,
-                                )),
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemCount: 4,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => const RequestCard(
+                            passengerName: 'Abu al-tayeb',
+                            passengerCount: 2,
+                            passengerPhoneNumber: 059954,
+                            passengerLocation: 'khaledyah ',
+                            // trailing: Icons.check,
+                          ),
+                        ),
                       ],
                     ),
                   ),

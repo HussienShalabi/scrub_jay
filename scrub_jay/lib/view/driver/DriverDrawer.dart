@@ -5,6 +5,7 @@ import '../../controller/driver_controller.dart';
 import '../common_screens/EditPassword.dart';
 import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
+import '../common_screens/settingsScreen.dart';
 import 'DriverMainScreen.dart';
 
 class DriverDrawer extends StatefulWidget {
@@ -84,6 +85,20 @@ class _DriverDrawerState extends State<DriverDrawer> {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.settings,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).colorScheme.secondary),
+              title: Text(
+                'Account settings'.tr,
+                style: TextStyle(
+                    fontSize: _drawerFontSize,
+                    color: Theme.of(context).colorScheme.secondary),
+              ),
+              onTap: () {
+                Get.to(SettingsScreen());
+              },
             ),
             ListTile(
               leading: Icon(Icons.person,

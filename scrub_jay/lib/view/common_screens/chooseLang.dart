@@ -82,45 +82,51 @@ class chooseLang extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Column(
                 children: [
-                  Container(
-                    decoration: ThemeHelper().buttonBoxDecoration(context),
-                    child: ElevatedButton(
-                      style: ThemeHelper().buttonStyle(),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                        child: Text(
-                          'Arabic'.tr.toUpperCase(),
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                  SizedBox(
+                    width: 200 ,
+                    child: Container(
+                      decoration: ThemeHelper().buttonBoxDecoration(context),
+                      child: ElevatedButton(
+                        style: ThemeHelper().buttonStyle(),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                          child: Text(
+                            'Arabic'.tr.toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
                         ),
+                        onPressed: () {
+                          controllerlang.changeLang('ar');
+                        },
                       ),
-                      onPressed: () {
-                        controllerlang.changeLang('ar');
-                      },
                     ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    decoration: ThemeHelper().buttonBoxDecoration(context),
-                    child: ElevatedButton(
-                      style: ThemeHelper().buttonStyle(),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                        child: Text(
-                          'English'.tr.toUpperCase(),
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                  SizedBox(
+                    width: 200,
+                    child: Container(
+                      decoration: ThemeHelper().buttonBoxDecoration(context),
+                      child: ElevatedButton(
+                        style: ThemeHelper().buttonStyle(),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                          child: Text(
+                            'English'.tr.toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
                         ),
+                        onPressed: () {
+                          controllerlang.changeLang('en');
+                        },
                       ),
-                      onPressed: () {
-                        controllerlang.changeLang('en');
-                      },
                     ),
                   ),
                 ],

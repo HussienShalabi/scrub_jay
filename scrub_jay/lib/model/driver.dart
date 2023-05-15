@@ -2,13 +2,13 @@ import 'package:scrub_jay/model/user.dart';
 
 class Driver extends User {
   String? vehicleNumber;
-  String? insuranceDriverImageURL;
-  String? insuranceCarImageURL;
+  String? driverIdentityNumber;
+  String? licenseNumber;
 
   Driver(
       {this.vehicleNumber,
-      this.insuranceDriverImageURL,
-      this.insuranceCarImageURL,
+      this.driverIdentityNumber,
+      this.licenseNumber,
       super.fullname,
       super.emailAddress,
       super.phoneNumber,
@@ -20,8 +20,9 @@ class Driver extends User {
     super.emailAddress = json['emailAddress'];
     super.phoneNumber = json['phoneNumber'];
     super.role = json['role'];
-    insuranceDriverImageURL = json['insuranceDriverImageURL'];
-    insuranceCarImageURL = json['insuranceCarImageURL'];
+    vehicleNumber = json['vehicleNumber'];
+    driverIdentityNumber = json['driverIdentityNumber'];
+    licenseNumber = json['licenseNumber'];
   }
 
   Map<String, dynamic> toJson() {
@@ -30,8 +31,9 @@ class Driver extends User {
     data['fullName'] = super.fullname;
     data['emailAddress'] = super.emailAddress;
     data['phoneNumber'] = super.phoneNumber;
-    data['insuranceDriverImageURL'] = insuranceDriverImageURL;
-    data['insuranceCarImageURL'] = insuranceCarImageURL;
+    data['vehicleNumber'] = vehicleNumber;
+    data['driverIdentityNumber'] = driverIdentityNumber;
+    data['licenseNumber'] = licenseNumber;
     data['role'] = super.role;
     return data;
   }

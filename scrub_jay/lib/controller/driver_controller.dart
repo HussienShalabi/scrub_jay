@@ -17,17 +17,56 @@ abstract class DriverController extends GetxController {
   Future<void> addTrip();
   Future<void> getDriverData();
   Future<void> driverSignout();
+  Future<void> getTrips();
 }
 
 class DriverControllerImp extends DriverController {
   bool isLoading = false;
-  Driver? currentUser;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController fullName = TextEditingController();
   final TextEditingController emailAddress = TextEditingController();
   final TextEditingController phoneNumber = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController rewritePassword = TextEditingController();
+  final TextEditingController vehicleNumber = TextEditingController();
+  final TextEditingController driverIdentityNumber = TextEditingController();
+  final TextEditingController licenseNumber = TextEditingController();
+
+  Driver? currentDriver;
+  List<Trip> trips = [];
+
+  @override
+  Future<void> getTrips() async {
+    isLoading = true;
+    update();
+
+    await Trip.getTrips().then(
+      (value) async {
+        value.onValue.listen(
+          (event) async {
+            trips = [];
+            final Iterable<DataSnapshot> data = event.snapshot.children;
+            for (DataSnapshot child in data) {
+              final Map<String, dynamic> trip =
+                  json.decode(json.encode(child.value));
+
+              (await user.User.getUser(trip['driverId']))
+                  .onValue
+                  .listen((event) {
+                trip['driverName'] =
+                    (event.snapshot.value as Map<dynamic, dynamic>)['fullName'];
+              });
+              trip['id'] = child.key;
+
+              trips.add(Trip.fromJson(trip));
+            }
+            isLoading = false;
+            update();
+          },
+        );
+      },
+    );
+  }
 
   @override
   driverSignup() async {
@@ -39,6 +78,9 @@ class DriverControllerImp extends DriverController {
       Driver newDriver = Driver(
           fullname: fullName.text.trim(),
           emailAddress: emailAddress.text.trim(),
+          vehicleNumber: vehicleNumber.text,
+          driverIdentityNumber: driverIdentityNumber.text,
+          licenseNumber: licenseNumber.text,
           role: 1);
 
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
@@ -75,15 +117,13 @@ class DriverControllerImp extends DriverController {
   Future<void> addTrip() async {
     if (!isLoading) {
       Trip newTrip = Trip(
-        driverId: currentUser!.id,
-        driverName: currentUser!.fullname,
-        phone: currentUser!.phoneNumber,
+        driverId: currentDriver!.id,
+        driverName: currentDriver!.fullname,
+        phone: currentDriver!.phoneNumber,
         totalPassengers: 0,
       );
 
-      await Trip.addTrip(newTrip).then((value) {
-        print(value);
-      });
+      await Trip.addTrip(newTrip).then((value) {});
     }
   }
 
@@ -98,10 +138,10 @@ class DriverControllerImp extends DriverController {
 
     databaseReference.onValue.listen(
       (event) {
-        currentUser =
+        currentDriver =
             Driver.fromJson(json.decode(json.encode(event.snapshot.value)));
 
-        currentUser!.id = event.snapshot.key;
+        currentDriver!.id = event.snapshot.key;
         isLoading = false;
       },
     );
@@ -111,5 +151,6 @@ class DriverControllerImp extends DriverController {
   void onInit() {
     super.onInit();
     getDriverData();
+    getTrips();
   }
 }

@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:scrub_jay/core/app_permissions.dart';
 import '../model/map.dart';
 
 abstract class MapController extends GetxController {

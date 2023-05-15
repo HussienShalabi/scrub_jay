@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/driver_controller.dart';
 import '../widgets/DriverInfoCard.dart';
 import '../widgets/HeaderWidget.dart';
 import 'DriverDrawer.dart';
@@ -94,17 +95,23 @@ class _ShowTurnState extends State<ShowTurn> {
                         const SizedBox(
                           height: 20,
                         ),
-                        ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            itemCount: 7,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) =>
-                                const DriverInfoCard(
-                                  leadingIcon: Icons.person,
-                                  title: 'Hejawi',
-                                  driverPhoneNumber: 555258,
-                                )),
+                        GetBuilder<DriverControllerImp>(
+                          init: DriverControllerImp(),
+                          builder: (controller) {
+                            return ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              itemCount: controller.trips.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) => DriverInfoCard(
+                                leadingIcon: Icons.person,
+                                title: controller.trips[index].driverName!,
+                                driverPhoneNumber:
+                                    controller.trips[index].phone ?? '00',
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
