@@ -106,7 +106,7 @@ class PassengerMap extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
                       child: Text(
                         controller.isLoading
-                            ? "Waiting"
+                            ? "Waiting".tr
                             : "Save Location".tr.toUpperCase(),
                         style: const TextStyle(
                           fontSize: 20,

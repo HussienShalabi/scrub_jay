@@ -230,7 +230,7 @@ class ChooseTrip extends StatelessWidget {
               ),
               onPressed: () {
                 Get.defaultDialog(
-                          title: "booking",
+                          title: "booking".tr,
                           content: SingleChildScrollView(
                             child: Column(
                               children: [
@@ -254,9 +254,9 @@ class ChooseTrip extends StatelessWidget {
                                   builder: (controller) => Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
-                                      const SizedBox(
+                                       SizedBox(
                                         child: Text(
-                                          'Your location:',
+                                          'Your location:'.tr,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -265,7 +265,7 @@ class ChooseTrip extends StatelessWidget {
                                       SizedBox(
                                         height: 40,
                                         child: RadioListTile(
-                                          title: const Text('Current location'),
+                                          title:  Text('Current location'.tr),
                                           value: 0,
                                           groupValue: controller.optionMapSelected.value,
                                           onChanged: (value) {
@@ -276,7 +276,7 @@ class ChooseTrip extends StatelessWidget {
                                       SizedBox(
                                         height: 40,
                                         child: RadioListTile(
-                                          title: const Text('Choose from map'),
+                                          title:  Text('Choose from map'.tr),
                                           value: 1,
                                           groupValue: controller.optionMapSelected.value,
                                           onChanged: (value) {
@@ -293,7 +293,7 @@ class ChooseTrip extends StatelessWidget {
                               ],
                             ),
                           ),
-                          textConfirm: "book now", buttonColor: Colors.yellow.shade700,confirmTextColor: Colors.white,
+                          textConfirm: "book now".tr, buttonColor: Colors.yellow.shade700,confirmTextColor: Colors.white,
                           onConfirm: () {
                             if (passengerControllerImp.optionMapSelected.value == 1) {
                               Get.to(() => const PassengerMap());

@@ -106,7 +106,7 @@ class PassengerDrawer extends StatelessWidget {
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
               title: Text(
-                'Account settings'.tr,
+                'Account management'.tr,
                 style: TextStyle(
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),
@@ -136,7 +136,7 @@ class PassengerDrawer extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
               ),
               title: Text(
-                ' Passenger Map'.tr,
+                'Passenger Map'.tr,
                 style: TextStyle(
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),

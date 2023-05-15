@@ -3,14 +3,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:scrub_jay/view/Driver/DriverDrawer.dart';
-import 'package:scrub_jay/view/admin/DeleteDriver.dart';
-import 'package:scrub_jay/view/passenger/PassengerDrawer.dart';
-import 'package:scrub_jay/view/widgets/DriverInfoCard.dart';
 import 'package:scrub_jay/view/widgets/RequestCard.dart';
-import 'package:scrub_jay/view/widgets/myDrawer.dart';
 import '../../controller/driver_controller.dart';
 import '../common_screens/theme_helper.dart';
-import '../widgets/HeaderWidget.dart';
 
 class DriverMap extends StatelessWidget {
   const DriverMap({super.key});
