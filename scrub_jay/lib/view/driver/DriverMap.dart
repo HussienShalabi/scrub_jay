@@ -6,6 +6,7 @@ import 'package:scrub_jay/view/passenger/PassengerDrawer.dart';
 import 'package:scrub_jay/view/widgets/DriverInfoCard.dart';
 import 'package:scrub_jay/view/widgets/RequestCard.dart';
 import 'package:scrub_jay/view/widgets/myDrawer.dart';
+import '../../controller/driver_controller.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
 
@@ -20,17 +21,51 @@ class DriverMap extends StatelessWidget {
         backgroundColor: Colors.yellow.shade700,
         onPressed: () => Get.bottomSheet(SingleChildScrollView(
           child: Container(
-            height: 300,
+            height: 400,
             color: Colors.white,
-            child: ListView.builder(
-              itemCount: 8,
-              itemBuilder: (context, index) => const InkWell(
-                child: RequestCard(
-                    passengerName: "Hus",
-                    passengerCount: 3,
-                    passengerPhoneNumber: 0592,
-                    passengerLocation: 'iktaba'),
-              ),
+            child: Column(
+              children : [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: 8,
+                    itemBuilder: (context, index) => const InkWell(
+                      child: RequestCard(
+                          passengerName: "Hus",
+                          passengerCount: 3,
+                          passengerPhoneNumber: 0592,
+                          passengerLocation: 'iktaba'),
+                    ),
+                  ),
+                ),
+                GetBuilder<DriverControllerImp>(
+                    init: DriverControllerImp(),
+                    builder: (controller) {
+                      return Container(
+                        // alignment: Alignment.bottomCenter,
+                        decoration: ThemeHelper().buttonBoxDecoration(context),
+                        child: ElevatedButton(
+                          style: ThemeHelper().buttonStyle(),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 110),
+                            child: Text(
+                              'Start the trip'.tr,
+                              style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          onPressed: () async {
+                            await controller.addTrip();
+
+                            //After successful login we will redirect to profile page.
+                            // Get.to(const DriverMap());
+                          },
+                        ),
+                      );
+                    }),
+              ]
+
             ),
           ),
         )),

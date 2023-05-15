@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:scrub_jay/view/driver/DriverMap.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
 import 'DriverDrawer.dart';
@@ -113,7 +114,7 @@ class DriverMainScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              Get.to(const MakeATrip());
+                              Get.to(const DriverMap());
                             },
                           ),
                         ),
