@@ -33,6 +33,7 @@ class PassengerControllerImp extends PassengerController {
   final TextEditingController passwordSignin = TextEditingController();
   RxInt optionMapSelected = RxInt(0);
 
+  bool permissionMap = false;
   bool isLoading = false;
   int numberOfPassengers = 1;
   List<Trip> trips = [];
