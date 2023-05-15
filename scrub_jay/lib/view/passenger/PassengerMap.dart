@@ -74,23 +74,13 @@ class PassengerMap extends StatelessWidget {
                   if (controller.destinationLocation != null)
                     MarkerLayer(
                       markers: [
-                        if (controller.currentLocation != null)
-                          Marker(
-                            point: LatLng(controller.currentLocation!.latitude,
-                                controller.currentLocation!.longitude),
-                            builder: (context) => const Icon(
-                              Icons.location_history,
-                              size: 50,
-                              color: Colors.red,
-                            ),
-                          ),
                         if (controller.destinationLocation != null)
                           Marker(
                             point: controller.destinationLocation!,
                             builder: (context) => const Icon(
                               Icons.location_history,
                               size: 50,
-                              color: Colors.amber,
+                              color: Colors.red,
                             ),
                           ),
                       ],

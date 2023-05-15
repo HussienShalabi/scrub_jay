@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/trip.dart';
@@ -11,6 +12,7 @@ import 'package:scrub_jay/model/user.dart' as user;
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../core/app_shared_preferences.dart';
+import '../model/map.dart' as map;
 
 abstract class DriverController extends GetxController {
   Future<void> driverSignup();
@@ -18,6 +20,7 @@ abstract class DriverController extends GetxController {
   Future<void> getDriverData();
   Future<void> driverSignout();
   Future<void> getTrips();
+  Future<void> determineCurrentLocation();
 }
 
 class DriverControllerImp extends DriverController {
@@ -32,8 +35,35 @@ class DriverControllerImp extends DriverController {
   final TextEditingController driverIdentityNumber = TextEditingController();
   final TextEditingController licenseNumber = TextEditingController();
 
+  LatLng? currentLocation;
   Driver? currentDriver;
+  List<LatLng> locations = [];
   List<Trip> trips = [];
+
+  @override
+  Future<void> determineCurrentLocation() async {
+    await map.Map.getCurrentLocation().then((value) {
+      currentLocation = LatLng(value.latitude, value.longitude);
+
+      update();
+    });
+  }
+
+  Future<void> getPassengersLocations() async {
+    locations = [];
+    if (trips.isNotEmpty) {
+      Trip myTrip = trips.firstWhere((element) {
+        return element.driverId == currentDriver!.id;
+      });
+      myTrip.passengers!.forEach((key, value) {
+        locations.add(
+          LatLng(
+              value['location']!['latitude'], value['location']!['longitude']),
+        );
+      });
+    }
+    update();
+  }
 
   @override
   Future<void> getTrips() async {
@@ -152,5 +182,6 @@ class DriverControllerImp extends DriverController {
     super.onInit();
     getDriverData();
     getTrips();
+    determineCurrentLocation();
   }
 }
