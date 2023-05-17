@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
+import 'package:scrub_jay/core/firebase_database_app.dart';
 import 'package:scrub_jay/model/driver.dart';
+import 'package:scrub_jay/model/passenger.dart';
 import 'package:scrub_jay/model/trip.dart';
 import 'package:scrub_jay/model/user.dart' as user;
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
@@ -37,7 +39,7 @@ class DriverControllerImp extends DriverController {
 
   LatLng? currentLocation;
   Driver? currentDriver;
-  List<LatLng> locations = [];
+  List<Passenger> passengers = [];
   List<Trip> trips = [];
 
   @override
@@ -50,19 +52,34 @@ class DriverControllerImp extends DriverController {
   }
 
   Future<void> getPassengersLocations() async {
-    locations = [];
+    passengers = [];
     if (trips.isNotEmpty) {
       Trip myTrip = trips.firstWhere((element) {
         return element.driverId == currentDriver!.id;
       });
-      myTrip.passengers!.forEach((key, value) {
-        locations.add(
-          LatLng(
-              value['location']!['latitude'], value['location']!['longitude']),
+      myTrip.passengers!.forEach((key, value) async {
+        Map<String, dynamic> data = {};
+        final DatabaseReference databaseRefrence = await FirebaseDatabaseApp
+            .firebaseDatabase
+            .getData('users/${value['passengerId']}');
+
+        await databaseRefrence.get().then((pas) {
+          data = jsonDecode(jsonEncode(pas.value));
+          data['id'] = pas.key;
+          data['location'] = {
+            'latitude': value['location']!['latitude'],
+            'longitude': value['location']!['longitude'],
+          };
+        });
+
+        passengers.add(
+          Passenger.fromJson(data),
+          // LatLng(
+          //     value['location']!['latitude'], value['location']!['longitude']),
         );
+        update();
       });
     }
-    update();
   }
 
   @override

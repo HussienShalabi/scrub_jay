@@ -1,7 +1,7 @@
 import 'package:scrub_jay/model/user.dart';
 
 class Passenger extends User {
-  Map<String, String>? location;
+  Map<String, dynamic>? location;
 
   Passenger(
       {this.location,

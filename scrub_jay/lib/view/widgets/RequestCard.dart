@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class RequestCard extends StatefulWidget {
   final IconData leadingIcon;
   final String passengerName;
-  final int passengerPhoneNumber;
+  final String passengerPhoneNumber;
   final int passengerCount;
   final String passengerLocation;
 
@@ -29,29 +29,29 @@ class _RequestCardState extends State<RequestCard> {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.black54,
-      margin: const EdgeInsets.symmetric(vertical: 5 , horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       // margin: const EdgeInsets.all(3),
       // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       elevation: 10,
       child: ListTile(
         leading: Icon(
-            widget.leadingIcon,
-            color: Colors.white,
-            size: 30,
+          widget.leadingIcon,
+          color: Colors.white,
+          size: 30,
         ),
         title: Row(
           children: [
             Text(
               "name: ".tr,
-              style:  TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.sp,
               ),
             ),
             Text(
               widget.passengerName,
-              style:  TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.sp,
               ),
@@ -65,14 +65,14 @@ class _RequestCardState extends State<RequestCard> {
               children: [
                 Text(
                   "phone: ".tr,
-                  style:  TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,
                   ),
                 ),
                 Text(
                   "${widget.passengerPhoneNumber}",
-                  style:  TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,
                   ),
@@ -83,14 +83,14 @@ class _RequestCardState extends State<RequestCard> {
               children: [
                 Text(
                   "seats: ".tr,
-                  style:  TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,
                   ),
                 ),
                 Text(
                   "${widget.passengerCount} ",
-                  style:  TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,
                   ),
@@ -101,14 +101,14 @@ class _RequestCardState extends State<RequestCard> {
               children: [
                 Text(
                   "Location: ".tr,
-                  style:  TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,
                   ),
                 ),
                 Text(
                   "${widget.passengerLocation} ",
-                  style:  TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,
                   ),
