@@ -96,7 +96,8 @@ class Signin extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                decoration: ThemeHelper().buttonBoxDecoration(context),
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
                                 child: GetBuilder<SignInControllerImp>(
                                     init: SignInControllerImp(),
                                     builder: (signInController) {

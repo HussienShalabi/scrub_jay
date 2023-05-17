@@ -66,9 +66,6 @@ class DriverMap extends StatelessWidget {
                                 ),
                                 onPressed: () async {
                                   await controller.addTrip();
-
-                                  //After successful login we will redirect to profile page.
-                                  // Get.to(const DriverMap());
                                 },
                               ),
                             ),
@@ -80,15 +77,6 @@ class DriverMap extends StatelessWidget {
                   ),
             appBar: AppBar(
               centerTitle: true,
-              // title: Text(
-              //   "".tr,
-              //   style: const TextStyle(
-              //     color: Colors.white,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
-              // elevation: 0.5,
-              // iconTheme: const IconThemeData(color: Colors.white),
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
