@@ -97,7 +97,7 @@ class MakeATrip extends StatelessWidget {
                           itemBuilder: (context, index) => const RequestCard(
                             passengerName: 'Abu al-tayeb',
                             passengerCount: 2,
-                            passengerPhoneNumber: 059954,
+                            passengerPhoneNumber: '059954',
                             passengerLocation: 'khaledyah ',
                             // trailing: Icons.check,
                           ),

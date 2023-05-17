@@ -22,16 +22,23 @@ class DriverMap extends StatelessWidget {
             color: Colors.white,
             child: Column(children: [
               Expanded(
-                child: ListView.builder(
-                  itemCount: 8,
-                  itemBuilder: (context, index) => const InkWell(
-                    child: RequestCard(
-                        passengerName: "Hus",
-                        passengerCount: 3,
-                        passengerPhoneNumber: 0592,
-                        passengerLocation: 'iktaba'),
-                  ),
-                ),
+                child: GetBuilder<DriverControllerImp>(
+                    init: DriverControllerImp(),
+                    builder: (controller) {
+                      return ListView.builder(
+                        itemCount: controller.passengers.length,
+                        itemBuilder: (context, index) => InkWell(
+                          child: RequestCard(
+                              passengerName:
+                                  controller.passengers[index].fullname ?? '',
+                              passengerCount: 3,
+                              passengerPhoneNumber:
+                                  controller.passengers[index].phoneNumber ??
+                                      '',
+                              passengerLocation: 'iktaba'),
+                        ),
+                      );
+                    }),
               ),
               GetBuilder<DriverControllerImp>(
                   init: DriverControllerImp(),
@@ -132,6 +139,10 @@ class DriverMap extends StatelessWidget {
               builder: (controller) {
                 controller.getPassengersLocations();
 
+                if (controller.passengers.isNotEmpty) {
+                  print(controller.passengers);
+                }
+
                 return FlutterMap(
                   options: MapOptions(
                     center: controller.currentLocation != null
@@ -150,11 +161,12 @@ class DriverMap extends StatelessWidget {
                         'id': 'mapbox.mapbox-streets-v8',
                       },
                     ),
-                    if (controller.locations.isNotEmpty)
+                    if (controller.passengers.isNotEmpty)
                       MarkerLayer(
-                        markers: controller.locations.map((e) {
+                        markers: controller.passengers.map((e) {
                           return Marker(
-                            point: e,
+                            point: LatLng(e.location!['latitude']! as double,
+                                e.location!['longitude']! as double),
                             builder: (context) {
                               return const Icon(
                                 Icons.location_history,
