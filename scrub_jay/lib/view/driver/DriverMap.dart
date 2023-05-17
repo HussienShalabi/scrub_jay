@@ -117,7 +117,7 @@ class DriverMap extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                )
+                ),
               ],
             ),
           )

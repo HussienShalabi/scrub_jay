@@ -55,11 +55,9 @@ class _DriverDrawerState extends State<DriverDrawer> {
                 child: Center(
                   child: Column(
                     children: const [
-                      CircleAvatar(
-                        radius: 40,
-                      ),
+
                       SizedBox(
-                        height: 10,
+                        height: 50,
                       ),
                       Text(
                         'user name',
@@ -74,24 +72,13 @@ class _DriverDrawerState extends State<DriverDrawer> {
                 ),
               ),
             ),
-            ListTile(
-              leading: Icon(Icons.person,
-                  size: _drawerIconSize,
-                  color: Theme.of(context).colorScheme.secondary),
-              title: Text(
-                'Profile Page'.tr,
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).colorScheme.secondary),
-              ),
-              onTap: () {},
-            ),
+
             ListTile(
               leading: Icon(Icons.settings,
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
               title: Text(
-                'Account settings'.tr,
+                'Account management'.tr,
                 style: TextStyle(
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),
@@ -100,25 +87,8 @@ class _DriverDrawerState extends State<DriverDrawer> {
                 Get.to(SettingsScreen());
               },
             ),
-            ListTile(
-              leading: Icon(Icons.person,
-                  size: _drawerIconSize,
-                  color: Theme.of(context).colorScheme.secondary),
-              title: Text(
-                'Driver Map'.tr,
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).colorScheme.secondary),
-              ),
-              onTap: () {
-                Get.to(const DriverMap());
-              },
-            ),
 
-            Divider(
-              color: Theme.of(context).primaryColor,
-              height: 1,
-            ),
+
             ListTile(
               leading: Icon(Icons.drive_eta_rounded,
                   size: _drawerIconSize,
