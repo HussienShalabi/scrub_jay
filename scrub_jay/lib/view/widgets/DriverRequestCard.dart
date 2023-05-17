@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class DriverRequestCard extends StatefulWidget {
+class DriverRequestCard extends StatelessWidget {
   final IconData leadingIcon;
   final String title;
   final int driverPhoneNumber;
@@ -10,18 +10,13 @@ class DriverRequestCard extends StatefulWidget {
   final double BottomMargin;
 
   const DriverRequestCard({
-    this.leadingIcon =  Icons.person ,
+    this.leadingIcon = Icons.person,
     required this.title,
     required this.driverPhoneNumber,
     required this.trailing,
     this.BottomMargin = 0,
   });
 
-  @override
-  State<DriverRequestCard> createState() => _DriverRequestCardState();
-}
-
-class _DriverRequestCardState extends State<DriverRequestCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -31,11 +26,11 @@ class _DriverRequestCardState extends State<DriverRequestCard> {
       elevation: 5.sp,
       child: ListTile(
         leading: Icon(
-          widget.leadingIcon,
+          leadingIcon,
           color: Colors.white,
         ),
         title: Text(
-          widget.title,
+          title,
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -55,7 +50,7 @@ class _DriverRequestCardState extends State<DriverRequestCard> {
               ),
             ),
             Text(
-              '${widget.driverPhoneNumber}',
+              '$driverPhoneNumber',
               style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.white,
@@ -69,7 +64,7 @@ class _DriverRequestCardState extends State<DriverRequestCard> {
           //TODO Show attachments
           onPressed: () => {},
           icon: Icon(
-            widget.trailing,
+            trailing,
             color: Colors.green,
           ),
         ),

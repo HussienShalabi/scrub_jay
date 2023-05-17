@@ -10,7 +10,6 @@ import '../common_screens/SignUpPassenger.dart';
 import '../common_screens/SplashScreen.dart';
 import '../driver/DriverMainScreen.dart';
 
-
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
@@ -27,13 +26,13 @@ class MyDrawer extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 stops: const [
-                  0.0,
-                  1.0
-                ],
+              0.0,
+              1.0
+            ],
                 colors: [
-                  Theme.of(context).primaryColor.withOpacity(0.2),
-                  Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                ])),
+              Theme.of(context).primaryColor.withOpacity(0.2),
+              Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+            ])),
         child: ListView(
           children: [
             DrawerHeader(
@@ -71,7 +70,6 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ),
               ),
-
             ),
             ListTile(
               leading: Icon(
@@ -86,11 +84,8 @@ class MyDrawer extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SplashScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SplashScreen()));
               },
             ),
             ListTile(
@@ -108,7 +103,8 @@ class MyDrawer extends StatelessWidget {
             Divider(
               color: Theme.of(context).primaryColor,
               height: 1,
-            ),ListTile(
+            ),
+            ListTile(
               leading: Icon(Icons.person,
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
@@ -228,8 +224,7 @@ class MyDrawer extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                      const ForgotPasswordVerification()),
+                      builder: (context) => const ForgotPasswordVerification()),
                 );
               },
             ),
@@ -253,7 +248,6 @@ class MyDrawer extends StatelessWidget {
                 Get.find<PassengerControllerImp>().passengerSignout();
               },
             ),
-
           ],
         ),
       ),

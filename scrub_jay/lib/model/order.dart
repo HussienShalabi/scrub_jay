@@ -3,7 +3,7 @@ import 'package:scrub_jay/model/trip.dart';
 
 class Order {
   String? id;
-  String? passengerId;
+  double? passengerId;
   Map<String, double>? location;
   int? numOfPassengers;
   String? phone;

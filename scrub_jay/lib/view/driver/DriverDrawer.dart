@@ -8,14 +8,9 @@ import '../common_screens/chooseLang.dart';
 import '../common_screens/settingsScreen.dart';
 import 'DriverMainScreen.dart';
 
-class DriverDrawer extends StatefulWidget {
+class DriverDrawer extends StatelessWidget {
   const DriverDrawer({super.key});
 
-  @override
-  State<DriverDrawer> createState() => _DriverDrawerState();
-}
-
-class _DriverDrawerState extends State<DriverDrawer> {
   final double _drawerIconSize = 18;
 
   final double _drawerFontSize = 17;
@@ -55,7 +50,6 @@ class _DriverDrawerState extends State<DriverDrawer> {
                 child: Center(
                   child: Column(
                     children: const [
-
                       SizedBox(
                         height: 50,
                       ),
@@ -72,7 +66,6 @@ class _DriverDrawerState extends State<DriverDrawer> {
                 ),
               ),
             ),
-
             ListTile(
               leading: Icon(Icons.settings,
                   size: _drawerIconSize,
@@ -87,8 +80,6 @@ class _DriverDrawerState extends State<DriverDrawer> {
                 Get.to(SettingsScreen());
               },
             ),
-
-
             ListTile(
               leading: Icon(Icons.drive_eta_rounded,
                   size: _drawerIconSize,
@@ -114,7 +105,7 @@ class _DriverDrawerState extends State<DriverDrawer> {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.to( EditPassword());
+                Get.to(EditPassword());
               },
             ),
             ListTile(

@@ -39,7 +39,7 @@ class DriverControllerImp extends DriverController {
 
   LatLng? currentLocation;
   Driver? currentDriver;
-  List<Passenger> passengers = [];
+  List<Map<String, dynamic>> passengers = [];
   List<Trip> trips = [];
 
   @override
@@ -52,33 +52,36 @@ class DriverControllerImp extends DriverController {
   }
 
   Future<void> getPassengersLocations() async {
-    passengers = [];
     if (trips.isNotEmpty) {
       Trip myTrip = trips.firstWhere((element) {
         return element.driverId == currentDriver!.id;
       });
-      myTrip.passengers!.forEach((key, value) async {
-        Map<String, dynamic> data = {};
-        final DatabaseReference databaseRefrence = await FirebaseDatabaseApp
-            .firebaseDatabase
-            .getData('users/${value['passengerId']}');
+      myTrip.passengers!.forEach(
+        (key, value) async {
+          Map<String, dynamic> data = {};
+          final DatabaseReference databaseRefrence = await FirebaseDatabaseApp
+              .firebaseDatabase
+              .getData('users/${value['passengerId']}');
 
-        await databaseRefrence.get().then((pas) {
-          data = jsonDecode(jsonEncode(pas.value));
-          data['id'] = pas.key;
-          data['location'] = {
-            'latitude': value['location']!['latitude'],
-            'longitude': value['location']!['longitude'],
-          };
-        });
+          passengers = [];
+          databaseRefrence.onValue.listen(
+            (event) {
+              data = jsonDecode(jsonEncode(event.snapshot.value));
+              data['id'] = event.snapshot.key;
+              data['location'] = {
+                'latitude': value['location']!['latitude'],
+                'longitude': value['location']!['longitude'],
+              };
 
-        passengers.add(
-          Passenger.fromJson(data),
-          // LatLng(
-          //     value['location']!['latitude'], value['location']!['longitude']),
-        );
-        update();
-      });
+              passengers.add({
+                'passenger': Passenger.fromJson(data),
+                'numOfPassenger': value['numOfPassengers']
+              });
+              update();
+            },
+          );
+        },
+      );
     }
   }
 
@@ -107,10 +110,12 @@ class DriverControllerImp extends DriverController {
 
               trips.add(Trip.fromJson(trip));
             }
-            isLoading = false;
-            update();
+            await getPassengersLocations();
           },
         );
+
+        isLoading = false;
+        update();
       },
     );
   }
