@@ -1,4 +1,5 @@
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
@@ -27,49 +28,67 @@ class DriverMap extends StatelessWidget {
                         child: Container(
                           height: 400,
                           color: Colors.white,
-                          child: Column(children: [
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: controller.passengers.length,
-                                itemBuilder: (context, index) => InkWell(
-                                  child: RequestCard(
-                                      passengerName: controller
-                                              .passengers[index]['passenger']
-                                              .fullname ??
-                                          '',
-                                      passengerCount: controller
-                                          .passengers[index]['numOfPassenger'],
-                                      passengerPhoneNumber: controller
-                                              .passengers[index]['passenger']
-                                              .phoneNumber ??
-                                          '',
-                                      passengerLocation: 'iktaba'),
-                                ),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: controller.passengers.isEmpty
+                                    ? Center(
+                                        child: Text(
+                                          'Not found any orders yet',
+                                          style: TextStyle(
+                                            fontSize: 20.sp,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      )
+                                    : ListView.builder(
+                                        itemCount: controller.passengers.length,
+                                        itemBuilder: (context, index) =>
+                                            InkWell(
+                                          child: RequestCard(
+                                              passengerName: controller
+                                                      .passengers[index]
+                                                          ['passenger']
+                                                      .fullname ??
+                                                  '',
+                                              passengerCount:
+                                                  controller.passengers[index]
+                                                      ['numOfPassenger'],
+                                              passengerPhoneNumber: controller
+                                                      .passengers[index]
+                                                          ['passenger']
+                                                      .phoneNumber ??
+                                                  '',
+                                              passengerLocation: 'iktaba'),
+                                        ),
+                                      ),
                               ),
-                            ),
-                            Container(
-                              // alignment: Alignment.bottomCenter,
-                              decoration:
-                                  ThemeHelper().buttonBoxDecoration(context),
-                              child: ElevatedButton(
-                                style: ThemeHelper().buttonStyle(),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 110),
-                                  child: Text(
-                                    'Start the trip'.tr,
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 25),
+                                // alignment: Alignment.bottomCenter,
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 110),
+                                    child: Text(
+                                      'Start the trip'.tr,
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
                                   ),
+                                  onPressed: () async {
+                                    await controller.addTrip();
+                                  },
                                 ),
-                                onPressed: () async {
-                                  await controller.addTrip();
-                                },
                               ),
-                            ),
-                          ]),
+                            ],
+                          ),
                         ),
                       ),
                     ),

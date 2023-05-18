@@ -146,7 +146,7 @@ class DriverControllerImp extends DriverController {
     update();
 
     final DatabaseReference? databaseReference =
-        await user.User.getUser(driverId);
+        await user.User.getUser(driverId, role: 1);
 
     databaseReference!.onValue.listen(
       (event) {
