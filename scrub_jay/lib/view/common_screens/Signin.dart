@@ -4,13 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/signin_controller.dart';
 import 'package:scrub_jay/core/app_functions.dart';
+import '../../controller/auth_controller.dart';
 import '../../view/passenger/choose_trip.dart';
 import '../widgets/HeaderWidget.dart';
 import 'ForgotPassword.dart';
 import 'SignUpPassenger.dart';
 import 'theme_helper.dart';
 
-const double _headerHeight = 250;
+const double _headerHeight = 200;
 
 class Signin extends StatelessWidget {
   const Signin({Key? key}) : super(key: key);
@@ -31,8 +32,8 @@ class Signin extends StatelessWidget {
             ),
             SafeArea(
               child: Container(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                  margin: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                   // This will be the login form
                   child: Column(
                     children: [
@@ -47,11 +48,74 @@ class Signin extends StatelessWidget {
                         'Sign in into your account'.tr,
                         style: const TextStyle(color: Colors.grey),
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
                       Form(
                           key: controller.formKeySignIn,
                           child: Column(
                             children: [
+                              SizedBox(
+                                child: Text(
+                                  'Sign in as:'.tr,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+
+                              GetBuilder<AuthControllerImp>(
+
+                                builder: (controller) => Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                            width: 150,
+                                            child: RadioListTile(contentPadding:EdgeInsets.zero,
+                                              title:  Text('Admin'.tr,),
+                                              value: 0,
+                                              groupValue: controller.RoleSelected.value,
+                                              onChanged: (value) {
+                                                controller.updateSelectedValue(value!);
+                                              },
+                                            )),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 150,
+                                          child: RadioListTile(contentPadding:EdgeInsets.zero,
+                                            title:  Text('Passenger'.tr,),
+                                            value: 2,
+                                            groupValue: controller.RoleSelected.value,
+                                            onChanged: (value) {
+                                              controller.updateSelectedValue(value!);
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 130,
+                                          child: RadioListTile(contentPadding:EdgeInsets.zero,
+                                            title:  Text('Driver'.tr,),
+                                            value: 1,
+                                            groupValue: controller.RoleSelected.value,
+                                            onChanged: (value) {
+                                              controller.updateSelectedValue(value!);
+                                            },
+                                          ),
+                                        ),
+
+
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+
+
                               Container(
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),

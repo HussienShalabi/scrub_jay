@@ -29,6 +29,7 @@ class AuthControllerImp extends AuthController {
   TextEditingController vehicleNumber = TextEditingController();
   TextEditingController driverIdentityNumber = TextEditingController();
   TextEditingController licenseNumber = TextEditingController();
+  RxInt RoleSelected = RxInt(2);
 
   clearData() {
     fullName.dispose();
@@ -143,6 +144,10 @@ class AuthControllerImp extends AuthController {
     }
 
     isLoading = false;
+    update();
+  }
+  void updateSelectedValue(int value) {
+    RoleSelected.value = value;
     update();
   }
 }
