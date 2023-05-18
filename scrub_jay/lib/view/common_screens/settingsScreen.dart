@@ -169,26 +169,26 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                   ListTile(
-                    minLeadingWidth: 20,
-                    leading: Icon(Icons.lock_person_rounded),
-                    title: Text('Edit password: '.tr),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: accountcontroller.password,
-                          // validator: (value) => formValidation(value, 'password',8,30),
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
-                          decoration: ThemeHelper().textInputDecoration(
-                              'New password'.tr, 'Enter new password'.tr),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
+                  //  ListTile(
+                  //   minLeadingWidth: 20,
+                  //   leading: Icon(Icons.lock_person_rounded),
+                  //   title: Text('Edit password: '.tr),
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: TextFormField(
+                  //         controller: accountcontroller.password,
+                  //         // validator: (value) => formValidation(value, 'password',8,30),
+                  //         keyboardType: TextInputType.visiblePassword,
+                  //         obscureText: true,
+                  //         decoration: ThemeHelper().textInputDecoration(
+                  //             'New password'.tr, 'Enter new password'.tr),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  const SizedBox(height: 50),
                   Container(
                     decoration: ThemeHelper().buttonBoxDecoration(context),
                     child: GetBuilder<AccountManagement>(
@@ -251,7 +251,7 @@ class SettingsScreen extends StatelessWidget {
                           text: 'Press here'.tr,
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                             print('hiiiiiiiiiiiii');
+                              accountcontroller.deleteAccount();
                             },
                           style: TextStyle(
                             fontWeight: FontWeight.bold,

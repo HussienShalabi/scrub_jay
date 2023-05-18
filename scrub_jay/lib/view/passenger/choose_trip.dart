@@ -303,9 +303,7 @@ class ChooseTrip extends StatelessWidget {
                             }
                           },
                         );
-                        // passengerControllerImp.orderTrip();
-                // if (_formKey.currentState!.validate()) {
-                // Get.to(DriversList());
+
               },
             ),
           ),

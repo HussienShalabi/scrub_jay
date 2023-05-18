@@ -85,7 +85,7 @@ class Signin extends StatelessWidget {
                                 alignment: Alignment.topRight,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Get.to(const ForgotPassword());
+                                    Get.to( ForgotPassword());
                                   },
                                   child: Text(
                                     "Forgot your password?".tr,

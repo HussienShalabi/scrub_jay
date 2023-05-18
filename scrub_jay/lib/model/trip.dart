@@ -7,6 +7,7 @@ class Trip {
   String? driverId;
   String? driverName;
   int? totalPassengers;
+  DateTime? date;
   Map<String, dynamic>? passengers;
 
   Trip(
@@ -15,7 +16,8 @@ class Trip {
       this.driverId,
       this.driverName,
       this.passengers,
-      this.totalPassengers});
+      this.totalPassengers,
+      this.date});
 
   static List<Trip> trips = [];
 

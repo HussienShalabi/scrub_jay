@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/model/user.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
+import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import '../view/passenger/choose_trip.dart';
 
 import '../core/app_shared_preferences.dart';
@@ -42,6 +43,9 @@ class SignInControllerImp extends SignInController {
         } else if (setData &&
             (data.value as Map<dynamic, dynamic>)['role'] == 2) {
           Get.offAll(() => ChooseTrip());
+        } else if (setData &&
+            (data.value as Map<dynamic, dynamic>)['role'] == 0) {
+          Get.offAll(() => const AdminMainScreen());
         }
       } else {
         isLoading = false;

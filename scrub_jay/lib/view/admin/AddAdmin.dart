@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/AdminController.dart';
+import '../../controller/auth_controller.dart';
+import '../../core/app_functions.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/headerWidget.dart';
 import 'AdminDrawer.dart';
 
 class AddAdmin extends StatelessWidget {
-  const AddAdmin({super.key});
+  final AdminControllerImp adminController = Get.find<AdminControllerImp>();
 
+  AddAdmin({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +88,7 @@ class AddAdmin extends StatelessWidget {
               child: Column(
                 children: [
                   Form(
-                    // key: _formKey,
+                    key: adminController.createAdminKey,
                     child: Column(
                       children: [
                         const SizedBox(
@@ -101,8 +106,11 @@ class AddAdmin extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
+                            validator: (value) =>
+                                formValidation(value, 'username'),
+                            controller: adminController.fullName,
                             decoration: ThemeHelper().textInputDecoration(
-                                'First Name'.tr, 'Enter your first name'.tr),
+                                'Full Name'.tr, 'Enter your full name'.tr),
                           ),
                         ),
                         const SizedBox(
@@ -111,40 +119,40 @@ class AddAdmin extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
+                            controller: adminController.emailAddress,
+                            validator: (value) =>
+                                formValidation(value, 'email'),
                             decoration: ThemeHelper().textInputDecoration(
-                                'Last Name'.tr, 'Enter your last name'.tr),
+                                'Email Address'.tr,
+                                'Enter your email address'.tr),
                           ),
                         ),
                         const SizedBox(height: 20.0),
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
+                            controller: adminController.phoneNumber,
+                            validator: (value) =>
+                                formValidation(value, 'phone'),
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(10),
+                            ],
                             decoration: ThemeHelper().textInputDecoration(
                                 "Mobile Number".tr,
                                 "Enter your mobile number".tr),
                             keyboardType: TextInputType.phone,
-                            validator: (val) {
-                              if (!(val!.isEmpty) &&
-                                  !RegExp(r"^(\d+)*$").hasMatch(val)) {
-                                return "Enter a valid phone number".tr;
-                              }
-                              return null;
-                            },
                           ),
                         ),
                         const SizedBox(height: 20.0),
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
+                            controller: adminController.password,
+                            validator: (value) =>
+                                formValidation(value, 'password', 8, 30),
                             obscureText: true,
                             decoration: ThemeHelper().textInputDecoration(
                                 "Password*".tr, "Enter your password".tr),
-                            validator: (val) {
-                              if (val!.isEmpty) {
-                                return "Please enter your password".tr;
-                              }
-                              return null;
-                            },
                           ),
                         ),
                         const SizedBox(height: 20.0),
@@ -152,39 +160,55 @@ class AddAdmin extends StatelessWidget {
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
                             obscureText: true,
-                            decoration: ThemeHelper().textInputDecoration(
-                                "ReEnter Password*".tr,
-                                "Enter your password".tr),
+                            controller: adminController.rewritePassword,
                             validator: (val) {
                               if (val!.isEmpty) {
-                                return "Please enter your password".tr;
+                                return "this field is required".tr;
+                              }
+                              if (adminController.password.text.trim() !=
+                                  adminController.rewritePassword.text.trim()) {
+                                return 'Passwords don\'t match';
                               }
                               return null;
                             },
+                            decoration: ThemeHelper().textInputDecoration(
+                                "ReEnter Password*".tr,
+                                "Enter your password".tr),
                           ),
                         ),
                         const SizedBox(height: 30.0),
-                        Container(
-                          decoration:
-                              ThemeHelper().buttonBoxDecoration(context),
-                          child: ElevatedButton(
-                            style: ThemeHelper().buttonStyle(),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                              child: Text(
-                                "Add".tr.toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
+                        SizedBox(
+                          width: 200,
+                          child: Container(
+                            decoration:
+                                ThemeHelper().buttonBoxDecoration(context),
+                            child: GetBuilder<AdminControllerImp>(
+                              init: AdminControllerImp(),
+                              builder: (controller) {
+                                return controller.isLoading
+                                    ? const Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : ElevatedButton(
+                                        style: ThemeHelper().buttonStyle(),
+                                        onPressed: controller.isLoading
+                                            ? () {}
+                                            : () => controller.adminSignup(),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              40, 10, 40, 10),
+                                          child: Text(
+                                            "Add".tr.toUpperCase(),
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                              },
                             ),
-                            onPressed: () {
-                              // if (_formKey.currentState!.validate()) {
-                              // Get.to(DriversList());
-                            },
                           ),
                         ),
                       ],

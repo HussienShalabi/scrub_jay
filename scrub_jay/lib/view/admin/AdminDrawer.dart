@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
+import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
 import '../common_screens/EditPassword.dart';
 import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
 // add file constant
 
-class AdminDrawer extends StatefulWidget {
+class AdminDrawer extends StatelessWidget {
   const AdminDrawer({super.key});
 
-  @override
-  State<AdminDrawer> createState() => _AdminDrawerState();
-}
-
-class _AdminDrawerState extends State<AdminDrawer> {
   final double _drawerIconSize = 18;
 
   final double _drawerFontSize = 17;
@@ -53,11 +49,9 @@ class _AdminDrawerState extends State<AdminDrawer> {
                 child: Center(
                   child: Column(
                     children: const [
-                      CircleAvatar(
-                        radius: 40,
-                      ),
+
                       SizedBox(
-                        height: 10,
+                        height: 50,
                       ),
                       Text(
                         'user name',
@@ -72,34 +66,20 @@ class _AdminDrawerState extends State<AdminDrawer> {
                 ),
               ),
             ),
+
+
             ListTile(
               leading: Icon(Icons.person,
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
               title: Text(
-                'Profile Page'.tr,
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).colorScheme.secondary),
-              ),
-              onTap: () {},
-            ),
-            Divider(
-              color: Theme.of(context).primaryColor,
-              height: 1,
-            ),
-            ListTile(
-              leading: Icon(Icons.person,
-                  size: _drawerIconSize,
-                  color: Theme.of(context).colorScheme.secondary),
-              title: Text(
-                'Admin main page'.tr,
+                'Account Management'.tr,
                 style: TextStyle(
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.to(const AdminMainScreen());
+                Get.to(SettingsScreen());
               },
             ),
             ListTile(

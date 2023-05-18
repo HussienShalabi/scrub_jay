@@ -70,28 +70,6 @@ class FirebaseAuthApp {
           .signInWithEmailAndPassword(email: email, password: password);
 
       return userCredential.user!.uid;
-      // final UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-      // AppSharedPrefernces.appSharedPrefernces.getDate('role') as int?;
-      // DocumentSnapshot userDoc = await _firestore.collection('users').doc('users/${userCredential.user!.uid}').get();
-      // final userData = userDoc.data()as Map<String, dynamic>?; // Navigate to the appropriate screen based on the user role
-      // if (userData != null) {
-      //   final role = userData['role'] as int?;
-      // if (role!=null){
-      // switch (role) {
-      //   case 0:
-      //   // Admin screen
-      //     Get.offAll(() => AdminMainScreen());
-      //     break;
-      //   case 1:
-      //   // Regular user screen
-      //     Get.offAll(() => DriverMainScreen());
-      //     break;
-      //   default:
-      //   // Unknown user role
-      //    Get.offAll(()=>ChooseTrip());
-      // }}
-      // else {}}
-      // return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {
       getxSnackbar('error', error.code);
     }
