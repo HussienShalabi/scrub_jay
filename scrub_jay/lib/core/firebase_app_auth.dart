@@ -22,8 +22,16 @@ class FirebaseAuthApp {
 
       await userCredential.user!.sendEmailVerification();
 
-      await FirebaseDatabaseApp.firebaseDatabase
-          .addDataWithoutKey('users/${userCredential.user!.uid}', json);
+      if (json['role'] == 0) {
+        await FirebaseDatabaseApp.firebaseDatabase.addDataWithoutKey(
+            'users/admins/${userCredential.user!.uid}', json);
+      } else if (json['role'] == 1) {
+        await FirebaseDatabaseApp.firebaseDatabase.addDataWithoutKey(
+            'users/drivers/${userCredential.user!.uid}', json);
+      } else {
+        await FirebaseDatabaseApp.firebaseDatabase.addDataWithoutKey(
+            'users/passengers/${userCredential.user!.uid}', json);
+      }
 
       getxSnackbar(
         'Success',
