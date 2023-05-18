@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/passenger_controller.dart';
+import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/EditPassword.dart';
 import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
 import 'package:scrub_jay/view/passenger/PassengerMap.dart';
@@ -115,6 +116,7 @@ class PassengerDrawer extends StatelessWidget {
                 Get.to(SettingsScreen());
               },
             ),
+
             ListTile(
               leading: Icon(Icons.translate_rounded,
                   size: _drawerIconSize,

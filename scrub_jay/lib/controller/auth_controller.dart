@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/model/admin.dart';
+import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/Signin.dart';
 import '../core/firebase_app_auth.dart';
 import '../model/driver.dart';
@@ -10,12 +12,14 @@ abstract class AuthController extends GetxController {
   Future<void> signout();
   Future<void> passengerSignup();
   Future<void> driverSignup();
+  Future<void> AdminSignup();
 }
 
 class AuthControllerImp extends AuthController {
   bool isLoading = false;
   GlobalKey<FormState> signupPassengerKey = GlobalKey<FormState>();
   GlobalKey<FormState> signupDriverKey = GlobalKey<FormState>();
+  GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
   GlobalKey<FormState> signInKey = GlobalKey<FormState>();
   TextEditingController fullName = TextEditingController();
   TextEditingController emailAddress = TextEditingController();
@@ -110,5 +114,35 @@ class AuthControllerImp extends AuthController {
   void onClose() {
     super.onClose();
     clearData();
+  }
+
+  @override
+  Future<void> AdminSignup() async {
+    isLoading = false;
+
+    final bool isValid = createAdminKey.currentState!.validate();
+
+    if (isValid) {
+      Admin newAdmin = Admin(
+        fullname: fullName.text.trim(),
+        emailAddress: emailAddress.text.trim(),
+        phoneNumber: phoneNumber.text.trim(),
+        role: 0,
+      );
+
+      final String? uid = await FirebaseAuthApp.firebaseAuthApp
+          .signup(0, newAdmin.toJson(), password.text);
+
+      await FirebaseAuthApp.firebaseAuthApp.signout();
+
+      if (uid != null) {
+        isLoading = false;
+        update();
+        Get.offAll(() => const AdminMainScreen());
+      }
+    }
+
+    isLoading = false;
+    update();
   }
 }

@@ -6,14 +6,9 @@ import 'Signin.dart';
 import 'ForgotPasswordVerification.dart';
 import 'theme_helper.dart';
 
-class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({Key? key}) : super(key: key);
+class ForgotPassword extends StatelessWidget {
+   ForgotPassword({Key? key}) : super(key: key);
 
-  @override
-  _ForgotPasswordState createState() => _ForgotPasswordState();
-}
-
-class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -53,7 +48,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               height: 10,
                             ),
                             Text(
-                              'Enter the phone number associated with your account.'
+                              'Enter the email address associated with your account.'
                                   .tr,
                               style: const TextStyle(
                                   // fontSize: 20,
@@ -64,7 +59,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               height: 10,
                             ),
                             Text(
-                              'We will send to you a verification code to check your authenticity.'
+                              'We will send to you a verification message to check your authenticity.'
                                   .tr,
                               style: const TextStyle(
                                 color: Colors.black38,
@@ -83,13 +78,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               decoration:
                                   ThemeHelper().inputBoxDecorationShaddow(),
                               child: TextFormField(
-                                keyboardType: TextInputType.phone,
+                                keyboardType: TextInputType.emailAddress,
                                 decoration: ThemeHelper().textInputDecoration(
-                                    "Mobile Number".tr,
-                                    "Enter your mobile number".tr),
+                                    "Email address".tr,
+                                    "Enter your email address".tr),
                                 validator: (val) {
                                   if (val!.isEmpty) {
-                                    return "phone can't be empty".tr;
+                                    return "Email can't be empty".tr;
                                   }
                                   return null;
                                 },
@@ -134,12 +129,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     text: 'Sign In'.tr,
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Signin()),
-                                        );
+                                        Get.offAll(Signin());
                                       },
                                     style: TextStyle(
                                         color: Colors.yellow.shade800,

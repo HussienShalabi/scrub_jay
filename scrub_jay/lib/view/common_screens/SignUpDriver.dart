@@ -11,6 +11,7 @@ class SignUpDriver extends StatelessWidget {
   final AuthControllerImp authController = Get.find<AuthControllerImp>();
 
   SignUpDriver({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,8 +189,7 @@ class SignUpDriver extends StatelessWidget {
                         SizedBox(
                           width: 200,
                           child: Container(
-                            decoration:
-                                ThemeHelper().buttonBoxDecoration(context),
+                            decoration: ThemeHelper().buttonBoxDecoration(context),
                             child: GetBuilder<AuthControllerImp>(
                                 init: AuthControllerImp(),
                                 builder: (controller) {

@@ -177,7 +177,7 @@ class AdminMainScreen extends StatelessWidget {
                             ),
                             onPressed: () {
                               //After successful login we will redirect to profile page.
-                              Get.to(const AddAdmin());
+                              Get.to( AddAdmin());
                             },
                           ),
                         ),
@@ -199,7 +199,7 @@ class AdminMainScreen extends StatelessWidget {
                             ),
                             onPressed: () {
                               //After successful login we will redirect to profile page.
-                              Get.to( ConfirmDriver());
+                              Get.to( confirmDriver());
                             },
                           ),
                         ),

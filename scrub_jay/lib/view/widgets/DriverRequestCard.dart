@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../common_screens/theme_helper.dart';
+
 class DriverRequestCard extends StatelessWidget {
   final IconData leadingIcon;
   final String title;
@@ -62,7 +64,31 @@ class DriverRequestCard extends StatelessWidget {
         ),
         trailing: IconButton(
           //TODO Show attachments
-          onPressed: () => {},
+          onPressed: () => {
+            Get.defaultDialog(
+              title: "Driver Information".tr,
+              content: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(width: 15),
+                    Row(
+                      children: [
+                        Text('Name: '),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+              textConfirm: "book now".tr,
+              buttonColor: Colors.yellow.shade700,
+              confirmTextColor: Colors.white,
+              onConfirm: () {},
+            ),
+          },
           icon: Icon(
             trailing,
             color: Colors.green,

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'app_functions.dart';
 import 'firebase_database_app.dart';
 
@@ -19,40 +20,25 @@ class FirebaseAuthApp {
           await firebaseAuth.createUserWithEmailAndPassword(
               email: json['emailAddress'], password: password);
 
-      Map<String, dynamic> userInformation = {
-        'username': json['fullname'],
-        'phoneNumber': json['phoneNumber'],
-        'email': ['email'],
-        'role': role,
-      };
+      await userCredential.user!.sendEmailVerification();
 
-      await FirebaseDatabaseApp.firebaseDatabase
-          .addDataWithoutKey('users/${userCredential.user!.uid}', json);
+      if (json['role'] == 0) {
+        await FirebaseDatabaseApp.firebaseDatabase.addDataWithoutKey(
+            'users/admins/${userCredential.user!.uid}', json);
+      } else if (json['role'] == 1) {
+        await FirebaseDatabaseApp.firebaseDatabase.addDataWithoutKey(
+            'users/drivers/${userCredential.user!.uid}', json);
+      } else {
+        await FirebaseDatabaseApp.firebaseDatabase.addDataWithoutKey(
+            'users/passengers/${userCredential.user!.uid}', json);
+      }
 
-      await firebaseAuth.verifyPhoneNumber(
-        phoneNumber: '+97${json['phoneNumber']}',
-        verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
-          await firebaseAuth.signInWithCredential(phoneAuthCredential);
-        },
-        verificationFailed: (FirebaseAuthException error) {
-          if (error.code == 'invalid-phone-number') {
-            // print('The provided phone number is not valid.');
-          }
-        },
-        codeSent: (String verificationId, int? forceResendingToken) async {
-          String smsCode = '123456';
-
-          // Create a PhoneAuthCredential with the code
-          PhoneAuthCredential credential = PhoneAuthProvider.credential(
-            verificationId: verificationId,
-            smsCode: smsCode,
-          );
-
-          // Sign the user in (or link) with the credential
-          await firebaseAuth.signInWithCredential(credential);
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {},
+      getxSnackbar(
+        'Success',
+        'We are send email verification',
+        backgroundColor: Colors.green,
       );
+
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {
       getxSnackbar('error', error.code);
@@ -69,29 +55,12 @@ class FirebaseAuthApp {
       final UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
 
+      if (!userCredential.user!.emailVerified) {
+        getxSnackbar('error', 'your account not verified');
+        return null;
+      }
+
       return userCredential.user!.uid;
-      // final UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-      // AppSharedPrefernces.appSharedPrefernces.getDate('role') as int?;
-      // DocumentSnapshot userDoc = await _firestore.collection('users').doc('users/${userCredential.user!.uid}').get();
-      // final userData = userDoc.data()as Map<String, dynamic>?; // Navigate to the appropriate screen based on the user role
-      // if (userData != null) {
-      //   final role = userData['role'] as int?;
-      // if (role!=null){
-      // switch (role) {
-      //   case 0:
-      //   // Admin screen
-      //     Get.offAll(() => AdminMainScreen());
-      //     break;
-      //   case 1:
-      //   // Regular user screen
-      //     Get.offAll(() => DriverMainScreen());
-      //     break;
-      //   default:
-      //   // Unknown user role
-      //    Get.offAll(()=>ChooseTrip());
-      // }}
-      // else {}}
-      // return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {
       getxSnackbar('error', error.code);
     }
