@@ -40,11 +40,11 @@ String? formValidation(String? text, String type, [int? min, int? max]) {
   return null;
 }
 
-void getxSnackbar(String title, String message) {
+void getxSnackbar(String title, String message, {Color? backgroundColor}) {
   Get.snackbar(
     '',
     '',
-    backgroundColor: Get.theme.colorScheme.error,
+    backgroundColor: backgroundColor ?? Get.theme.colorScheme.error,
     colorText: Colors.white,
     titleText: Text(
       title.tr,
@@ -54,7 +54,8 @@ void getxSnackbar(String title, String message) {
         color: Colors.white,
       ),
     ),
-    messageText: Text( message.trim().tr.capitalizeFirst.toString(),
+    messageText: Text(
+      message.trim().tr.capitalizeFirst.toString(),
       style: TextStyle(
         fontSize: 15.sp,
         color: Colors.white,

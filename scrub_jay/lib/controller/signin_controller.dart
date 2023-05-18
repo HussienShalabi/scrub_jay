@@ -47,10 +47,6 @@ class SignInControllerImp extends SignInController {
             (data.value as Map<dynamic, dynamic>)['role'] == 0) {
           Get.offAll(() => const AdminMainScreen());
         }
-      } else {
-        isLoading = false;
-        update();
-        return;
       }
     }
 

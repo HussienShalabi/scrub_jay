@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'app_functions.dart';
 import 'firebase_database_app.dart';
 
@@ -19,40 +20,17 @@ class FirebaseAuthApp {
           await firebaseAuth.createUserWithEmailAndPassword(
               email: json['emailAddress'], password: password);
 
-      Map<String, dynamic> userInformation = {
-        'username': json['fullname'],
-        'phoneNumber': json['phoneNumber'],
-        'email': ['email'],
-        'role': role,
-      };
+      await userCredential.user!.sendEmailVerification();
 
       await FirebaseDatabaseApp.firebaseDatabase
           .addDataWithoutKey('users/${userCredential.user!.uid}', json);
 
-      await firebaseAuth.verifyPhoneNumber(
-        phoneNumber: '+97${json['phoneNumber']}',
-        verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
-          await firebaseAuth.signInWithCredential(phoneAuthCredential);
-        },
-        verificationFailed: (FirebaseAuthException error) {
-          if (error.code == 'invalid-phone-number') {
-            // print('The provided phone number is not valid.');
-          }
-        },
-        codeSent: (String verificationId, int? forceResendingToken) async {
-          String smsCode = '123456';
-
-          // Create a PhoneAuthCredential with the code
-          PhoneAuthCredential credential = PhoneAuthProvider.credential(
-            verificationId: verificationId,
-            smsCode: smsCode,
-          );
-
-          // Sign the user in (or link) with the credential
-          await firebaseAuth.signInWithCredential(credential);
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {},
+      getxSnackbar(
+        'Success',
+        'We are send email verification',
+        backgroundColor: Colors.green,
       );
+
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {
       getxSnackbar('error', error.code);
@@ -68,6 +46,11 @@ class FirebaseAuthApp {
     try {
       final UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
+
+      if (!userCredential.user!.emailVerified) {
+        getxSnackbar('error', 'your account not verified');
+        return null;
+      }
 
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {

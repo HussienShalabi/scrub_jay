@@ -164,19 +164,24 @@ class SignUpPassenger extends StatelessWidget {
                         ),
                         Container(
                           margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                          child: Text.rich(TextSpan(children: [
-                            TextSpan(text: "Are you a driver? ".tr),
+                          child: Text.rich(
                             TextSpan(
-                                text: 'Register here'.tr,
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Get.to(SignUpDriver());
-                                  },
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.yellow.shade800,
-                                )),
-                          ])),
+                              children: [
+                                TextSpan(text: "Are you a driver? ".tr),
+                                TextSpan(
+                                  text: 'Register here'.tr,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Get.to(SignUpDriver());
+                                    },
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.yellow.shade800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
