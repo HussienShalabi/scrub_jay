@@ -13,15 +13,15 @@ import '../model/admin.dart';
 import '../view/admin/AdminMainScreen.dart';
 
 abstract class AbstractAdminController extends GetxController {
-
-  Driver? currentDriver;
-
   Future<void> adminSignup();
+  Future<void> getDrivers();
   final controller = Get.put(AdminControllerImp);
 }
 
 class AdminControllerImp extends AbstractAdminController {
   bool isLoading = false;
+
+  List<Driver> drivers = [];
 
   GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
 
@@ -38,7 +38,6 @@ class AdminControllerImp extends AbstractAdminController {
     password.dispose();
     rewritePassword.dispose();
   }
-
 
   @override
   Future<void> adminSignup() async {
@@ -78,12 +77,19 @@ class AdminControllerImp extends AbstractAdminController {
     update();
   }
 
-
-
   @override
   void onInit() {
     super.onInit();
-    adminSignup();
+    getDrivers();
+  }
 
+  @override
+  Future<void> getDrivers() async {
+    DatabaseReference driversData = await FirebaseDatabaseApp.firebaseDatabase.getData("users/drivers");
+    await driversData.get().then((value) {
+      for(var element in value.children){
+        print(element);
+      }
+    });
   }
 }
