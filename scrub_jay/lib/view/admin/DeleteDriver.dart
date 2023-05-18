@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/AdminController.dart';
 import '../widgets/DriverRequestCard.dart';
 import '../widgets/HeaderWidget.dart';
 import 'AdminDrawer.dart';
 
-class DeleteDriver extends StatefulWidget {
+class DeleteDriver extends StatelessWidget {
   const DeleteDriver({super.key});
 
-  @override
-  State<StatefulWidget> createState() {
-    return _DeleteDriverState();
-  }
-}
-
-class _DeleteDriverState extends State<DeleteDriver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,18 +88,27 @@ class _DeleteDriverState extends State<DeleteDriver> {
                         const SizedBox(
                           height: 20,
                         ),
-                        ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            itemCount: 7,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) =>
-                                const DriverRequestCard(
+                        GetBuilder<AdminControllerImp>(
+                          init: AdminControllerImp(),
+                          builder: (controller) {
+                            return ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemCount: controller.drivers.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) =>DriverRequestCard(
                                   leadingIcon: Icons.person,
-                                  title: 'Nabhan',
-                                  driverPhoneNumber: 3156464,
+                                  title: controller.drivers[index].fullname ?? " ",
+                                  driverPhoneNumber: controller.drivers[index].phoneNumber ?? " ",
+                                  driverEmailAddress: controller.drivers[index].emailAddress ?? " " ,
+                                  driverVehicleNumber: controller.drivers[index].vehicleNumber ?? " " ,
+                                  driverIdentityNumber: controller.drivers[index].driverIdentityNumber ?? " " ,
+                                  driverLicenseNumber: controller.drivers[index].licenseNumber ?? " " ,
                                   trailing: Icons.restore_from_trash_rounded,
-                                )),
+                                ),
+                            );
+                          }
+                        ),
                       ],
                     ),
                   ),

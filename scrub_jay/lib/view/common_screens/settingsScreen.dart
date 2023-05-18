@@ -216,32 +216,9 @@ class SettingsScreen extends StatelessWidget {
                       }
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  // Container(
-                  //   child: ElevatedButton(
-                  //     style: ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  //       RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(30.0),
-                  //       ),
-                  //     ),
-                  //       minimumSize: MaterialStateProperty.all(const Size(50, 50)),
-                  //       backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                  //       shadowColor: MaterialStateProperty.all(Colors.transparent),),
-                  //     onPressed: () {},
-                  //     child: Padding(
-                  //       padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
-                  //       child: Text(
-                  //         'Delete account'.tr,
-                  //         style: const TextStyle(
-                  //             fontSize: 18,
-                  //             fontWeight: FontWeight.bold,
-                  //             color: Colors.red),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   Container(
                     margin:
                     const EdgeInsets.fromLTRB(10, 20, 10, 20),

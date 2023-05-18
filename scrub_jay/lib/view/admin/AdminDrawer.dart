@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/account_controller.dart';
 import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
 import '../common_screens/EditPassword.dart';
@@ -49,7 +50,6 @@ class AdminDrawer extends StatelessWidget {
                 child: Center(
                   child: Column(
                     children: const [
-
                       SizedBox(
                         height: 50,
                       ),
@@ -66,8 +66,6 @@ class AdminDrawer extends StatelessWidget {
                 ),
               ),
             ),
-
-
             ListTile(
               leading: Icon(Icons.person,
                   size: _drawerIconSize,
@@ -110,10 +108,7 @@ class AdminDrawer extends StatelessWidget {
                 Get.to(chooseLang());
               },
             ),
-            Divider(
-              color: Theme.of(context).primaryColor,
-              height: 1,
-            ),
+
             ListTile(
               leading: Icon(
                 Icons.logout_rounded,
@@ -130,9 +125,7 @@ class AdminDrawer extends StatelessWidget {
                 Get.off(const Signin());
               },
             ),
-            const Divider(
-              height: 1,
-            ),
+
           ],
         ),
       ),
