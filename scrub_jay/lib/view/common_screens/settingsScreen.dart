@@ -85,10 +85,10 @@ class SettingsScreen extends StatelessWidget {
               key: accountcontroller.formKeyEdit,
               child: Column(
                 children: [
-                  const ListTile(
+                   ListTile(
                     leading: Icon(Icons.person_rounded),
                     minLeadingWidth: 20,
-                    title: Text('Edit full name: '),
+                    title: Text('Edit full name: '.tr),
                   ),
                   Row(
                     children: [
@@ -129,10 +129,10 @@ class SettingsScreen extends StatelessWidget {
                       // ),
                     ],
                   ),
-                  const ListTile(
+                   ListTile(
                     leading: Icon(Icons.email),
                     minLeadingWidth: 20,
-                    title: Text('Edit email address: '),
+                    title: Text('Edit email address: '.tr),
                   ),
                   Row(
                     children: [
@@ -148,10 +148,10 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const ListTile(
+                   ListTile(
                     leading: Icon(Icons.phone),
                     minLeadingWidth: 20,
-                    title: Text('Edit phone number: '),
+                    title: Text('Edit phone number: '.tr),
                   ),
                   Row(
                     children: [
@@ -169,10 +169,10 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const ListTile(
+                   ListTile(
                     minLeadingWidth: 20,
                     leading: Icon(Icons.lock_person_rounded),
-                    title: Text('Edit password: '),
+                    title: Text('Edit password: '.tr),
                   ),
                   Row(
                     children: [

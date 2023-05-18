@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class RequestCard extends StatefulWidget {
+class RequestCard extends StatelessWidget {
   final IconData leadingIcon;
   final String passengerName;
   final String passengerPhoneNumber;
@@ -21,11 +21,6 @@ class RequestCard extends StatefulWidget {
   });
 
   @override
-  State<RequestCard> createState() => _RequestCardState();
-}
-
-class _RequestCardState extends State<RequestCard> {
-  @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.black54,
@@ -36,7 +31,7 @@ class _RequestCardState extends State<RequestCard> {
       elevation: 10,
       child: ListTile(
         leading: Icon(
-          widget.leadingIcon,
+          leadingIcon,
           color: Colors.white,
           size: 30,
         ),
@@ -50,7 +45,7 @@ class _RequestCardState extends State<RequestCard> {
               ),
             ),
             Text(
-              widget.passengerName,
+              passengerName,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.sp,
@@ -71,7 +66,7 @@ class _RequestCardState extends State<RequestCard> {
                   ),
                 ),
                 Text(
-                  "${widget.passengerPhoneNumber}",
+                  "$passengerPhoneNumber",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,
@@ -89,7 +84,7 @@ class _RequestCardState extends State<RequestCard> {
                   ),
                 ),
                 Text(
-                  "${widget.passengerCount} ",
+                  "$passengerCount ",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,
@@ -107,7 +102,7 @@ class _RequestCardState extends State<RequestCard> {
                   ),
                 ),
                 Text(
-                  "${widget.passengerLocation} ",
+                  "$passengerLocation ",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,

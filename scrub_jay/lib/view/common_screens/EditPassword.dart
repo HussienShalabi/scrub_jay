@@ -4,7 +4,7 @@ import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
 class EditPassword extends StatelessWidget {
-   EditPassword({Key? key}) : super(key: key);
+  EditPassword({Key? key}) : super(key: key);
 
   final double _headerHeight = 250;
 
@@ -14,10 +14,10 @@ class EditPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
+        title: Center(
           child: Text(
-            "Edit password",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            "Edit password".tr,
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
         elevation: 0.5,

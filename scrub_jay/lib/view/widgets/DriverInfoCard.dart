@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class DriverInfoCard extends StatefulWidget {
+class DriverInfoCard extends StatelessWidget {
   final IconData leadingIcon;
   final String title;
   final String driverPhoneNumber;
@@ -18,11 +18,6 @@ class DriverInfoCard extends StatefulWidget {
       this.BottomMargin = 0});
 
   @override
-  State<DriverInfoCard> createState() => _DriverInfoCardState();
-}
-
-class _DriverInfoCardState extends State<DriverInfoCard> {
-  @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.black54,
@@ -31,11 +26,11 @@ class _DriverInfoCardState extends State<DriverInfoCard> {
       elevation: 5.sp,
       child: ListTile(
         leading: Icon(
-          widget.leadingIcon,
+          leadingIcon,
           color: Colors.white,
         ),
         title: Text(
-          widget.title,
+          title,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -54,7 +49,7 @@ class _DriverInfoCardState extends State<DriverInfoCard> {
               ),
             ),
             Text(
-              widget.driverPhoneNumber,
+              driverPhoneNumber,
               style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.white,

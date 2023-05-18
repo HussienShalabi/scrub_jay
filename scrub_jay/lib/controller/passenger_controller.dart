@@ -12,11 +12,9 @@ import 'package:scrub_jay/model/order.dart';
 import 'package:scrub_jay/model/user.dart' as user;
 import 'package:scrub_jay/model/passenger.dart';
 import 'package:scrub_jay/model/trip.dart';
-import '../view/passenger/choose_trip.dart';
 import '../model/map.dart' as map;
 
 abstract class PassengerController extends GetxController {
-  Future<void> passengerSignup();
   Future<void> passengerSignout();
   Future<void> orderTrip();
   Future<void> getTrips();
@@ -135,42 +133,6 @@ class PassengerControllerImp extends PassengerController {
     isLoading = false;
     update();
     Get.back();
-  }
-
-  @override
-  passengerSignup() async {
-    final bool isValid = formKey.currentState!.validate();
-    isLoading = true;
-    update();
-
-    if (isValid) {
-      Passenger newPassenger = Passenger(
-          fullname: fullName.text.trim(),
-          emailAddress: emailAddress.text.trim(),
-          phoneNumber: phoneNumber.text.trim(),
-          role: 2);
-
-      final String? uid = await FirebaseAuthApp.firebaseAuthApp
-          .signup(2, newPassenger.toJson(), password.text);
-
-      final bool setData =
-          await AppSharedPrefernces.appSharedPrefernces.setData('role', 2);
-
-      if (uid != null && setData) {
-        isLoading = false;
-        update();
-
-        Get.offAll(() => ChooseTrip());
-      } else {
-        await FirebaseAuthApp.firebaseAuthApp.signout();
-        isLoading = false;
-        update();
-        return;
-      }
-    }
-
-    isLoading = false;
-    update();
   }
 
   @override

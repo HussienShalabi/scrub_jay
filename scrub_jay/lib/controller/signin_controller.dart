@@ -43,12 +43,9 @@ class SignInControllerImp extends SignInController {
             (data.value as Map<dynamic, dynamic>)['role'] == 2) {
           Get.offAll(() => ChooseTrip());
         }
-
-        // Get.offAll(ChooseTrip());
       } else {
         isLoading = false;
         update();
-        print('hiiiiiiiii');
         return;
       }
     }

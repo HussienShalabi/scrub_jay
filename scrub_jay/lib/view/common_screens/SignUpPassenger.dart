@@ -1,18 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:scrub_jay/controller/passenger_controller.dart';
+import 'package:scrub_jay/controller/auth_controller.dart';
 import 'package:scrub_jay/core/app_functions.dart';
-import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/SignUpDriver.dart';
 import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
 class SignUpPassenger extends StatelessWidget {
-  final PassengerControllerImp passengercontroller = Get.put(PassengerControllerImp());
+  final AuthControllerImp authController = Get.put(AuthControllerImp());
 
   SignUpPassenger({super.key});
   @override
@@ -31,7 +29,7 @@ class SignUpPassenger extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 50),
               alignment: Alignment.center,
               child: Form(
-                key: passengercontroller.formKey,
+                key: authController.signInKey,
                 child: Column(
                   children: [
                     Text(
@@ -60,7 +58,7 @@ class SignUpPassenger extends StatelessWidget {
                           child: TextFormField(
                             validator: (value) =>
                                 formValidation(value, 'username'),
-                            controller: passengercontroller.fullName,
+                            controller: authController.fullName,
                             decoration: ThemeHelper().textInputDecoration(
                                 'Full Name'.tr, 'Enter your Full name'.tr),
                           ),
@@ -71,7 +69,7 @@ class SignUpPassenger extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            controller: passengercontroller.emailAddress,
+                            controller: authController.emailAddress,
                             validator: (value) =>
                                 formValidation(value, 'email'),
                             decoration: ThemeHelper().textInputDecoration(
@@ -84,7 +82,7 @@ class SignUpPassenger extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            controller: passengercontroller.phoneNumber,
+                            controller: authController.phoneNumber,
                             validator: (value) =>
                                 formValidation(value, 'phone'),
                             inputFormatters: [
@@ -100,7 +98,7 @@ class SignUpPassenger extends StatelessWidget {
                         Container(
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
-                            controller: passengercontroller.password,
+                            controller: authController.password,
                             validator: (value) =>
                                 formValidation(value, 'password', 8, 30),
                             obscureText: true,
@@ -113,13 +111,13 @@ class SignUpPassenger extends StatelessWidget {
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
                             obscureText: true,
-                            controller: passengercontroller.rewritePassword,
+                            controller: authController.rewritePassword,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "this field is required".tr;
                               }
-                              if (passengercontroller.password.text.trim() !=
-                                  passengercontroller.rewritePassword.text.trim()) {
+                              if (authController.password.text.trim() !=
+                                  authController.rewritePassword.text.trim()) {
                                 return 'Passwords don\'t match'.tr;
                               }
                               return null;
@@ -133,30 +131,36 @@ class SignUpPassenger extends StatelessWidget {
                         Container(
                           decoration:
                               ThemeHelper().buttonBoxDecoration(context),
-                          child: GetBuilder<PassengerControllerImp>(
-                            init:PassengerControllerImp(),
-                            builder: (controller) {
-                              return SizedBox(
-                                width: 200,
-                                child: ElevatedButton(
-                                  style: ThemeHelper().buttonStyle(),
-                                  onPressed: controller.isLoading ? () {} :() =>  passengercontroller.passengerSignup(),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                    child:controller.isLoading ? const Center(child: CircularProgressIndicator(),) : Text(
-                                      "Register".tr,
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
+                          child: GetBuilder<AuthControllerImp>(
+                              init: AuthControllerImp(),
+                              builder: (controller) {
+                                return SizedBox(
+                                  width: 200,
+                                  child: ElevatedButton(
+                                    style: ThemeHelper().buttonStyle(),
+                                    onPressed: controller.isLoading
+                                        ? () {}
+                                        : () => controller.passengerSignup(),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          40, 10, 40, 10),
+                                      child: controller.isLoading
+                                          ? const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            )
+                                          : Text(
+                                              "Register".tr,
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                     ),
                                   ),
-                                ),
-                              );
-                            }
-                          ),
+                                );
+                              }),
                         ),
                         Container(
                           margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
