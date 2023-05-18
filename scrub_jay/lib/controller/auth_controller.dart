@@ -1,35 +1,42 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/core/app_functions.dart';
 import 'package:scrub_jay/model/admin.dart';
 import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/Signin.dart';
+import '../core/app_shared_preferences.dart';
 import '../core/firebase_app_auth.dart';
 import '../model/driver.dart';
 import '../model/passenger.dart';
+import '../model/user.dart';
+import '../view/Driver/DriverMainScreen.dart';
+import '../view/passenger/choose_trip.dart';
 
 abstract class AuthController extends GetxController {
   Future<void> signIn();
   Future<void> signout();
   Future<void> passengerSignup();
   Future<void> driverSignup();
-  Future<void> AdminSignup();
+  Future<void> adminSignup();
 }
 
 class AuthControllerImp extends AuthController {
   bool isLoading = false;
-  GlobalKey<FormState> signupPassengerKey = GlobalKey<FormState>();
-  GlobalKey<FormState> signupDriverKey = GlobalKey<FormState>();
-  GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
-  GlobalKey<FormState> signInKey = GlobalKey<FormState>();
-  TextEditingController fullName = TextEditingController();
-  TextEditingController emailAddress = TextEditingController();
-  TextEditingController phoneNumber = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController rewritePassword = TextEditingController();
-  TextEditingController vehicleNumber = TextEditingController();
-  TextEditingController driverIdentityNumber = TextEditingController();
-  TextEditingController licenseNumber = TextEditingController();
-  RxInt RoleSelected = RxInt(2);
+  final GlobalKey<FormState> signupPassengerKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> signupDriverKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeySignIn = GlobalKey<FormState>();
+  final GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> signInKey = GlobalKey<FormState>();
+  final TextEditingController fullName = TextEditingController();
+  final TextEditingController emailAddress = TextEditingController();
+  final TextEditingController phoneNumber = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController rewritePassword = TextEditingController();
+  final TextEditingController vehicleNumber = TextEditingController();
+  final TextEditingController driverIdentityNumber = TextEditingController();
+  final TextEditingController licenseNumber = TextEditingController();
+  final RxInt roleSelected = RxInt(2);
 
   clearData() {
     fullName.dispose();
@@ -43,7 +50,50 @@ class AuthControllerImp extends AuthController {
   }
 
   @override
-  Future<void> signIn() async {}
+  Future<void> signIn() async {
+    final bool isValid = formKeySignIn.currentState!.validate();
+    isLoading = true;
+    update();
+
+    if (isValid) {
+      final String? uid = await FirebaseAuthApp.firebaseAuthApp
+          .signin(emailAddress.text.trim(), password.text);
+
+      if (uid != null) {
+        isLoading = false;
+        update();
+
+        final DatabaseReference? databaseReference =
+            await User.getUser(uid, role: roleSelected.value);
+
+        if (databaseReference == null) {
+          getxSnackbar('Failed Sign In', 'An error has occurred');
+          return;
+        }
+
+        final DataSnapshot data = await databaseReference.get();
+
+        if (data.value == null) {
+          getxSnackbar('Failed Sign In', 'Your are not allowed to enter');
+          return;
+        }
+
+        final bool setData = await AppSharedPrefernces.appSharedPrefernces
+            .setData('role', roleSelected.value);
+
+        if (setData && roleSelected.value == 1) {
+          Get.offAll(() => const DriverMainScreen());
+        } else if (setData && roleSelected.value == 2) {
+          Get.offAll(() => ChooseTrip());
+        } else if (setData && roleSelected.value == 0) {
+          Get.offAll(() => const AdminMainScreen());
+        }
+      }
+    }
+
+    isLoading = false;
+    update();
+  }
 
   @override
   Future<void> passengerSignup() async {
@@ -112,13 +162,7 @@ class AuthControllerImp extends AuthController {
   Future<void> signout() async {}
 
   @override
-  void onClose() {
-    super.onClose();
-    clearData();
-  }
-
-  @override
-  Future<void> AdminSignup() async {
+  Future<void> adminSignup() async {
     isLoading = false;
 
     final bool isValid = createAdminKey.currentState!.validate();
@@ -146,8 +190,15 @@ class AuthControllerImp extends AuthController {
     isLoading = false;
     update();
   }
+
   void updateSelectedValue(int value) {
-    RoleSelected.value = value;
+    roleSelected.value = value;
     update();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    clearData();
   }
 }

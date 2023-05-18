@@ -10,6 +10,16 @@ class User {
 
   User({this.fullname, this.emailAddress, this.phoneNumber, this.role});
 
-  static Future<DatabaseReference> getUser(String uid) async =>
-      await FirebaseDatabaseApp.firebaseDatabase.getData('users/$uid');
+  static Future<DatabaseReference?> getUser(String uid, {int? role}) async {
+    if (role != null) {
+      final String path = role == 0
+          ? 'users/admins'
+          : role == 1
+              ? 'users/drivers'
+              : 'users/passengers';
+
+      return await FirebaseDatabaseApp.firebaseDatabase.getData('$path/$uid');
+    }
+    return null;
+  }
 }

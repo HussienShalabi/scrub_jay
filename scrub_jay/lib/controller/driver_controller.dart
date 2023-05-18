@@ -97,7 +97,7 @@ class DriverControllerImp extends DriverController {
               final Map<String, dynamic> trip =
                   json.decode(json.encode(child.value));
 
-              (await user.User.getUser(trip['driverId']))
+              (await user.User.getUser(trip['driverId']))!
                   .onValue
                   .listen((event) {
                 trip['driverName'] =
@@ -145,10 +145,10 @@ class DriverControllerImp extends DriverController {
     isLoading = true;
     update();
 
-    final DatabaseReference databaseReference =
+    final DatabaseReference? databaseReference =
         await user.User.getUser(driverId);
 
-    databaseReference.onValue.listen(
+    databaseReference!.onValue.listen(
       (event) {
         currentDriver =
             Driver.fromJson(json.decode(json.encode(event.snapshot.value)));

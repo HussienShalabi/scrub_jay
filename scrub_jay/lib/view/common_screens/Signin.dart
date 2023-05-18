@@ -2,10 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:scrub_jay/controller/signin_controller.dart';
 import 'package:scrub_jay/core/app_functions.dart';
 import '../../controller/auth_controller.dart';
-import '../../view/passenger/choose_trip.dart';
 import '../widgets/HeaderWidget.dart';
 import 'ForgotPassword.dart';
 import 'SignUpPassenger.dart';
@@ -18,7 +16,7 @@ class Signin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SignInControllerImp controller = Get.put(SignInControllerImp());
+    final AuthControllerImp controller = Get.put(AuthControllerImp());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -62,22 +60,26 @@ class Signin extends StatelessWidget {
                                   ),
                                 ),
                               ),
-
                               GetBuilder<AuthControllerImp>(
-
                                 builder: (controller) => Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     Row(
                                       children: [
                                         SizedBox(
                                             width: 150,
-                                            child: RadioListTile(contentPadding:EdgeInsets.zero,
-                                              title:  Text('Admin'.tr,),
+                                            child: RadioListTile(
+                                              contentPadding: EdgeInsets.zero,
+                                              title: Text(
+                                                'Admin'.tr,
+                                              ),
                                               value: 0,
-                                              groupValue: controller.RoleSelected.value,
+                                              groupValue:
+                                                  controller.roleSelected.value,
                                               onChanged: (value) {
-                                                controller.updateSelectedValue(value!);
+                                                controller.updateSelectedValue(
+                                                    value!);
                                               },
                                             )),
                                       ],
@@ -86,36 +88,41 @@ class Signin extends StatelessWidget {
                                       children: [
                                         SizedBox(
                                           width: 150,
-                                          child: RadioListTile(contentPadding:EdgeInsets.zero,
-                                            title:  Text('Passenger'.tr,),
+                                          child: RadioListTile(
+                                            contentPadding: EdgeInsets.zero,
+                                            title: Text(
+                                              'Passenger'.tr,
+                                            ),
                                             value: 2,
-                                            groupValue: controller.RoleSelected.value,
+                                            groupValue:
+                                                controller.roleSelected.value,
                                             onChanged: (value) {
-                                              controller.updateSelectedValue(value!);
+                                              controller
+                                                  .updateSelectedValue(value!);
                                             },
                                           ),
                                         ),
                                         SizedBox(
                                           width: 130,
-                                          child: RadioListTile(contentPadding:EdgeInsets.zero,
-                                            title:  Text('Driver'.tr,),
+                                          child: RadioListTile(
+                                            contentPadding: EdgeInsets.zero,
+                                            title: Text(
+                                              'Driver'.tr,
+                                            ),
                                             value: 1,
-                                            groupValue: controller.RoleSelected.value,
+                                            groupValue:
+                                                controller.roleSelected.value,
                                             onChanged: (value) {
-                                              controller.updateSelectedValue(value!);
+                                              controller
+                                                  .updateSelectedValue(value!);
                                             },
                                           ),
                                         ),
-
-
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
-
-
-
                               Container(
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
@@ -123,7 +130,7 @@ class Signin extends StatelessWidget {
                                   validator: (value) =>
                                       formValidation(value!, 'value'),
                                   keyboardType: TextInputType.emailAddress,
-                                  controller: controller.emailAddressSignin,
+                                  controller: controller.emailAddress,
                                   decoration: ThemeHelper().textInputDecoration(
                                       "Email address".tr,
                                       "Enter your email address".tr),
@@ -135,7 +142,7 @@ class Signin extends StatelessWidget {
                                     ThemeHelper().inputBoxDecorationShaddow(),
                                 child: TextFormField(
                                   obscureText: true,
-                                  controller: controller.passwordSignin,
+                                  controller: controller.password,
                                   validator: (value) =>
                                       formValidation(value!, 'password'),
                                   decoration: ThemeHelper().textInputDecoration(
@@ -149,7 +156,7 @@ class Signin extends StatelessWidget {
                                 alignment: Alignment.topRight,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Get.to( ForgotPassword());
+                                    Get.to(ForgotPassword());
                                   },
                                   child: Text(
                                     "Forgot your password?".tr,
@@ -162,8 +169,8 @@ class Signin extends StatelessWidget {
                               Container(
                                 decoration:
                                     ThemeHelper().buttonBoxDecoration(context),
-                                child: GetBuilder<SignInControllerImp>(
-                                    init: SignInControllerImp(),
+                                child: GetBuilder<AuthControllerImp>(
+                                    init: AuthControllerImp(),
                                     builder: (signInController) {
                                       return SizedBox(
                                         width: 250.w,

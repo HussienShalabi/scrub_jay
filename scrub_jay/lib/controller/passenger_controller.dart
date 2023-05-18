@@ -87,7 +87,7 @@ class PassengerControllerImp extends PassengerController {
               final Map<String, dynamic> trip =
                   json.decode(json.encode(child.value));
 
-              (await user.User.getUser(trip['driverId']))
+              (await user.User.getUser(trip['driverId']))!
                   .onValue
                   .listen((event) {
                 trip['driverName'] =
