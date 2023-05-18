@@ -29,7 +29,7 @@ class SignUpPassenger extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 50),
               alignment: Alignment.center,
               child: Form(
-                key: authController.signInKey,
+                key: authController.signupPassengerKey,
                 child: Column(
                   children: [
                     Text(
