@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:scrub_jay/controller/AdminController.dart';
 import 'package:scrub_jay/view/admin/MakeTurn.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/HeaderWidget.dart';
@@ -75,161 +76,165 @@ class AdminMainScreen extends StatelessWidget {
           ],
         ),
         drawer: const AdminDrawer(),
-        body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              const SizedBox(
-                height: 100,
-                child: HeaderWidget(100, false, Icons.house_rounded),
-              ),
-              Container(
-                alignment: Alignment.center,
-                margin: const EdgeInsets.fromLTRB(25, 120, 25, 10),
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: Column(
+        body: GetBuilder<AdminControllerImp>(
+            init: AdminControllerImp(),
+            builder: (controller) {
+              return SingleChildScrollView(
+                child: Stack(
                   children: [
                     const SizedBox(
-                      height: 20,
+                      height: 100,
+                      child: HeaderWidget(100, false, Icons.house_rounded),
                     ),
-                    GridView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 10,
-                      ),
-                      shrinkWrap: true,
-                      children: [
-                        Container(
-                          decoration:
-                              ThemeHelper().buttonBoxDecoration(context),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10.h, horizontal: 10.w),
-                          child: ElevatedButton(
-                            style: ThemeHelper().buttonStyle(),
-                            child: Text(
-                              'driver\'s list'.tr,
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {
-                              //After successful login we will redirect to profile page.
-                              Get.to( DriversList());
-                            },
+                    Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(25, 120, 25, 10),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
                           ),
-                        ),
-                        Container(
-                          decoration:
-                              ThemeHelper().buttonBoxDecoration(context),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10.h, horizontal: 10.w),
-                          child: ElevatedButton(
-                            style: ThemeHelper().buttonStyle(),
-                            child: Text(
-                              'initial turn'.tr,
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              textAlign: TextAlign.center,
+                          GridView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 10,
                             ),
-                            onPressed: () {
-                              //After successful login we will redirect to profile page.
-                              Get.to(const MakeTurn());
-                            },
-                          ),
-                        ),
-                        Container(
-                          decoration:
-                              ThemeHelper().buttonBoxDecoration(context),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10.h, horizontal: 10.w),
-                          child: ElevatedButton(
-                            style: ThemeHelper().buttonStyle(),
-                            child: Text(
-                              'today\'s trip'.tr,
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ),
-                        Container(
-                          decoration:
-                              ThemeHelper().buttonBoxDecoration(context),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10.h, horizontal: 10.w),
-                          child: ElevatedButton(
-                            style: ThemeHelper().buttonStyle(),
-                            child: Text(
-                              'add admin'.tr,
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {
-                              //After successful login we will redirect to profile page.
-                              Get.to( AddAdmin());
-                            },
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          decoration:
-                              ThemeHelper().buttonBoxDecoration(context),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10.h, horizontal: 10.w),
-                          child: ElevatedButton(
-                            style: ThemeHelper().buttonStyle(),
-                            child: Text(
-                              'Confirm Drivers'.tr,
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {
-                              //After successful login we will redirect to profile page.
-                              Get.to( confirmDriver());
-                            },
-                          ),
-                        ),
-                        Container(
-                          decoration:
-                              ThemeHelper().buttonBoxDecoration(context),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10.h, horizontal: 10.w),
-                          child: ElevatedButton(
-                            style: ThemeHelper().buttonStyle(),
-                            child: Text('delete account'.tr,
-                                style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                                textAlign: TextAlign.center),
-                            onPressed: () {
-                              //After successful login we will redirect to profile page.
+                            shrinkWrap: true,
+                            children: [
+                              Container(
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 10.h, horizontal: 10.w),
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  child: Text(
+                                    'driver\'s list'.tr,
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  onPressed: () {
+                                    //After successful login we will redirect to profile page.
+                                    Get.to(DriversList());
+                                  },
+                                ),
+                              ),
+                              Container(
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 10.h, horizontal: 10.w),
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  child: Text(
+                                    'initial turn'.tr,
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  onPressed: () {
+                                    //After successful login we will redirect to profile page.
+                                    Get.to(const MakeTurn());
+                                  },
+                                ),
+                              ),
+                              Container(
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 10.h, horizontal: 10.w),
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  child: Text(
+                                    'today\'s trip'.tr,
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ),
+                              Container(
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 10.h, horizontal: 10.w),
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  child: Text(
+                                    'add admin'.tr,
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  onPressed: () {
+                                    //After successful login we will redirect to profile page.
+                                    Get.to(AddAdmin());
+                                  },
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 10.h, horizontal: 10.w),
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  child: Text(
+                                    'Confirm Drivers'.tr,
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  onPressed: () {
+                                    //After successful login we will redirect to profile page.
+                                    Get.to(confirmDriver());
+                                  },
+                                ),
+                              ),
+                              Container(
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 10.h, horizontal: 10.w),
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  child: Text('delete account'.tr,
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                  onPressed: () {
+                                    //After successful login we will redirect to profile page.
 
-                              Get.to(const DeleteDriver());
-                            },
+                                    Get.to(const DeleteDriver());
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-        ));
+              );
+            }));
   }
 }

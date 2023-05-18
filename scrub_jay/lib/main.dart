@@ -7,6 +7,7 @@ import 'package:scrub_jay/core/app_midleware.dart';
 import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/firebase_options.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
+import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/passenger/choose_trip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controller/locale/locale.dart';
@@ -57,6 +58,10 @@ class MyApp extends StatelessWidget {
               name: '/Signin',
               page: () => const Signin(),
               middlewares: [AppMiddleware()],
+            ),
+            GetPage(
+              name: '/adminMainScreen',
+              page: () => const AdminMainScreen(),
             ),
             GetPage(
                 name: '/DriverMainScreen',

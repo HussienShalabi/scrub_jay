@@ -85,10 +85,11 @@ class AdminControllerImp extends AbstractAdminController {
 
   @override
   Future<void> getDrivers() async {
-    DatabaseReference driversData = await FirebaseDatabaseApp.firebaseDatabase.getData("users/drivers");
+    DatabaseReference driversData =
+        await FirebaseDatabaseApp.firebaseDatabase.getData("users/drivers");
     await driversData.get().then((value) {
-      for(var element in value.children){
-        print(element);
+      for (var element in value.children) {
+        print(element.value);
       }
     });
   }

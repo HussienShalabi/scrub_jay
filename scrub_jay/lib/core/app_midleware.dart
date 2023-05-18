@@ -8,7 +8,11 @@ class AppMiddleware extends GetMiddleware {
     final int? role =
         AppSharedPrefernces.appSharedPrefernces.getDate('role') as int?;
     if (role != null) {
-      if (role == 1) {
+      if (role == 0) {
+        return const RouteSettings(
+          name: '/adminMainScreen',
+        );
+      } else if (role == 1) {
         return const RouteSettings(
           name: '/DriverMainScreen',
         );
