@@ -17,88 +17,6 @@ class ChooseTrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Colors.yellow.shade700,
-      //   onPressed: () {
-      //     Get.defaultDialog(
-      //       title: "booking",
-      //       content: SingleChildScrollView(
-      //         child: Column(
-      //           children: [
-      //             const SizedBox(width: 15),
-      //             DropdownButtonFormField<int>(
-      //               decoration: ThemeHelper().textInputDecoration(
-      //                 'Number of passengers'.tr,
-      //               ),
-      //               items: [1, 2, 3, 4].map((passenger) {
-      //                 return DropdownMenuItem<int>(
-      //                   value: passenger,
-      //                   child: Text('$passenger'),
-      //                 );
-      //               }).toList(),
-      //               value: passengerControllerImp.numberOfPassengers,
-      //               onChanged: (value) =>
-      //                   passengerControllerImp.selectNumberOfPassenger(value),
-      //             ),
-      //             const SizedBox(height: 10),
-      //             GetBuilder<PassengerControllerImp>(
-      //               builder: (controller) => Column(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //                 children: [
-      //                   const SizedBox(
-      //                     child: Text(
-      //                       'Your location:',
-      //                       style: TextStyle(
-      //                         fontWeight: FontWeight.bold,
-      //                       ),
-      //                     ),
-      //                   ),
-      //                   SizedBox(
-      //                     height: 40,
-      //                     child: RadioListTile(
-      //                       title: const Text('Current location'),
-      //                       value: 0,
-      //                       groupValue: controller.optionMapSelected.value,
-      //                       onChanged: (value) {
-      //                         controller.updateSelectedValue(value!);
-      //                       },
-      //                     ),
-      //                   ),
-      //                   SizedBox(
-      //                     height: 40,
-      //                     child: RadioListTile(
-      //                       title: const Text('Choose from map'),
-      //                       value: 1,
-      //                       groupValue: controller.optionMapSelected.value,
-      //                       onChanged: (value) {
-      //                         controller.updateSelectedValue(value!);
-      //                       },
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //             const SizedBox(
-      //               height: 20,
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //       textConfirm: "book now",
-      //       onConfirm: () {
-      //         if (passengerControllerImp.optionMapSelected.value == 1) {
-      //           Get.to(() => const PassengerMap());
-      //         } else {
-      //           passengerControllerImp.orderTrip();
-      //           Get.back();
-      //         }
-      //       },
-      //     );
-      //     // passengerControllerImp.orderTrip();
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -162,153 +80,170 @@ class ChooseTrip extends StatelessWidget {
       ),
       drawer: const PassengerDrawer(),
       body: Stack(
-          children: [
-        SizedBox(
-          height: 100,
-          child: HeaderWidget(80.h, false, Icons.house_rounded),
-        ),
-        SingleChildScrollView(
-          child: Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.fromLTRB(5, 80, 5, 10),
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Column(children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                GetBuilder<PassengerControllerImp>(
-                    init: PassengerControllerImp(),
-                    builder: (controller) {
-                      if (controller.trips.isEmpty) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-
-                      return ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.trips.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            child: TripCard(
-                              leadingIcon: Icons.taxi_alert_rounded,
-                              driverPhoneNumber:
-                              controller.trips[index].phone ?? '',
-                              driverName:
-                              controller.trips[index].driverName ?? '',
-                              availableSeats: 7 -
-                                  (controller.trips[index].totalPassengers ??
-                                      0),
-                            ),
-                            // onTap: () {
-                            // },
+        children: [
+          SizedBox(
+            height: 100,
+            child: HeaderWidget(80.h, false, Icons.house_rounded),
+          ),
+          SingleChildScrollView(
+            child: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.fromLTRB(5, 80, 5, 10),
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Column(children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GetBuilder<PassengerControllerImp>(
+                      init: PassengerControllerImp(),
+                      builder: (controller) {
+                        if (controller.isLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      );
-                    })
-              ])),
-        ),
-        Center(
-          child: Container(
-            margin: EdgeInsets.only(top: 500.h),
-            decoration:
-            ThemeHelper().buttonBoxDecoration(context),
-            child: ElevatedButton(
-              style: ThemeHelper().buttonStyle(),
-              child: Padding(
-                padding:
-                const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                child: Text(
-                  "Book a ride".tr.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                        }
+
+                        if (controller.trips.isEmpty) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 30).h,
+                            child: const Center(
+                              child: Text(
+                                'Not Found Trips',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+
+                        return ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: controller.trips.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              child: TripCard(
+                                leadingIcon: Icons.taxi_alert_rounded,
+                                driverPhoneNumber:
+                                    controller.trips[index].phone ?? '',
+                                driverName:
+                                    controller.trips[index].driverName ?? '',
+                                availableSeats: 7 -
+                                    (controller.trips[index].totalPassengers ??
+                                        0),
+                              ),
+                              // onTap: () {
+                              // },
+                            );
+                          },
+                        );
+                      })
+                ])),
+          ),
+          Center(
+            child: Container(
+              margin: EdgeInsets.only(top: 500.h),
+              decoration: ThemeHelper().buttonBoxDecoration(context),
+              child: ElevatedButton(
+                style: ThemeHelper().buttonStyle(),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                  child: Text(
+                    "Book a ride".tr.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-              onPressed: () {
-                Get.defaultDialog(
-                          title: "booking".tr,
-                          content: SingleChildScrollView(
-                            child: Column(
+                onPressed: () {
+                  Get.defaultDialog(
+                    title: "booking".tr,
+                    content: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(width: 15),
+                          DropdownButtonFormField<int>(
+                            decoration: ThemeHelper().textInputDecoration(
+                              'Number of passengers'.tr,
+                            ),
+                            items: [1, 2, 3, 4].map((passenger) {
+                              return DropdownMenuItem<int>(
+                                value: passenger,
+                                child: Text('$passenger'),
+                              );
+                            }).toList(),
+                            value: passengerControllerImp.numberOfPassengers,
+                            onChanged: (value) => passengerControllerImp
+                                .selectNumberOfPassenger(value),
+                          ),
+                          const SizedBox(height: 10),
+                          GetBuilder<PassengerControllerImp>(
+                            builder: (controller) => Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                const SizedBox(width: 15),
-                                DropdownButtonFormField<int>(
-                                  decoration: ThemeHelper().textInputDecoration(
-                                    'Number of passengers'.tr,
-                                  ),
-                                  items: [1, 2, 3, 4].map((passenger) {
-                                    return DropdownMenuItem<int>(
-                                      value: passenger,
-                                      child: Text('$passenger'),
-                                    );
-                                  }).toList(),
-                                  value: passengerControllerImp.numberOfPassengers,
-                                  onChanged: (value) =>
-                                      passengerControllerImp.selectNumberOfPassenger(value),
-                                ),
-                                const SizedBox(height: 10),
-                                GetBuilder<PassengerControllerImp>(
-                                  builder: (controller) => Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                       SizedBox(
-                                        child: Text(
-                                          'Your location:'.tr,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 40,
-                                        child: RadioListTile(
-                                          title:  Text('Current location'.tr),
-                                          value: 0,
-                                          groupValue: controller.optionMapSelected.value,
-                                          onChanged: (value) {
-                                            controller.updateSelectedValue(value!);
-                                          },
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 40,
-                                        child: RadioListTile(
-                                          title:  Text('Choose from map'.tr),
-                                          value: 1,
-                                          groupValue: controller.optionMapSelected.value,
-                                          onChanged: (value) {
-                                            controller.updateSelectedValue(value!);
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                                SizedBox(
+                                  child: Text(
+                                    'Your location:'.tr,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 20,
+                                SizedBox(
+                                  height: 40,
+                                  child: RadioListTile(
+                                    title: Text('Current location'.tr),
+                                    value: 0,
+                                    groupValue:
+                                        controller.optionMapSelected.value,
+                                    onChanged: (value) {
+                                      controller.updateSelectedValue(value!);
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                  child: RadioListTile(
+                                    title: Text('Choose from map'.tr),
+                                    value: 1,
+                                    groupValue:
+                                        controller.optionMapSelected.value,
+                                    onChanged: (value) {
+                                      controller.updateSelectedValue(value!);
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                          textConfirm: "book now".tr, buttonColor: Colors.yellow.shade700,confirmTextColor: Colors.white,
-                          onConfirm: () {
-                            if (passengerControllerImp.optionMapSelected.value == 1) {
-                              Get.to(() => const PassengerMap());
-                            } else {
-                              passengerControllerImp.orderTrip();
-                              Get.back();
-                            }
-                          },
-                        );
-
-              },
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                    textConfirm: "book now".tr,
+                    buttonColor: Colors.yellow.shade700,
+                    confirmTextColor: Colors.white,
+                    onConfirm: () {
+                      if (passengerControllerImp.optionMapSelected.value == 1) {
+                        Get.to(() => const PassengerMap());
+                      } else {
+                        passengerControllerImp.orderTrip();
+                        Get.back();
+                      }
+                    },
+                  );
+                },
+              ),
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

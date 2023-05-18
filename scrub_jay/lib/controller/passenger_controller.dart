@@ -54,7 +54,7 @@ class PassengerControllerImp extends PassengerController {
 
     final DatabaseReference databaseReference = await FirebaseDatabaseApp
         .firebaseDatabase
-        .getData('users/${user!.uid}');
+        .getData('users/passengers/${user!.uid}');
     await databaseReference.get().then((value) {
       final Map<String, dynamic> data = jsonDecode(jsonEncode(value.value));
 
@@ -87,7 +87,7 @@ class PassengerControllerImp extends PassengerController {
               final Map<String, dynamic> trip =
                   json.decode(json.encode(child.value));
 
-              (await user.User.getUser(trip['driverId']))
+              (await user.User.getUser(trip['driverId']))!
                   .onValue
                   .listen((event) {
                 trip['driverName'] =
