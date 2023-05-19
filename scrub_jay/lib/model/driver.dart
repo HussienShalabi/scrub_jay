@@ -4,6 +4,7 @@ class Driver extends User {
   String? vehicleNumber;
   String? driverIdentityNumber;
   String? licenseNumber;
+  bool? isConfirm;
 
   Driver(
       {this.vehicleNumber,
@@ -12,7 +13,8 @@ class Driver extends User {
       super.fullname,
       super.emailAddress,
       super.phoneNumber,
-      super.role});
+      super.role,
+      this.isConfirm = false});
 
   Driver.fromJson(Map<String, dynamic> json) {
     super.id = json['id'];
@@ -23,6 +25,7 @@ class Driver extends User {
     vehicleNumber = json['vehicleNumber'];
     driverIdentityNumber = json['driverIdentityNumber'];
     licenseNumber = json['licenseNumber'];
+    isConfirm = json['isConfirm'];
   }
 
   Map<String, dynamic> toJson() {
@@ -35,6 +38,7 @@ class Driver extends User {
     data['driverIdentityNumber'] = driverIdentityNumber;
     data['licenseNumber'] = licenseNumber;
     data['role'] = super.role;
+    data['isConfirm'] = isConfirm;
     return data;
   }
 }

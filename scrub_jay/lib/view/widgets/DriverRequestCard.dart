@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/AdminController.dart';
+import 'package:scrub_jay/controller/auth_controller.dart';
 
 import '../common_screens/theme_helper.dart';
 
 class DriverRequestCard extends StatelessWidget {
   final IconData leadingIcon;
+  final String id;
   final String title;
-  final int driverPhoneNumber;
+  final String driverPhoneNumber;
+  final String driverEmailAddress;
+  final String driverVehicleNumber;
+  final String driverIdentityNumber;
+  final String driverLicenseNumber;
   final IconData trailing;
-  final double BottomMargin;
+  final double bottomMargin;
+  final void Function()? onPressed;
 
   const DriverRequestCard({
+    super.key,
     this.leadingIcon = Icons.person,
+    required this.id,
     required this.title,
     required this.driverPhoneNumber,
-    required this.trailing,
-    this.BottomMargin = 0,
+    this.trailing = Icons.check,
+    required this.driverEmailAddress,
+    required this.driverVehicleNumber,
+    required this.driverIdentityNumber,
+    required this.driverLicenseNumber,
+    this.onPressed,
+    this.bottomMargin = 0,
   });
 
   @override
@@ -26,74 +41,129 @@ class DriverRequestCard extends StatelessWidget {
       margin: EdgeInsets.all(7.sp),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       elevation: 5.sp,
-      child: ListTile(
-        leading: Icon(
-          leadingIcon,
-          color: Colors.white,
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            leadingIcon,
             color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-            // fontFamily: ('Caveat'),
           ),
-        ),
-        subtitle: Row(
-          children: [
-            Text(
-              'phone: '.tr,
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.white,
-                // fontFamily: ('Caveat'),
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-            Text(
-              '$driverPhoneNumber',
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.white,
-                // fontFamily: ('Caveat'),
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ],
-        ),
-        trailing: IconButton(
-          //TODO Show attachments
-          onPressed: () => {
-            Get.defaultDialog(
-              title: "Driver Information".tr,
-              content: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(width: 15),
-                    Row(
-                      children: [
-                        Text('Name: '),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
+          SizedBox(
+            height: 220.h,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                    // fontFamily: ('Caveat'),
+                  ),
                 ),
-              ),
-              textConfirm: "book now".tr,
-              buttonColor: Colors.yellow.shade700,
-              confirmTextColor: Colors.white,
-              onConfirm: () {},
+                Text(
+                  'phone: '.tr,
+                  style: TextStyle(
+                    fontSize: 17.sp,
+                    color: Colors.white,
+                    // fontFamily: ('Caveat'),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  driverPhoneNumber,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.white,
+                    // fontFamily: ('Caveat'),
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                Text(
+                  'email: '.tr,
+                  style: TextStyle(
+                    fontSize: 17.sp,
+                    color: Colors.white,
+                    // fontFamily: ('Caveat'),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '$driverEmailAddress',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.white,
+                    // fontFamily: ('Caveat'),
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                Text(
+                  'Vehicle Number: '.tr,
+                  style: TextStyle(
+                    fontSize: 17.sp,
+                    color: Colors.white,
+                    // fontFamily: ('Caveat'),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '$driverVehicleNumber',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.white,
+                    // fontFamily: ('Caveat'),
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                Text(
+                  'Identity Number: '.tr,
+                  style: TextStyle(
+                    fontSize: 17.sp,
+                    color: Colors.white,
+                    // fontFamily: ('Caveat'),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '$driverIdentityNumber',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.white,
+                    // fontFamily: ('Caveat'),
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                Text(
+                  'Driver License Number: '.tr,
+                  style: TextStyle(
+                    fontSize: 17.sp,
+                    color: Colors.white,
+                    // fontFamily: ('Caveat'),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '$driverLicenseNumber',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.white,
+                    // fontFamily: ('Caveat'),
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
             ),
-          },
-          icon: Icon(
-            trailing,
-            color: Colors.green,
           ),
-        ),
+          IconButton(
+            onPressed: onPressed,
+            icon: Icon(
+              trailing,
+              color: Colors.green,
+            ),
+          ),
+        ],
       ),
     );
   }

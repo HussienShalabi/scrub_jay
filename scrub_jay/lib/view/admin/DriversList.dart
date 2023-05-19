@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/AdminController.dart';
 import '../widgets/DriverInfoCard.dart';
 import '../widgets/HeaderWidget.dart';
 import 'AdminDrawer.dart';
 
-class DriversList extends StatefulWidget {
+class DriversList extends StatelessWidget {
   const DriversList({super.key});
-// just show screen from db
-  @override
-  State<StatefulWidget> createState() {
-    return _DriversListState();
-  }
-}
 
-class _DriversListState extends State<DriversList> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,14 +87,19 @@ class _DriversListState extends State<DriversList> {
                     const SizedBox(
                       height: 20,
                     ),
-                    ListView.builder(
-                      itemCount: 5,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => const DriverInfoCard(
-                        leadingIcon: Icons.taxi_alert_rounded,
-                        title: "data",
-                        driverPhoneNumber: '005975',
-                      ),
+                    GetBuilder<AdminControllerImp>(
+                      init: AdminControllerImp(),
+                      builder: (controller) {
+                        return ListView.builder(
+                          itemCount: controller.drivers.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => DriverInfoCard(
+                            leadingIcon: Icons.taxi_alert_rounded,
+                            title: controller.drivers[index].fullname ?? " " ,
+                            driverPhoneNumber: controller.drivers[index].phoneNumber ?? " " ,
+                          ),
+                        );
+                      }
                     ),
                   ],
                 ),

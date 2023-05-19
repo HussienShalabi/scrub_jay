@@ -116,8 +116,8 @@ class SignUpPassenger extends StatelessWidget {
                               if (val!.isEmpty) {
                                 return "this field is required".tr;
                               }
-                              if (authController.password.text.trim() !=
-                                  authController.rewritePassword.text.trim()) {
+                              if (authController.password!.text.trim() !=
+                                  authController.rewritePassword!.text.trim()) {
                                 return 'Passwords don\'t match'.tr;
                               }
                               return null;
