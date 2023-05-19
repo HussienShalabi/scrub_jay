@@ -115,8 +115,8 @@ class SignUpDriver extends StatelessWidget {
                               if (val!.isEmpty) {
                                 return "this field is required".tr;
                               }
-                              if (authController.password.text.trim() !=
-                                  authController.rewritePassword.text.trim()) {
+                              if (authController.password!.text.trim() !=
+                                  authController.rewritePassword!.text.trim()) {
                                 return 'Passwords don\'t match';
                               }
                               return null;
@@ -189,7 +189,8 @@ class SignUpDriver extends StatelessWidget {
                         SizedBox(
                           width: 200,
                           child: Container(
-                            decoration: ThemeHelper().buttonBoxDecoration(context),
+                            decoration:
+                                ThemeHelper().buttonBoxDecoration(context),
                             child: GetBuilder<AuthControllerImp>(
                                 init: AuthControllerImp(),
                                 builder: (controller) {

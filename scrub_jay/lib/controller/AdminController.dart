@@ -14,7 +14,8 @@ import '../view/admin/AdminMainScreen.dart';
 abstract class AbstractAdminController extends GetxController {
   Future<void> adminSignup();
   Future<void> getDrivers();
-  Future <void> swap();
+  Future<void> swap();
+  Future<void> deleteDriver(String id);
   //Future<void> deleteDriver();
   final controller = Get.put(AdminControllerImp);
 }
@@ -38,6 +39,11 @@ class AdminControllerImp extends AbstractAdminController {
     phoneNumber.dispose();
     password.dispose();
     rewritePassword.dispose();
+  }
+
+  @override
+  Future<void> deleteDriver(String id) async {
+    await FirebaseDatabaseApp.firebaseDatabase.deleteData('users/drivers/$id');
   }
 
   @override
@@ -90,18 +96,17 @@ class AdminControllerImp extends AbstractAdminController {
         await FirebaseDatabaseApp.firebaseDatabase.getData("users/drivers");
     await driversData.get().then((value) {
       for (var element in value.children) {
-        final Map<String,dynamic> json = jsonDecode(jsonEncode(element.value));
+        final Map<String, dynamic> json = jsonDecode(jsonEncode(element.value));
         drivers.add(Driver.fromJson(json));
       }
       update();
     });
   }
-  
+
   @override
   Future<void> swap() async {
     var newIndex;
     var oldIndex;
     if (newIndex > oldIndex) newIndex--;
-
   }
 }

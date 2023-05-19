@@ -65,4 +65,10 @@ class FirebaseDatabaseApp {
     final DatabaseReference ref = await getDatabaseReference(path);
     await ref.update(data);
   }
+
+  Future<void> deleteData(String path) async {
+    print(path);
+    final DatabaseReference ref = await getDatabaseReference(path);
+    await ref.remove();
+  }
 }

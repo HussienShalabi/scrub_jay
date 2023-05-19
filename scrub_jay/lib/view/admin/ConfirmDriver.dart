@@ -103,6 +103,7 @@ class confirmDriver extends StatelessWidget {
                                       shrinkWrap: true,
                                       itemBuilder: (context, index) =>
                                           DriverRequestCard(
+                                        id: controller.drivers[index].id ?? '',
                                         leadingIcon: Icons.person,
                                         title: controller
                                                 .drivers[index].fullname ??
@@ -111,10 +112,19 @@ class confirmDriver extends StatelessWidget {
                                                 .drivers[index].phoneNumber ??
                                             " ",
                                         trailing: Icons.check,
-                                        driverEmailAddress: controller.drivers[index].emailAddress ?? " " ,
-                                        driverVehicleNumber: controller.drivers[index].vehicleNumber ?? " " ,
-                                        driverIdentityNumber: controller.drivers[index].driverIdentityNumber ?? " " ,
-                                        driverLicenseNumber: controller.drivers[index].licenseNumber ?? " " ,
+                                        driverEmailAddress: controller
+                                                .drivers[index].emailAddress ??
+                                            " ",
+                                        driverVehicleNumber: controller
+                                                .drivers[index].vehicleNumber ??
+                                            " ",
+                                        driverIdentityNumber: controller
+                                                .drivers[index]
+                                                .driverIdentityNumber ??
+                                            " ",
+                                        driverLicenseNumber: controller
+                                                .drivers[index].licenseNumber ??
+                                            " ",
                                       ),
                                     );
                                   }),

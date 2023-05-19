@@ -89,26 +89,39 @@ class DeleteDriver extends StatelessWidget {
                           height: 20,
                         ),
                         GetBuilder<AdminControllerImp>(
-                          init: AdminControllerImp(),
-                          builder: (controller) {
-                            return ListView.builder(
+                            init: AdminControllerImp(),
+                            builder: (controller) {
+                              return ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.vertical,
                                 itemCount: controller.drivers.length,
                                 shrinkWrap: true,
-                                itemBuilder: (context, index) =>DriverRequestCard(
+                                itemBuilder: (context, index) =>
+                                    DriverRequestCard(
                                   leadingIcon: Icons.person,
-                                  title: controller.drivers[index].fullname ?? " ",
-                                  driverPhoneNumber: controller.drivers[index].phoneNumber ?? " ",
-                                  driverEmailAddress: controller.drivers[index].emailAddress ?? " " ,
-                                  driverVehicleNumber: controller.drivers[index].vehicleNumber ?? " " ,
-                                  driverIdentityNumber: controller.drivers[index].driverIdentityNumber ?? " " ,
-                                  driverLicenseNumber: controller.drivers[index].licenseNumber ?? " " ,
+                                  id: controller.drivers[index].id ?? '',
+                                  title:
+                                      controller.drivers[index].fullname ?? " ",
+                                  driverPhoneNumber:
+                                      controller.drivers[index].phoneNumber ??
+                                          " ",
+                                  driverEmailAddress:
+                                      controller.drivers[index].emailAddress ??
+                                          " ",
+                                  driverVehicleNumber:
+                                      controller.drivers[index].vehicleNumber ??
+                                          " ",
+                                  driverIdentityNumber: controller
+                                          .drivers[index]
+                                          .driverIdentityNumber ??
+                                      " ",
+                                  driverLicenseNumber:
+                                      controller.drivers[index].licenseNumber ??
+                                          " ",
                                   trailing: Icons.restore_from_trash_rounded,
                                 ),
-                            );
-                          }
-                        ),
+                              );
+                            }),
                       ],
                     ),
                   ),

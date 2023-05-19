@@ -28,25 +28,36 @@ class AuthControllerImp extends AuthController {
   final GlobalKey<FormState> formKeySignIn = GlobalKey<FormState>();
   final GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
   final GlobalKey<FormState> signInKey = GlobalKey<FormState>();
-  final TextEditingController fullName = TextEditingController();
-  final TextEditingController emailAddress = TextEditingController();
-  final TextEditingController phoneNumber = TextEditingController();
-  final TextEditingController password = TextEditingController();
-  final TextEditingController rewritePassword = TextEditingController();
-  final TextEditingController vehicleNumber = TextEditingController();
-  final TextEditingController driverIdentityNumber = TextEditingController();
-  final TextEditingController licenseNumber = TextEditingController();
+  TextEditingController? fullName;
+  TextEditingController? emailAddress;
+  TextEditingController? phoneNumber;
+  TextEditingController? password;
+  TextEditingController? rewritePassword;
+  TextEditingController? vehicleNumber;
+  TextEditingController? driverIdentityNumber;
+  TextEditingController? licenseNumber;
   final RxInt roleSelected = RxInt(2);
 
   clearData() {
-    fullName.dispose();
-    emailAddress.dispose();
-    phoneNumber.dispose();
-    password.dispose();
-    rewritePassword.dispose();
-    vehicleNumber.dispose();
-    driverIdentityNumber.dispose();
-    licenseNumber.dispose();
+    fullName!.clear();
+    emailAddress!.clear();
+    phoneNumber!.clear();
+    password!.clear();
+    rewritePassword!.clear();
+    vehicleNumber!.clear();
+    driverIdentityNumber!.clear();
+    licenseNumber!.clear();
+  }
+
+  initilizeData() {
+    fullName = TextEditingController();
+    emailAddress = TextEditingController();
+    phoneNumber = TextEditingController();
+    password = TextEditingController();
+    rewritePassword = TextEditingController();
+    vehicleNumber = TextEditingController();
+    driverIdentityNumber = TextEditingController();
+    licenseNumber = TextEditingController();
   }
 
   @override
@@ -57,7 +68,7 @@ class AuthControllerImp extends AuthController {
 
     if (isValid) {
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
-          .signin(emailAddress.text.trim(), password.text);
+          .signin(emailAddress!.text.trim(), password!.text);
 
       if (uid != null) {
         isLoading = false;
@@ -103,14 +114,14 @@ class AuthControllerImp extends AuthController {
 
     if (isValid) {
       Passenger newPassenger = Passenger(
-        fullname: fullName.text.trim(),
-        emailAddress: emailAddress.text.trim(),
-        phoneNumber: phoneNumber.text.trim(),
+        fullname: fullName!.text.trim(),
+        emailAddress: emailAddress!.text.trim(),
+        phoneNumber: phoneNumber!.text.trim(),
         role: 2,
       );
 
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
-          .signup(2, newPassenger.toJson(), password.text);
+          .signup(2, newPassenger.toJson(), password!.text);
 
       if (uid != null) {
         isLoading = false;
@@ -133,17 +144,17 @@ class AuthControllerImp extends AuthController {
 
     if (isValid) {
       Driver newDriver = Driver(
-        fullname: fullName.text.trim(),
-        emailAddress: emailAddress.text.trim(),
-        phoneNumber: phoneNumber.text.trim(),
-        vehicleNumber: vehicleNumber.text.trim(),
-        driverIdentityNumber: driverIdentityNumber.text.trim(),
-        licenseNumber: licenseNumber.text.trim(),
+        fullname: fullName!.text.trim(),
+        emailAddress: emailAddress!.text.trim(),
+        phoneNumber: phoneNumber!.text.trim(),
+        vehicleNumber: vehicleNumber!.text.trim(),
+        driverIdentityNumber: driverIdentityNumber!.text.trim(),
+        licenseNumber: licenseNumber!.text.trim(),
         role: 1,
       );
 
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
-          .signup(1, newDriver.toJson(), password.text);
+          .signup(1, newDriver.toJson(), password!.text);
 
       await FirebaseAuthApp.firebaseAuthApp.signout();
 
@@ -159,7 +170,11 @@ class AuthControllerImp extends AuthController {
   }
 
   @override
-  Future<void> signout() async {}
+  Future<void> signout() async {
+    await FirebaseAuthApp.firebaseAuthApp.signout();
+    await AppSharedPrefernces.appSharedPrefernces.deleteData('role');
+    Get.offAll(() => const Signin());
+  }
 
   @override
   Future<void> adminSignup() async {
@@ -169,14 +184,14 @@ class AuthControllerImp extends AuthController {
 
     if (isValid) {
       Admin newAdmin = Admin(
-        fullname: fullName.text.trim(),
-        emailAddress: emailAddress.text.trim(),
-        phoneNumber: phoneNumber.text.trim(),
+        fullname: fullName!.text.trim(),
+        emailAddress: emailAddress!.text.trim(),
+        phoneNumber: phoneNumber!.text.trim(),
         role: 0,
       );
 
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
-          .signup(0, newAdmin.toJson(), password.text);
+          .signup(0, newAdmin.toJson(), password!.text);
 
       await FirebaseAuthApp.firebaseAuthApp.signout();
 
@@ -194,6 +209,12 @@ class AuthControllerImp extends AuthController {
   void updateSelectedValue(int value) {
     roleSelected.value = value;
     update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    initilizeData();
   }
 
   @override
