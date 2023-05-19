@@ -14,9 +14,8 @@ import '../view/admin/AdminMainScreen.dart';
 abstract class AbstractAdminController extends GetxController {
   Future<void> adminSignup();
   Future<void> getDrivers();
-  Future<void> swap();
-  Future<void> deleteDriver(String id);
-  //Future<void> deleteDriver();
+  Future<void> deleteDriver(int index, String id);
+  Future<void> confirmDriver(int index, String id);
   final controller = Get.put(AdminControllerImp);
 }
 
@@ -24,6 +23,7 @@ class AdminControllerImp extends AbstractAdminController {
   bool isLoading = false;
 
   List<Driver> drivers = [];
+  List<Driver> newDrivers = [];
 
   GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
 
@@ -39,11 +39,6 @@ class AdminControllerImp extends AbstractAdminController {
     phoneNumber.dispose();
     password.dispose();
     rewritePassword.dispose();
-  }
-
-  @override
-  Future<void> deleteDriver(String id) async {
-    await FirebaseDatabaseApp.firebaseDatabase.deleteData('users/drivers/$id');
   }
 
   @override
@@ -85,28 +80,46 @@ class AdminControllerImp extends AbstractAdminController {
   }
 
   @override
-  void onInit() {
-    super.onInit();
-    getDrivers();
-  }
-
-  @override
   Future<void> getDrivers() async {
     DatabaseReference driversData =
         await FirebaseDatabaseApp.firebaseDatabase.getData("users/drivers");
     await driversData.get().then((value) {
       for (var element in value.children) {
         final Map<String, dynamic> json = jsonDecode(jsonEncode(element.value));
-        drivers.add(Driver.fromJson(json));
+        json['id'] = element.key;
+        if (json['isConfirm']) {
+          drivers.add(Driver.fromJson(json));
+        } else {
+          newDrivers.add(Driver.fromJson(json));
+        }
       }
       update();
     });
   }
 
   @override
-  Future<void> swap() async {
-    var newIndex;
-    var oldIndex;
-    if (newIndex > oldIndex) newIndex--;
+  Future<void> deleteDriver(int index, String id) async {
+    await FirebaseDatabaseApp.firebaseDatabase.deleteData('users/drivers/$id');
+    update();
+  }
+
+  @override
+  Future<void> confirmDriver(int index, String id) async {
+    final Driver driver = newDrivers[index];
+    driver.isConfirm = true;
+
+    await FirebaseDatabaseApp.firebaseDatabase.updateData('users/drivers/$id', {
+      'isConfirm': driver.isConfirm,
+    });
+
+    drivers.add(driver);
+    newDrivers.remove(driver);
+    update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getDrivers();
   }
 }

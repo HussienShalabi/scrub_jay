@@ -17,6 +17,7 @@ class DriverRequestCard extends StatelessWidget {
   final String driverLicenseNumber;
   final IconData trailing;
   final double bottomMargin;
+  final void Function()? onPressed;
 
   const DriverRequestCard({
     super.key,
@@ -29,6 +30,7 @@ class DriverRequestCard extends StatelessWidget {
     required this.driverVehicleNumber,
     required this.driverIdentityNumber,
     required this.driverLicenseNumber,
+    this.onPressed,
     this.bottomMargin = 0,
   });
 
@@ -154,17 +156,13 @@ class DriverRequestCard extends StatelessWidget {
               ],
             ),
           ),
-          GetBuilder<AdminControllerImp>(
-              init: AdminControllerImp(),
-              builder: (controller) {
-                return IconButton(
-                  onPressed: () => controller.deleteDriver(id),
-                  icon: Icon(
-                    trailing,
-                    color: Colors.green,
-                  ),
-                );
-              }),
+          IconButton(
+            onPressed: onPressed,
+            icon: Icon(
+              trailing,
+              color: Colors.green,
+            ),
+          ),
         ],
       ),
     );

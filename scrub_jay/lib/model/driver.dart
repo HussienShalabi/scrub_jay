@@ -4,7 +4,7 @@ class Driver extends User {
   String? vehicleNumber;
   String? driverIdentityNumber;
   String? licenseNumber;
-  String? isConfirm;
+  bool? isConfirm;
 
   Driver(
       {this.vehicleNumber,
@@ -13,7 +13,8 @@ class Driver extends User {
       super.fullname,
       super.emailAddress,
       super.phoneNumber,
-      super.role});
+      super.role,
+      this.isConfirm = false});
 
   Driver.fromJson(Map<String, dynamic> json) {
     super.id = json['id'];

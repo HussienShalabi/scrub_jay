@@ -7,8 +7,6 @@ import '../widgets/DriverRequestCard.dart';
 import '../widgets/HeaderWidget.dart';
 
 class confirmDriver extends StatelessWidget {
-  final DriverControllerImp driverController = Get.find<DriverControllerImp>();
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AdminControllerImp>(
@@ -99,31 +97,42 @@ class confirmDriver extends StatelessWidget {
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       scrollDirection: Axis.vertical,
-                                      itemCount: controller.drivers.length,
+                                      itemCount: controller.newDrivers.length,
                                       shrinkWrap: true,
                                       itemBuilder: (context, index) =>
                                           DriverRequestCard(
-                                        id: controller.drivers[index].id ?? '',
+                                        id: controller.newDrivers[index].id ??
+                                            '',
                                         leadingIcon: Icons.person,
                                         title: controller
-                                                .drivers[index].fullname ??
+                                                .newDrivers[index].fullname ??
                                             " ",
                                         driverPhoneNumber: controller
-                                                .drivers[index].phoneNumber ??
+                                                .newDrivers[index]
+                                                .phoneNumber ??
                                             " ",
                                         trailing: Icons.check,
+                                        onPressed: () =>
+                                            controller.confirmDriver(
+                                                index,
+                                                controller
+                                                        .newDrivers[index].id ??
+                                                    ''),
                                         driverEmailAddress: controller
-                                                .drivers[index].emailAddress ??
+                                                .newDrivers[index]
+                                                .emailAddress ??
                                             " ",
                                         driverVehicleNumber: controller
-                                                .drivers[index].vehicleNumber ??
+                                                .newDrivers[index]
+                                                .vehicleNumber ??
                                             " ",
                                         driverIdentityNumber: controller
-                                                .drivers[index]
+                                                .newDrivers[index]
                                                 .driverIdentityNumber ??
                                             " ",
                                         driverLicenseNumber: controller
-                                                .drivers[index].licenseNumber ??
+                                                .newDrivers[index]
+                                                .licenseNumber ??
                                             " ",
                                       ),
                                     );

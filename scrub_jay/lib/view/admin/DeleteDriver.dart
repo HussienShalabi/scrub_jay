@@ -99,6 +99,9 @@ class DeleteDriver extends StatelessWidget {
                                 itemBuilder: (context, index) =>
                                     DriverRequestCard(
                                   leadingIcon: Icons.person,
+                                  onPressed: () => controller.deleteDriver(
+                                      index,
+                                      controller.drivers[index].id ?? ''),
                                   id: controller.drivers[index].id ?? '',
                                   title:
                                       controller.drivers[index].fullname ?? " ",
