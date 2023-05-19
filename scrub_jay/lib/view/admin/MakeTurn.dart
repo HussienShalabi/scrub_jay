@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/widgets.dart';
+import 'package:scrub_jay/controller/AdminController.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/DriverInfoCard.dart';
 import '../widgets/headerWidget.dart';
@@ -95,24 +96,33 @@ class _MakeTurnState extends State<MakeTurn> {
                     ),
                     SizedBox(
                         height: 600,
-                        child: ReorderableListView.builder(
-                          itemBuilder: (context, index) {
-                            return DriverInfoCard(
-                              key: Key(index.toString()),
-                              leadingIcon: Icons.taxi_alert_rounded,
-                              title: "data",
-                              driverPhoneNumber: '05975',
-                            );
-                          },
-                          itemCount: 5,
-                          onReorder: (oldIndex, newIndex) {
-                            setState(() {
-                              if (newIndex > oldIndex) newIndex--;
-                            });
-                          },
-                        )),
+                        child: GetBuilder<AdminControllerImp>(
+                            init: AdminControllerImp(),
+                            builder: (controller) {
+                              return ReorderableListView.builder(
+                                itemBuilder: (context, index) {
+                                  return DriverInfoCard(
+                                    key: Key(index.toString()),
+                                    leadingIcon: Icons.taxi_alert_rounded,
+                                    title: controller.drivers[index].fullname ??
+                                        " ",
+                                    driverPhoneNumber:
+                                        controller.drivers[index].phoneNumber ??
+                                            " ",
+                                  );
+                                },
+                                
+                                itemCount: controller.drivers.length,
+
+                                onReorder: (oldIndex, newIndex) {
+                                  setState(() {
+                                    if (newIndex > oldIndex) newIndex--;
+                                  });
+                                },
+                              );
+                            })),
                     SizedBox(
-                      width: 200 ,
+                      width: 200,
                       child: Container(
                         decoration: ThemeHelper().buttonBoxDecoration(context),
                         child: ElevatedButton(
@@ -127,9 +137,7 @@ class _MakeTurnState extends State<MakeTurn> {
                                   color: Colors.white),
                             ),
                           ),
-                          onPressed: () {
-
-                          },
+                          onPressed: () {},
                         ),
                       ),
                     ),

@@ -6,7 +6,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/model/driver.dart';
-import '../model/user.dart' as user;
 import '../core/firebase_app_auth.dart';
 import '../core/firebase_database_app.dart';
 import '../model/admin.dart';
@@ -15,6 +14,7 @@ import '../view/admin/AdminMainScreen.dart';
 abstract class AbstractAdminController extends GetxController {
   Future<void> adminSignup();
   Future<void> getDrivers();
+  Future <void> swap();
   //Future<void> deleteDriver();
   final controller = Get.put(AdminControllerImp);
 }
@@ -95,5 +95,13 @@ class AdminControllerImp extends AbstractAdminController {
       }
       update();
     });
+  }
+  
+  @override
+  Future<void> swap() async {
+    var newIndex;
+    var oldIndex;
+    if (newIndex > oldIndex) newIndex--;
+
   }
 }

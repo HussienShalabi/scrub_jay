@@ -50,7 +50,7 @@ class DriverRequestCard extends StatelessWidget {
           ),
         ),
         subtitle: SizedBox(
-          height: 240,
+          height: 250,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
