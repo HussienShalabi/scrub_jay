@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/auth_controller.dart';
 import 'package:scrub_jay/controller/passenger_controller.dart';
 import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/EditPassword.dart';
@@ -157,7 +158,7 @@ class PassengerDrawer extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.find<PassengerControllerImp>().passengerSignout();
+                Get.find<AuthControllerImp>().signout();
               },
             ),
           ],

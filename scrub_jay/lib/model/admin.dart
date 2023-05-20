@@ -8,6 +8,8 @@ class Admin extends User {
     super.role,
   });
 
+  // Serialization
+
   Admin.fromJson(Map<String, dynamic> json) {
     super.id = json['id'];
     super.fullname = json['fullName'];
@@ -17,7 +19,7 @@ class Admin extends User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = {};
     data['id'] = super.id;
     data['fullName'] = super.fullname;
     data['emailAddress'] = super.emailAddress;

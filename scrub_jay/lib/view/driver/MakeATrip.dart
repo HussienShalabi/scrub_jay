@@ -126,7 +126,7 @@ class MakeATrip extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
-                          await controller.addTrip();
+                          // await controller.addTrip();
 
                           //After successful login we will redirect to profile page.
                           // Get.to(const DriverMap());

@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/core/firebase_database_app.dart';
 import 'package:scrub_jay/model/order.dart';
@@ -15,20 +13,11 @@ import 'package:scrub_jay/model/trip.dart';
 import '../model/map.dart' as map;
 
 abstract class PassengerController extends GetxController {
-  Future<void> passengerSignout();
   Future<void> orderTrip();
   Future<void> getTrips();
 }
 
 class PassengerControllerImp extends PassengerController {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController fullName = TextEditingController();
-  final TextEditingController emailAddress = TextEditingController();
-  final TextEditingController phoneNumber = TextEditingController();
-  final TextEditingController password = TextEditingController();
-  final TextEditingController rewritePassword = TextEditingController();
-  final TextEditingController emailAddressSignin = TextEditingController();
-  final TextEditingController passwordSignin = TextEditingController();
   RxInt optionMapSelected = RxInt(0);
 
   bool permissionMap = false;
@@ -129,13 +118,6 @@ class PassengerControllerImp extends PassengerController {
     isLoading = false;
     update();
     Get.back();
-  }
-
-  @override
-  Future passengerSignout() async {
-    await FirebaseAuthApp.firebaseAuthApp.signout(); // Sign out the user
-    await AppSharedPrefernces.appSharedPrefernces.deleteData('role');
-    Get.offAllNamed('/Signin'); // Navigate to the login page
   }
 
   void selectNumberOfPassenger(value) {

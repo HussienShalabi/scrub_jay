@@ -11,7 +11,7 @@ class chooseLang extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MyLocaleController controllerlang = Get.find();
+    MyLocaleControllerImp controllerlang = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -83,7 +83,7 @@ class chooseLang extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    width: 200 ,
+                    width: 200,
                     child: Container(
                       decoration: ThemeHelper().buttonBoxDecoration(context),
                       child: ElevatedButton(
@@ -99,7 +99,7 @@ class chooseLang extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          controllerlang.changeLang('ar');
+                          controllerlang.changeLocale('ar');
                         },
                       ),
                     ),
@@ -124,7 +124,7 @@ class chooseLang extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          controllerlang.changeLang('en');
+                          controllerlang.changeLocale('en');
                         },
                       ),
                     ),

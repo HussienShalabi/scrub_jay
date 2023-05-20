@@ -6,7 +6,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/app_functions.dart';
-import 'package:scrub_jay/core/firebase_database_app.dart';
 import 'package:scrub_jay/model/admin.dart';
 import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/Signin.dart';
@@ -76,9 +75,6 @@ class AuthControllerImp extends AuthController {
           .signin(emailAddress!.text.trim(), password!.text);
 
       if (uid != null) {
-        isLoading = false;
-        update();
-
         final DatabaseReference? databaseReference =
             await User.getUser(uid, role: roleSelected.value);
 
@@ -177,6 +173,7 @@ class AuthControllerImp extends AuthController {
   @override
   Future<void> driverSignup() async {
     isLoading = false;
+    update();
 
     final bool isValid = signupDriverKey.currentState!.validate();
 

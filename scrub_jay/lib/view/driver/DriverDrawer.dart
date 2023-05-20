@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/auth_controller.dart';
 import '../../controller/driver_controller.dart';
 import '../common_screens/EditPassword.dart';
 import '../common_screens/chooseLang.dart';
@@ -135,7 +136,7 @@ class DriverDrawer extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.find<DriverControllerImp>().driverSignout();
+                Get.find<AuthControllerImp>().signout();
               },
             ),
           ],
