@@ -16,6 +16,10 @@ class DriverMap extends StatelessWidget {
     return GetBuilder<DriverControllerImp>(
         init: DriverControllerImp(),
         builder: (controller) {
+          if (controller.getLocations) {
+            controller.getPassengersLocations();
+          }
+
           return Scaffold(
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
@@ -156,7 +160,7 @@ class DriverMap extends StatelessWidget {
                                 ? LatLng(controller.currentLocation!.latitude,
                                     controller.currentLocation!.longitude)
                                 : null,
-                            zoom: 11,
+                            zoom: 16,
                           ),
                           children: [
                             TileLayer(
@@ -181,7 +185,7 @@ class DriverMap extends StatelessWidget {
                                       builder: (context) {
                                         return const Icon(
                                           Icons.location_history,
-                                          size: 50,
+                                          size: 40,
                                           color: Colors.red,
                                         );
                                       },

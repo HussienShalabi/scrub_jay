@@ -38,6 +38,8 @@ class DriverControllerImp extends DriverController {
   Driver? currentDriver;
   List<Map<String, dynamic>> passengers = [];
   List<Trip> trips = [];
+  bool getLocations = true;
+  String myTripId = '';
 
   @override
   Future<void> determineCurrentLocation() async {
@@ -51,32 +53,31 @@ class DriverControllerImp extends DriverController {
   Future<void> getPassengersLocations() async {
     if (trips.isNotEmpty) {
       Trip myTrip = trips.firstWhere((element) {
-        return element.driverId == currentDriver!.id;
+        return element.id == myTripId;
       });
       myTrip.passengers!.forEach(
         (key, value) async {
           Map<String, dynamic> data = {};
           final DatabaseReference databaseRefrence = await FirebaseDatabaseApp
               .firebaseDatabase
-              .getData('users/${value['passengerId']}');
+              .getData('users/passengers/${value['passengerId']}');
 
           passengers = [];
-          databaseRefrence.onValue.listen(
-            (event) {
-              data = jsonDecode(jsonEncode(event.snapshot.value));
-              data['id'] = event.snapshot.key;
-              data['location'] = {
-                'latitude': value['location']!['latitude'],
-                'longitude': value['location']!['longitude'],
-              };
+          await databaseRefrence.get().then((snapshot) {
+            data = jsonDecode(jsonEncode(snapshot.value));
+            data['id'] = snapshot.key;
+            data['location'] = {
+              'latitude': value['location']!['latitude'],
+              'longitude': value['location']!['longitude'],
+            };
 
-              passengers.add({
-                'passenger': Passenger.fromJson(data),
-                'numOfPassenger': value['numOfPassengers']
-              });
-              update();
-            },
-          );
+            passengers.add({
+              'passenger': Passenger.fromJson(data),
+              'numOfPassenger': value['numOfPassengers']
+            });
+            getLocations = false;
+            update();
+          });
         },
       );
     }
@@ -84,6 +85,7 @@ class DriverControllerImp extends DriverController {
 
   @override
   Future<void> getTrips() async {
+    String driverId = FirebaseAuth.instance.currentUser!.uid;
     isLoading = true;
     update();
 
@@ -95,13 +97,16 @@ class DriverControllerImp extends DriverController {
           final Map<String, dynamic> trip =
               json.decode(json.encode(child.value));
 
+          if (trip['driverId'] == driverId) {
+            myTripId = child.key!;
+          }
+
           (await user.User.getUser(trip['driverId'], role: 1))!
               .onValue
               .listen((event) {
             trip['driverName'] =
                 (event.snapshot.value as Map<dynamic, dynamic>)['fullName'];
             trip['id'] = child.key;
-
             trips.add(Trip.fromJson(trip));
             isLoading = false;
             update();
@@ -148,16 +153,18 @@ class DriverControllerImp extends DriverController {
             Driver.fromJson(json.decode(json.encode(event.snapshot.value)));
 
         currentDriver!.id = event.snapshot.key;
-        isLoading = false;
+        update();
       },
-    );
+    ).onData((data) {
+      getTrips();
+    });
   }
 
   @override
   void onInit() {
     super.onInit();
     getDriverData();
-    getTrips();
+    // getTrips();
     determineCurrentLocation();
   }
 }
