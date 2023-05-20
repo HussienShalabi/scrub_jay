@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -97,6 +99,31 @@ class AuthControllerImp extends AuthController {
         } else if (setData && roleSelected.value == 2) {
           Get.offAll(() => ChooseTrip());
         } else if (setData && roleSelected.value == 0) {
+          final Object? data =
+              AppSharedPrefernces.appSharedPrefernces.getDate('order_trips');
+
+          print(data);
+
+          if (data == null) {
+            await AppSharedPrefernces.appSharedPrefernces
+                .setData('order_trips', {
+              'times': 1,
+              'date': DateTime.now().toString(),
+            }).then((value) => print(value));
+          } else {
+            final Map<String, dynamic> map = jsonDecode(jsonEncode(data));
+            if (DateTime.now()
+                    .difference(DateTime.tryParse(map['date'])!)
+                    .inHours >=
+                24) {
+              await AppSharedPrefernces.appSharedPrefernces
+                  .setData('order_trips', {
+                'times': 1,
+                'date': DateTime.now().toString(),
+              });
+            }
+          }
+
           Get.offAll(() => const AdminMainScreen());
         }
       }

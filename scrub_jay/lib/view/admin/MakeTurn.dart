@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/widgets.dart';
 import 'package:scrub_jay/controller/AdminController.dart';
+import '../../model/driver.dart';
 import '../common_screens/theme_helper.dart';
 import '../widgets/DriverInfoCard.dart';
 import '../widgets/headerWidget.dart';
@@ -95,53 +96,61 @@ class _MakeTurnState extends State<MakeTurn> {
                       height: 20,
                     ),
                     SizedBox(
-                        height: 600,
-                        child: GetBuilder<AdminControllerImp>(
-                            init: AdminControllerImp(),
-                            builder: (controller) {
-                              return ReorderableListView.builder(
-                                itemBuilder: (context, index) {
-                                  return DriverInfoCard(
-                                    key: Key(index.toString()),
-                                    leadingIcon: Icons.taxi_alert_rounded,
-                                    title: controller.drivers[index].fullname ??
+                      height: 600,
+                      child: GetBuilder<AdminControllerImp>(
+                        init: AdminControllerImp(),
+                        builder: (controller) {
+                          return ReorderableListView.builder(
+                            itemBuilder: (context, index) {
+                              return DriverInfoCard(
+                                key: Key(controller.drivers[index].id ?? ''),
+                                leadingIcon: Icons.taxi_alert_rounded,
+                                title:
+                                    controller.drivers[index].fullname ?? " ",
+                                driverPhoneNumber:
+                                    controller.drivers[index].phoneNumber ??
                                         " ",
-                                    driverPhoneNumber:
-                                        controller.drivers[index].phoneNumber ??
-                                            " ",
-                                  );
-                                },
-                                itemCount: controller.drivers.length,
-                                onReorderEnd: (index) {
-                                  print(index);
-                                },
-                                onReorder: (oldIndex, newIndex) {
-                                  setState(() {
-                                    if (newIndex > oldIndex) newIndex--;
-                                  });
-                                },
                               );
-                            })),
-                    SizedBox(
-                      width: 200,
-                      child: Container(
-                        decoration: ThemeHelper().buttonBoxDecoration(context),
-                        child: ElevatedButton(
-                          style: ThemeHelper().buttonStyle(),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                            child: Text(
-                              'Save'.tr.toUpperCase(),
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          onPressed: () {},
-                        ),
+                            },
+                            itemCount: controller.drivers.length,
+                            onReorder: (oldIndex, newIndex) =>
+                                controller.reorder(oldIndex, newIndex),
+                          );
+                        },
                       ),
                     ),
+                    GetBuilder<AdminControllerImp>(
+                        init: AdminControllerImp(),
+                        builder: (controller) {
+                          return SizedBox(
+                            width: 200,
+                            child: Container(
+                              decoration:
+                                  ThemeHelper().buttonBoxDecoration(context),
+                              child: ElevatedButton(
+                                style: ThemeHelper().buttonStyle(),
+                                onPressed: controller.isLoading
+                                    ? () {}
+                                    : () => controller.saveTrips(),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                  child: controller.isLoading
+                                      ? const Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : Text(
+                                          'Save'.tr.toUpperCase(),
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
                   ],
                 ),
               ),

@@ -89,30 +89,24 @@ class DriverControllerImp extends DriverController {
 
     await Trip.getTrips().then(
       (value) async {
-        value.onValue.listen(
-          (event) async {
-            trips = [];
-            final Iterable<DataSnapshot> data = event.snapshot.children;
-            for (DataSnapshot child in data) {
-              final Map<String, dynamic> trip =
-                  json.decode(json.encode(child.value));
+        trips = [];
 
-              (await user.User.getUser(trip['driverId']))!
-                  .onValue
-                  .listen((event) {
-                trip['driverName'] =
-                    (event.snapshot.value as Map<dynamic, dynamic>)['fullName'];
-              });
-              trip['id'] = child.key;
+        for (DataSnapshot child in value) {
+          final Map<String, dynamic> trip =
+              json.decode(json.encode(child.value));
 
-              trips.add(Trip.fromJson(trip));
-            }
-            await getPassengersLocations();
-          },
-        );
+          (await user.User.getUser(trip['driverId'], role: 1))!
+              .onValue
+              .listen((event) {
+            trip['driverName'] =
+                (event.snapshot.value as Map<dynamic, dynamic>)['fullName'];
+            trip['id'] = child.key;
 
-        isLoading = false;
-        update();
+            trips.add(Trip.fromJson(trip));
+            isLoading = false;
+            update();
+          });
+        }
       },
     );
   }

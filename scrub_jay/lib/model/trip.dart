@@ -8,6 +8,7 @@ class Trip {
   String? driverName;
   int? totalPassengers;
   DateTime? date;
+  int? order;
   Map<String, dynamic>? passengers;
 
   Trip(
@@ -17,7 +18,8 @@ class Trip {
       this.driverName,
       this.passengers,
       this.totalPassengers,
-      this.date});
+      this.date,
+      this.order});
 
   static List<Trip> trips = [];
 
@@ -28,6 +30,7 @@ class Trip {
     passengers = json['passengers'] ?? {};
     driverName = json['driverName'];
     totalPassengers = json['totalPassengers'];
+    order = json['order'];
 
     trips.add(Trip(
       id: id,
@@ -36,6 +39,7 @@ class Trip {
       passengers: passengers,
       driverName: driverName,
       totalPassengers: totalPassengers,
+      order: order,
     ));
   }
 
@@ -48,6 +52,7 @@ class Trip {
     json['passengers'] = passengers;
     json['driverName'] = driverName;
     json['totalPassengers'] = totalPassengers;
+    json['order'] = order;
 
     return json;
   }
@@ -56,6 +61,9 @@ class Trip {
       await FirebaseDatabaseApp.firebaseDatabase
           .addDataWithKey('trips', trip.toJson());
 
-  static Future<DatabaseReference> getTrips() async =>
-      await FirebaseDatabaseApp.firebaseDatabase.getData('trips');
+  static Future<Iterable<DataSnapshot>> getTrips() async {
+    final DatabaseEvent databaseEvent =
+        await FirebaseDatabaseApp.firebaseDatabase.orderTrips('trips');
+    return databaseEvent.snapshot.children;
+  }
 }
