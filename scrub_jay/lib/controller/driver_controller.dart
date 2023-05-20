@@ -20,6 +20,7 @@ abstract class DriverController extends GetxController {
   Future<void> driverSignout();
   Future<void> getTrips();
   Future<void> determineCurrentLocation();
+  Future<void> startTrip();
 }
 
 class DriverControllerImp extends DriverController {
@@ -38,6 +39,10 @@ class DriverControllerImp extends DriverController {
   Driver? currentDriver;
   List<Map<String, dynamic>> passengers = [];
   List<Trip> trips = [];
+  bool getLocations = true;
+  bool save = false;
+  int indexTrip = 0;
+  String myTripId = '';
 
   @override
   Future<void> determineCurrentLocation() async {
@@ -48,35 +53,50 @@ class DriverControllerImp extends DriverController {
     });
   }
 
+  @override
+  Future<void> startTrip() async {
+    save = true;
+    update();
+    Trip trip = trips[indexTrip];
+
+    trip.order = trips[trips.length - 1].order! + 1;
+    trips.removeAt(indexTrip);
+    trips.add(trip);
+    await FirebaseDatabaseApp.firebaseDatabase
+        .updateData('trips/$myTripId', {'order': trip.order});
+
+    save = false;
+    update();
+  }
+
   Future<void> getPassengersLocations() async {
     if (trips.isNotEmpty) {
       Trip myTrip = trips.firstWhere((element) {
-        return element.driverId == currentDriver!.id;
+        return element.id == myTripId;
       });
       myTrip.passengers!.forEach(
         (key, value) async {
           Map<String, dynamic> data = {};
           final DatabaseReference databaseRefrence = await FirebaseDatabaseApp
               .firebaseDatabase
-              .getData('users/${value['passengerId']}');
+              .getData('users/passengers/${value['passengerId']}');
 
           passengers = [];
-          databaseRefrence.onValue.listen(
-            (event) {
-              data = jsonDecode(jsonEncode(event.snapshot.value));
-              data['id'] = event.snapshot.key;
-              data['location'] = {
-                'latitude': value['location']!['latitude'],
-                'longitude': value['location']!['longitude'],
-              };
+          await databaseRefrence.get().then((snapshot) {
+            data = jsonDecode(jsonEncode(snapshot.value));
+            data['id'] = snapshot.key;
+            data['location'] = {
+              'latitude': value['location']!['latitude'],
+              'longitude': value['location']!['longitude'],
+            };
 
-              passengers.add({
-                'passenger': Passenger.fromJson(data),
-                'numOfPassenger': value['numOfPassengers']
-              });
-              update();
-            },
-          );
+            passengers.add({
+              'passenger': Passenger.fromJson(data),
+              'numOfPassenger': value['numOfPassengers']
+            });
+            getLocations = false;
+            update();
+          });
         },
       );
     }
@@ -84,7 +104,9 @@ class DriverControllerImp extends DriverController {
 
   @override
   Future<void> getTrips() async {
+    int count = 0;
     isLoading = true;
+    String driverId = FirebaseAuth.instance.currentUser!.uid;
     update();
 
     await Trip.getTrips().then(
@@ -95,18 +117,24 @@ class DriverControllerImp extends DriverController {
           final Map<String, dynamic> trip =
               json.decode(json.encode(child.value));
 
-          (await user.User.getUser(trip['driverId'], role: 1))!
-              .onValue
-              .listen((event) {
-            trip['driverName'] =
-                (event.snapshot.value as Map<dynamic, dynamic>)['fullName'];
-            trip['id'] = child.key;
+          if (trip['driverId'] == driverId) {
+            myTripId = child.key!;
+            indexTrip = count;
+          }
 
-            trips.add(Trip.fromJson(trip));
-            isLoading = false;
-            update();
-          });
+          final DatabaseReference? databaseReference =
+              await user.User.getUser(trip['driverId'], role: 1);
+
+          final DataSnapshot dataSnapshot = await databaseReference!.get();
+
+          trip['driverName'] =
+              (dataSnapshot.value as Map<dynamic, dynamic>)['fullName'];
+          trip['id'] = child.key;
+          trips.add(Trip.fromJson(trip));
+          count++;
         }
+        isLoading = false;
+        update();
       },
     );
   }
@@ -148,16 +176,18 @@ class DriverControllerImp extends DriverController {
             Driver.fromJson(json.decode(json.encode(event.snapshot.value)));
 
         currentDriver!.id = event.snapshot.key;
-        isLoading = false;
+        update();
       },
-    );
+    ).onData((data) {
+      getTrips();
+    });
   }
 
   @override
   void onInit() {
     super.onInit();
     getDriverData();
-    getTrips();
+    // getTrips();
     determineCurrentLocation();
   }
 }

@@ -95,7 +95,7 @@ class AuthControllerImp extends AuthController {
             .setData('role', roleSelected.value);
 
         if (setData && roleSelected.value == 1) {
-          Get.offAll(() => const DriverMainScreen());
+          Get.offAll(() => DriverMainScreen());
         } else if (setData && roleSelected.value == 2) {
           Get.offAll(() => ChooseTrip());
         } else if (setData && roleSelected.value == 0) {

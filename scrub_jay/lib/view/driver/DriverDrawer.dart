@@ -91,7 +91,7 @@ class DriverDrawer extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.to(const DriverMainScreen());
+                Get.to(DriverMainScreen());
               },
             ),
             ListTile(

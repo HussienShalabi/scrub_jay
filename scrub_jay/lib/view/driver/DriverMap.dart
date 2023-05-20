@@ -16,6 +16,10 @@ class DriverMap extends StatelessWidget {
     return GetBuilder<DriverControllerImp>(
         init: DriverControllerImp(),
         builder: (controller) {
+          if (controller.getLocations) {
+            controller.getPassengersLocations();
+          }
+
           return Scaffold(
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
@@ -71,20 +75,24 @@ class DriverMap extends StatelessWidget {
                                     ThemeHelper().buttonBoxDecoration(context),
                                 child: ElevatedButton(
                                   style: ThemeHelper().buttonStyle(),
+                                  onPressed: controller.save
+                                      ? () {}
+                                      : () => controller.startTrip(),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 110),
-                                    child: Text(
-                                      'Start the trip'.tr,
-                                      style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
+                                    child: controller.save
+                                        ? const Center(
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        : Text(
+                                            'Start the trip'.tr,
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ),
                                   ),
-                                  onPressed: () async {
-                                    await controller.addTrip();
-                                  },
                                 ),
                               ),
                             ],
@@ -156,7 +164,7 @@ class DriverMap extends StatelessWidget {
                                 ? LatLng(controller.currentLocation!.latitude,
                                     controller.currentLocation!.longitude)
                                 : null,
-                            zoom: 11,
+                            zoom: 16,
                           ),
                           children: [
                             TileLayer(
@@ -181,7 +189,7 @@ class DriverMap extends StatelessWidget {
                                       builder: (context) {
                                         return const Icon(
                                           Icons.location_history,
-                                          size: 50,
+                                          size: 40,
                                           color: Colors.red,
                                         );
                                       },

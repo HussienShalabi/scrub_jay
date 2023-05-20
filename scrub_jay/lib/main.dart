@@ -63,9 +63,7 @@ class MyApp extends StatelessWidget {
               name: '/adminMainScreen',
               page: () => const AdminMainScreen(),
             ),
-            GetPage(
-                name: '/DriverMainScreen',
-                page: () => const DriverMainScreen()),
+            GetPage(name: '/DriverMainScreen', page: () => DriverMainScreen()),
             GetPage(name: '/ChooseTrip', page: () => ChooseTrip()),
           ],
         );

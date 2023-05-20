@@ -103,12 +103,14 @@ class _ShowTurnState extends State<ShowTurn> {
                               scrollDirection: Axis.vertical,
                               itemCount: controller.trips.length,
                               shrinkWrap: true,
-                              itemBuilder: (context, index) => DriverInfoCard(
-                                leadingIcon: Icons.person,
-                                title: controller.trips[index].driverName!,
-                                driverPhoneNumber:
-                                    controller.trips[index].phone ?? '00',
-                              ),
+                              itemBuilder: (context, index) {
+                                return DriverInfoCard(
+                                  leadingIcon: Icons.person,
+                                  title: controller.trips[index].driverName!,
+                                  driverPhoneNumber:
+                                      controller.trips[index].phone ?? '00',
+                                );
+                              },
                             );
                           },
                         ),
