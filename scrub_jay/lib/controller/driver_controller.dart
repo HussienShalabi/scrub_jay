@@ -20,6 +20,7 @@ abstract class DriverController extends GetxController {
   Future<void> driverSignout();
   Future<void> getTrips();
   Future<void> determineCurrentLocation();
+  Future<void> startTrip();
 }
 
 class DriverControllerImp extends DriverController {
@@ -39,6 +40,8 @@ class DriverControllerImp extends DriverController {
   List<Map<String, dynamic>> passengers = [];
   List<Trip> trips = [];
   bool getLocations = true;
+  bool save = false;
+  int indexTrip = 0;
   String myTripId = '';
 
   @override
@@ -48,6 +51,22 @@ class DriverControllerImp extends DriverController {
 
       update();
     });
+  }
+
+  @override
+  Future<void> startTrip() async {
+    save = true;
+    update();
+    Trip trip = trips[indexTrip];
+
+    trip.order = trips[trips.length - 1].order! + 1;
+    trips.removeAt(indexTrip);
+    trips.add(trip);
+    await FirebaseDatabaseApp.firebaseDatabase
+        .updateData('trips/$myTripId', {'order': trip.order});
+
+    save = false;
+    update();
   }
 
   Future<void> getPassengersLocations() async {
@@ -85,8 +104,9 @@ class DriverControllerImp extends DriverController {
 
   @override
   Future<void> getTrips() async {
-    String driverId = FirebaseAuth.instance.currentUser!.uid;
+    int count = 0;
     isLoading = true;
+    String driverId = FirebaseAuth.instance.currentUser!.uid;
     update();
 
     await Trip.getTrips().then(
@@ -99,19 +119,22 @@ class DriverControllerImp extends DriverController {
 
           if (trip['driverId'] == driverId) {
             myTripId = child.key!;
+            indexTrip = count;
           }
 
-          (await user.User.getUser(trip['driverId'], role: 1))!
-              .onValue
-              .listen((event) {
-            trip['driverName'] =
-                (event.snapshot.value as Map<dynamic, dynamic>)['fullName'];
-            trip['id'] = child.key;
-            trips.add(Trip.fromJson(trip));
-            isLoading = false;
-            update();
-          });
+          final DatabaseReference? databaseReference =
+              await user.User.getUser(trip['driverId'], role: 1);
+
+          final DataSnapshot dataSnapshot = await databaseReference!.get();
+
+          trip['driverName'] =
+              (dataSnapshot.value as Map<dynamic, dynamic>)['fullName'];
+          trip['id'] = child.key;
+          trips.add(Trip.fromJson(trip));
+          count++;
         }
+        isLoading = false;
+        update();
       },
     );
   }

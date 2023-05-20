@@ -104,8 +104,6 @@ class _ShowTurnState extends State<ShowTurn> {
                               itemCount: controller.trips.length,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                print(controller.trips[index].toJson());
-
                                 return DriverInfoCard(
                                   leadingIcon: Icons.person,
                                   title: controller.trips[index].driverName!,
