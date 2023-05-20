@@ -85,18 +85,18 @@ class PassengerControllerImp extends PassengerController {
           final Map<String, dynamic> trip =
               json.decode(json.encode(child.value));
 
-          (await user.User.getUser(trip['driverId'], role: 1))!
-              .onValue
-              .listen((event) {
-            trip['driverName'] =
-                (event.snapshot.value as Map<dynamic, dynamic>)['fullName'];
-            trip['id'] = child.key;
+          final DatabaseReference? databaseReference =
+              await user.User.getUser(trip['driverId'], role: 1);
 
-            trips.add(Trip.fromJson(trip));
-            isLoading = false;
-            update();
-          });
+          final DataSnapshot dataSnapshot = await databaseReference!.get();
+
+          trip['driverName'] =
+              (dataSnapshot.value as Map<dynamic, dynamic>)['fullName'];
+          trip['id'] = child.key;
+          trips.add(Trip.fromJson(trip));
         }
+        isLoading = false;
+        update();
       },
     );
   }

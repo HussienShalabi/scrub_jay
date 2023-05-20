@@ -75,7 +75,7 @@ class DriverMainScreen extends StatelessWidget {
         body: GetBuilder<DriverControllerImp>(
             init: DriverControllerImp(),
             builder: (controller) {
-              if (controller.isLoading) {
+              if (controller.isLoading || controller.isGetInformation) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );

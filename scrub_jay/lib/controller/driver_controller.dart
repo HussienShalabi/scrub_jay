@@ -43,6 +43,7 @@ class DriverControllerImp extends DriverController {
   bool save = false;
   int indexTrip = 0;
   String myTripId = '';
+  bool isGetInformation = false;
 
   @override
   Future<void> determineCurrentLocation() async {
@@ -62,8 +63,12 @@ class DriverControllerImp extends DriverController {
     trip.order = trips[trips.length - 1].order! + 1;
     trips.removeAt(indexTrip);
     trips.add(trip);
+    indexTrip = trips.length - 1;
+    await FirebaseDatabaseApp.firebaseDatabase.updateData(
+        'trips/$myTripId', {'order': trip.order, 'totalPassengers': 0});
+
     await FirebaseDatabaseApp.firebaseDatabase
-        .updateData('trips/$myTripId', {'order': trip.order});
+        .deleteData('trips/$myTripId/passengers');
 
     save = false;
     update();
@@ -164,23 +169,22 @@ class DriverControllerImp extends DriverController {
   @override
   Future<void> getDriverData() async {
     String driverId = FirebaseAuth.instance.currentUser!.uid;
-    isLoading = true;
+    isGetInformation = true;
     update();
 
     final DatabaseReference? databaseReference =
         await user.User.getUser(driverId, role: 1);
 
-    databaseReference!.onValue.listen(
-      (event) {
-        currentDriver =
-            Driver.fromJson(json.decode(json.encode(event.snapshot.value)));
+    final DataSnapshot dataSnapshot = await databaseReference!.get();
 
-        currentDriver!.id = event.snapshot.key;
-        update();
-      },
-    ).onData((data) {
-      getTrips();
-    });
+    currentDriver =
+        Driver.fromJson(json.decode(json.encode(dataSnapshot.value)));
+
+    currentDriver!.id = dataSnapshot.key;
+
+    isGetInformation = false;
+    update();
+    getTrips();
   }
 
   @override

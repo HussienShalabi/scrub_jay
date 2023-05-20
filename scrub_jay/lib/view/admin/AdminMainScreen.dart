@@ -75,10 +75,23 @@ class AdminMainScreen extends StatelessWidget {
             )
           ],
         ),
-        drawer: const AdminDrawer(),
+        drawer: GetBuilder<AdminControllerImp>(
+            init: AdminControllerImp(),
+            builder: (controller) {
+              if (controller.isGetInformation) {
+                return const SizedBox();
+              }
+              return const AdminDrawer();
+            }),
         body: GetBuilder<AdminControllerImp>(
             init: AdminControllerImp(),
             builder: (controller) {
+              if (controller.isGetInformation) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
               return SingleChildScrollView(
                 child: Stack(
                   children: [

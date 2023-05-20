@@ -1,9 +1,12 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/app_functions.dart';
+import 'package:scrub_jay/core/firebase_database_app.dart';
 import 'package:scrub_jay/model/admin.dart';
 import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/Signin.dart';
@@ -95,34 +98,42 @@ class AuthControllerImp extends AuthController {
             .setData('role', roleSelected.value);
 
         if (setData && roleSelected.value == 1) {
+          if ((jsonDecode(jsonEncode(data.value)))['isConfirm'] == false) {
+            getxSnackbar(
+                'Failed Sign In', 'Admin not confirmed your account yet');
+
+            await AppSharedPrefernces.appSharedPrefernces.deleteData('role');
+            isLoading = false;
+            update();
+            return;
+          }
+
           Get.offAll(() => DriverMainScreen());
         } else if (setData && roleSelected.value == 2) {
           Get.offAll(() => ChooseTrip());
         } else if (setData && roleSelected.value == 0) {
-          final Object? data =
-              AppSharedPrefernces.appSharedPrefernces.getDate('order_trips');
+          // final Object? data =
+          //     AppSharedPrefernces.appSharedPrefernces.getDate('order_trips');
 
-          print(data);
-
-          if (data == null) {
-            await AppSharedPrefernces.appSharedPrefernces
-                .setData('order_trips', {
-              'times': 1,
-              'date': DateTime.now().toString(),
-            }).then((value) => print(value));
-          } else {
-            final Map<String, dynamic> map = jsonDecode(jsonEncode(data));
-            if (DateTime.now()
-                    .difference(DateTime.tryParse(map['date'])!)
-                    .inHours >=
-                24) {
-              await AppSharedPrefernces.appSharedPrefernces
-                  .setData('order_trips', {
-                'times': 1,
-                'date': DateTime.now().toString(),
-              });
-            }
-          }
+          // if (data == null) {
+          //   await AppSharedPrefernces.appSharedPrefernces
+          //       .setData('order_trips', {
+          //     'times': 1,
+          //     'date': DateTime.now().toString(),
+          //   });
+          // } else {
+          //   final Map<String, dynamic> map = jsonDecode(jsonEncode(data));
+          //   if (DateTime.now()
+          //           .difference(DateTime.tryParse(map['date'])!)
+          //           .inHours >=
+          //       24) {
+          //     await AppSharedPrefernces.appSharedPrefernces
+          //         .setData('order_trips', {
+          //       'times': 1,
+          //       'date': DateTime.now().toString(),
+          //     });
+          //   }
+          // }
 
           Get.offAll(() => const AdminMainScreen());
         }

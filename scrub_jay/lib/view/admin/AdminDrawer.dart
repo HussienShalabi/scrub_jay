@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:scrub_jay/controller/account_controller.dart';
+import 'package:scrub_jay/controller/AdminController.dart';
 import 'package:scrub_jay/controller/auth_controller.dart';
-import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
 import '../common_screens/EditPassword.dart';
-import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
 // add file constant
 
@@ -18,6 +16,8 @@ class AdminDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AdminControllerImp controllerImp = Get.put(AdminControllerImp());
+
     return Drawer(
       child: Container(
         decoration: BoxDecoration(
@@ -47,16 +47,16 @@ class AdminDrawer extends StatelessWidget {
                   ],
                 ),
               ),
-              child: Container(
+              child: SizedBox(
                 child: Center(
                   child: Column(
-                    children: const [
-                      SizedBox(
+                    children: [
+                      const SizedBox(
                         height: 50,
                       ),
                       Text(
-                        'user name',
-                        style: TextStyle(
+                        controllerImp.currentAdmin!.fullname ?? 'username',
+                        style: const TextStyle(
                           fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.normal,

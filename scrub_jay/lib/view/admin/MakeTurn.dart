@@ -103,16 +103,15 @@ class _MakeTurnState extends State<MakeTurn> {
                           return ReorderableListView.builder(
                             itemBuilder: (context, index) {
                               return DriverInfoCard(
-                                key: Key(controller.drivers[index].id ?? ''),
+                                key: Key(controller.trips[index].id ?? ''),
                                 leadingIcon: Icons.taxi_alert_rounded,
                                 title:
-                                    controller.drivers[index].fullname ?? " ",
+                                    controller.trips[index].driverName ?? " ",
                                 driverPhoneNumber:
-                                    controller.drivers[index].phoneNumber ??
-                                        " ",
+                                    controller.trips[index].phone ?? " ",
                               );
                             },
-                            itemCount: controller.drivers.length,
+                            itemCount: controller.trips.length,
                             onReorder: (oldIndex, newIndex) =>
                                 controller.reorder(oldIndex, newIndex),
                           );

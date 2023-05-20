@@ -19,6 +19,9 @@ class PassengerDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PassengerControllerImp controllerImp =
+        Get.put(PassengerControllerImp());
+
     return Drawer(
       child: Container(
         decoration: BoxDecoration(
@@ -48,16 +51,16 @@ class PassengerDrawer extends StatelessWidget {
                   ],
                 ),
               ),
-              child: Container(
+              child: SizedBox(
                 child: Center(
                   child: Column(
-                    children: const [
-                      SizedBox(
+                    children: [
+                      const SizedBox(
                         height: 50,
                       ),
                       Text(
-                        'user name',
-                        style: TextStyle(
+                        controllerImp.currentPassenger!.fullname ?? 'username',
+                        style: const TextStyle(
                           fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.normal,
@@ -68,11 +71,6 @@ class PassengerDrawer extends StatelessWidget {
                 ),
               ),
             ),
-
-
-
-
-
 
             // ListTile(
             //   leading: Icon(Icons.person,
@@ -100,7 +98,6 @@ class PassengerDrawer extends StatelessWidget {
             //     Get.to( EditPassword());
             //   },
             // ),
-
 
             ListTile(
               leading: Icon(Icons.settings,
@@ -145,7 +142,6 @@ class PassengerDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Get.to(const PassengerMap());
-
               },
             ),
             ListTile(
@@ -162,7 +158,6 @@ class PassengerDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Get.find<PassengerControllerImp>().passengerSignout();
-
               },
             ),
           ],

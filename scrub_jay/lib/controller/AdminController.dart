@@ -5,17 +5,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/trip.dart';
 import '../core/firebase_app_auth.dart';
 import '../core/firebase_database_app.dart';
+import '../model/user.dart' as user;
 import '../model/admin.dart';
 import '../view/admin/AdminMainScreen.dart';
 
 abstract class AbstractAdminController extends GetxController {
   Future<void> adminSignup();
   Future<void> getDrivers();
+  Future<void> getTrips();
   Future<void> deleteDriver(int index, String id);
   Future<void> confirmDriver(int index, String id);
   Future<void> reorder(int oldIndex, int newIndex);
@@ -24,9 +25,12 @@ abstract class AbstractAdminController extends GetxController {
 
 class AdminControllerImp extends AbstractAdminController {
   bool isLoading = false;
+  bool isGetInformation = false;
 
+  Admin? currentAdmin;
   List<Driver> drivers = [];
   List<Driver> newDrivers = [];
+  List<Trip> trips = [];
   int orderTimes = 1;
 
   GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
@@ -43,6 +47,26 @@ class AdminControllerImp extends AbstractAdminController {
     phoneNumber.dispose();
     password.dispose();
     rewritePassword.dispose();
+  }
+
+  Future<void> getInformation() async {
+    isGetInformation = true;
+    update();
+
+    final User? user = await FirebaseAuthApp.firebaseAuthApp.currentUser();
+
+    final DatabaseReference databaseReference = await FirebaseDatabaseApp
+        .firebaseDatabase
+        .getData('users/admins/${user!.uid}');
+    await databaseReference.get().then((value) {
+      final Map<String, dynamic> data = jsonDecode(jsonEncode(value.value));
+
+      data['id'] = user.uid;
+
+      currentAdmin = Admin.fromJson(data);
+    });
+    isGetInformation = false;
+    update();
   }
 
   @override
@@ -155,8 +179,39 @@ class AdminControllerImp extends AbstractAdminController {
   }
 
   @override
+  Future<void> getTrips() async {
+    isLoading = true;
+    update();
+
+    await Trip.getTrips().then(
+      (value) async {
+        trips = [];
+
+        for (DataSnapshot child in value) {
+          final Map<String, dynamic> trip =
+              json.decode(json.encode(child.value));
+
+          final DatabaseReference? databaseReference =
+              await user.User.getUser(trip['driverId'], role: 1);
+
+          final DataSnapshot dataSnapshot = await databaseReference!.get();
+
+          trip['driverName'] =
+              (dataSnapshot.value as Map<dynamic, dynamic>)['fullName'];
+          trip['id'] = child.key;
+          trips.add(Trip.fromJson(trip));
+        }
+        isLoading = false;
+        update();
+      },
+    );
+  }
+
+  @override
   void onInit() {
     super.onInit();
+    getInformation();
     getDrivers();
+    getTrips();
   }
 }

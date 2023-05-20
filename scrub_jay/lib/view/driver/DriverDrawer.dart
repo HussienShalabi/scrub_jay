@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:scrub_jay/view/driver/DriverMap.dart';
 import '../../controller/driver_controller.dart';
 import '../common_screens/EditPassword.dart';
-import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
 import '../common_screens/settingsScreen.dart';
 import 'DriverMainScreen.dart';
@@ -17,6 +15,8 @@ class DriverDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DriverControllerImp controllerImp = Get.put(DriverControllerImp());
+
     return Drawer(
       child: Container(
         decoration: BoxDecoration(
@@ -46,16 +46,16 @@ class DriverDrawer extends StatelessWidget {
                   ],
                 ),
               ),
-              child: Container(
+              child: SizedBox(
                 child: Center(
                   child: Column(
-                    children: const [
-                      SizedBox(
+                    children: [
+                      const SizedBox(
                         height: 50,
                       ),
                       Text(
-                        'user name',
-                        style: TextStyle(
+                        controllerImp.currentDriver!.fullname ?? 'username',
+                        style: const TextStyle(
                           fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.normal,

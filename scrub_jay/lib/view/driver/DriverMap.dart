@@ -67,34 +67,35 @@ class DriverMap extends StatelessWidget {
                                         ),
                                       ),
                               ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 25),
-                                // alignment: Alignment.bottomCenter,
-                                decoration:
-                                    ThemeHelper().buttonBoxDecoration(context),
-                                child: ElevatedButton(
-                                  style: ThemeHelper().buttonStyle(),
-                                  onPressed: controller.save
-                                      ? () {}
-                                      : () => controller.startTrip(),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 110),
+                              if (!controller.save)
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 25),
+                                  // alignment: Alignment.bottomCenter,
+                                  decoration: ThemeHelper()
+                                      .buttonBoxDecoration(context),
+                                  child: ElevatedButton(
+                                    style: ThemeHelper().buttonStyle(),
+                                    onPressed: controller.save
+                                        ? () {}
+                                        : () => controller.startTrip(),
                                     child: controller.save
                                         ? const Center(
                                             child: CircularProgressIndicator(),
                                           )
-                                        : Text(
-                                            'Start the trip'.tr,
-                                            style: const TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
+                                        : Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 110),
+                                            child: Text(
+                                              'Start the trip'.tr,
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ),
                                           ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),

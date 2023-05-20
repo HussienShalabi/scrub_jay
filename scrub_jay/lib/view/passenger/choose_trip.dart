@@ -119,7 +119,7 @@ class ChooseTrip extends StatelessWidget {
                         }
 
                         return ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
+                          // physics: const NeverScrollableScrollPhysics(),
                           itemCount: controller.trips.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
