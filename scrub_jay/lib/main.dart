@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MyLocaleController());
+    final MyLocaleControllerImp localeController =
+        Get.put(MyLocaleControllerImp());
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       builder: (context, child) {
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey)
                 .copyWith(secondary: _accentColor),
           ),
-          locale: Get.deviceLocale,
+          locale: localeController.initialLocale ?? Get.deviceLocale,
           translations: Mylocale(),
           initialRoute: '/SplashScreen',
           initialBinding: Binding(),

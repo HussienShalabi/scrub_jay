@@ -49,17 +49,16 @@ class FirebaseAuthApp {
   // signin user
   Future<String?> signin(String email, String password) async {
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-    // FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
     try {
       final UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
 
-      // if (!userCredential.user!.emailVerified &&
-      //     userCredential.user!.email != 'anas_ashker_2000_ps@yahoo.com') {
-      //   getxSnackbar('error', 'your account not verified');
-      //   return null;
-      // }
+      if (!userCredential.user!.emailVerified &&
+          userCredential.user!.email != 'anas_ashker_2000_ps@yahoo.com') {
+        getxSnackbar('error', 'your account not verified');
+        return null;
+      }
 
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {

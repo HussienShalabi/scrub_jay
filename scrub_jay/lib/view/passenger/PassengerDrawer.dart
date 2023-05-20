@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/auth_controller.dart';
 import 'package:scrub_jay/controller/passenger_controller.dart';
 import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/EditPassword.dart';
@@ -19,6 +20,9 @@ class PassengerDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PassengerControllerImp controllerImp =
+        Get.put(PassengerControllerImp());
+
     return Drawer(
       child: Container(
         decoration: BoxDecoration(
@@ -48,16 +52,16 @@ class PassengerDrawer extends StatelessWidget {
                   ],
                 ),
               ),
-              child: Container(
+              child: SizedBox(
                 child: Center(
                   child: Column(
-                    children: const [
-                      SizedBox(
+                    children: [
+                      const SizedBox(
                         height: 50,
                       ),
                       Text(
-                        'user name',
-                        style: TextStyle(
+                        controllerImp.currentPassenger!.fullname ?? 'username',
+                        style: const TextStyle(
                           fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.normal,
@@ -68,11 +72,6 @@ class PassengerDrawer extends StatelessWidget {
                 ),
               ),
             ),
-
-
-
-
-
 
             // ListTile(
             //   leading: Icon(Icons.person,
@@ -100,7 +99,6 @@ class PassengerDrawer extends StatelessWidget {
             //     Get.to( EditPassword());
             //   },
             // ),
-
 
             ListTile(
               leading: Icon(Icons.settings,
@@ -145,7 +143,6 @@ class PassengerDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Get.to(const PassengerMap());
-
               },
             ),
             ListTile(
@@ -161,8 +158,7 @@ class PassengerDrawer extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.find<PassengerControllerImp>().passengerSignout();
-
+                Get.find<AuthControllerImp>().signout();
               },
             ),
           ],

@@ -1,14 +1,11 @@
-import 'dart:convert';
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/core/firebase_database_app.dart';
 import '../model/user.dart' as user;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountManagement extends GetxController {
   bool isLoading = false;

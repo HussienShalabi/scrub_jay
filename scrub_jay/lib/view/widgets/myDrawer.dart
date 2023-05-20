@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/auth_controller.dart';
 
 import '../../controller/passenger_controller.dart';
 import '../admin/AdminMainScreen.dart';
@@ -199,8 +200,7 @@ class MyDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>  ForgotPassword()),
+                  MaterialPageRoute(builder: (context) => ForgotPassword()),
                 );
               },
             ),
@@ -245,7 +245,7 @@ class MyDrawer extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.find<PassengerControllerImp>().passengerSignout();
+                Get.find<AuthControllerImp>().signout();
               },
             ),
           ],
