@@ -5,7 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/model/driver.dart';
+import 'package:scrub_jay/model/trip.dart';
 import '../core/firebase_app_auth.dart';
 import '../core/firebase_database_app.dart';
 import '../model/admin.dart';
@@ -16,6 +18,7 @@ abstract class AbstractAdminController extends GetxController {
   Future<void> getDrivers();
   Future<void> deleteDriver(int index, String id);
   Future<void> confirmDriver(int index, String id);
+  Future<void> reorder(int oldIndex, int newIndex);
   final controller = Get.put(AdminControllerImp);
 }
 
@@ -24,6 +27,7 @@ class AdminControllerImp extends AbstractAdminController {
 
   List<Driver> drivers = [];
   List<Driver> newDrivers = [];
+  int orderTimes = 1;
 
   GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
 
@@ -95,6 +99,39 @@ class AdminControllerImp extends AbstractAdminController {
       }
       update();
     });
+  }
+
+  @override
+  Future<void> reorder(int oldIndex, int newIndex) async {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final Driver item = drivers.removeAt(oldIndex);
+    drivers.insert(newIndex, item);
+
+    update();
+  }
+
+  Future<void> saveTrips() async {
+    isLoading = true;
+    update();
+    int index = 1;
+
+    for (var driver in drivers) {
+      Trip trip = Trip(
+        phone: driver.phoneNumber,
+        driverId: driver.id,
+        totalPassengers: 0,
+        order: index,
+      );
+      await FirebaseDatabaseApp.firebaseDatabase.addDataWithKey(
+        'trips',
+        trip.toJson(),
+      );
+      index++;
+    }
+    isLoading = false;
+    update();
   }
 
   @override

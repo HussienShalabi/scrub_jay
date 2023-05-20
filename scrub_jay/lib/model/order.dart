@@ -3,7 +3,7 @@ import 'package:scrub_jay/model/trip.dart';
 
 class Order {
   String? id;
-  double? passengerId;
+  String? passengerId;
   Map<String, double>? location;
   int? numOfPassengers;
   String? phone;
@@ -27,20 +27,23 @@ class Order {
     return json;
   }
 
-  static Future<void> addOrder(Order order) async {
+  static Future<int?> addOrder(List<Trip> trips, Order order) async {
     String? tripId;
+    int index = 0;
     int totalPassengers = 0;
 
-    for (var trip in Trip.trips) {
-      if (order.numOfPassengers! <= (7 - trip.passengers!.length)) {
+    for (var trip in trips) {
+      if (order.numOfPassengers! <= (7 - trip.totalPassengers!)) {
         tripId = trip.id;
         totalPassengers =
             (order.numOfPassengers ?? 1) + (trip.totalPassengers ?? 0);
+        trip.totalPassengers = totalPassengers;
         break;
       }
+      index++;
     }
     if (tripId == null) {
-      return;
+      return null;
     }
 
     await FirebaseDatabaseApp.firebaseDatabase.addDataWithKey(
@@ -54,5 +57,7 @@ class Order {
         'totalPassengers': totalPassengers,
       },
     );
+
+    return index;
   }
 }

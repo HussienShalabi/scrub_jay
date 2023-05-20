@@ -14,20 +14,10 @@ class FirebaseDatabaseApp {
     return FirebaseDatabase.instance.ref(path);
   }
 
-  // Future<String> addNewUser(
-  //     String name, String email, String phone, String password) async {
-  //   final UserCredential? userCredential =
-  //       await firebaseAppAuth.signup(email, password);
-  //   final String uid = userCredential!.user!.uid;
-
-  //   await addData('users/$uid', {
-  //     "name": name,
-  //     "email": email,
-  //     "phone": phone,
-  //   });
-
-  //   return uid;
-  // }
+  Future<DatabaseEvent> orderTrips(String path) async {
+    final ref = await getDatabaseReference(path);
+    return ref.orderByChild('order').once();
+  }
 
   Future<DatabaseReference> getData(String path, [String? child]) async {
     final ref = await getDatabaseReference(path);
@@ -67,7 +57,6 @@ class FirebaseDatabaseApp {
   }
 
   Future<void> deleteData(String path) async {
-    print(path);
     final DatabaseReference ref = await getDatabaseReference(path);
     await ref.remove();
   }
