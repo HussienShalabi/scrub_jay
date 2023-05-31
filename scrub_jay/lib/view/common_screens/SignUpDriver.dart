@@ -192,31 +192,32 @@ class SignUpDriver extends StatelessWidget {
                             decoration:
                                 ThemeHelper().buttonBoxDecoration(context),
                             child: GetBuilder<AuthControllerImp>(
-                                init: AuthControllerImp(),
-                                builder: (controller) {
-                                  return controller.isLoading
-                                      ? const Center(
-                                          child: CircularProgressIndicator(),
-                                        )
-                                      : ElevatedButton(
-                                          style: ThemeHelper().buttonStyle(),
-                                          onPressed: controller.isLoading
-                                              ? () {}
-                                              : () => controller.driverSignup(),
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                40, 10, 40, 10),
-                                            child: Text(
-                                              "Register".tr,
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              ),
+                              init: AuthControllerImp(),
+                              builder: (controller) {
+                                return ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  onPressed: controller.isLoading
+                                      ? () {}
+                                      : () => controller.driverSignup(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        40, 10, 40, 10),
+                                    child: controller.isLoading
+                                        ? const Center(
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        : Text(
+                                            "Register".tr,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
                                             ),
                                           ),
-                                        );
-                                }),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],

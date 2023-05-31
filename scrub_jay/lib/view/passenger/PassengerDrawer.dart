@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/auth_controller.dart';
 import 'package:scrub_jay/controller/passenger_controller.dart';
+import 'package:scrub_jay/core/app_shared_preferences.dart';
+import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/EditPassword.dart';
 import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
@@ -172,8 +174,11 @@ class PassengerDrawer extends StatelessWidget {
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),
               ),
-              onTap: () {
-                Get.find<AuthControllerImp>().signout();
+              onTap: () async {
+                await AppSharedPrefernces.appSharedPrefernces
+                    .deleteData('role');
+                await FirebaseAuthApp.firebaseAuthApp.signout();
+                Get.offAll(() => const Signin());
               },
             ),
           ],

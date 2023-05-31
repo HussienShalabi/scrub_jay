@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:scrub_jay/controller/auth_controller.dart';
 import 'package:scrub_jay/view/driver/DriverProfile.dart';
 import '../../controller/driver_controller.dart';
+import '../../core/app_shared_preferences.dart';
+import '../../core/firebase_app_auth.dart';
 import '../common_screens/EditPassword.dart';
+import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
 import '../common_screens/settingsScreen.dart';
 import 'DriverMainScreen.dart';
@@ -96,7 +99,6 @@ class DriverDrawer extends StatelessWidget {
                 Get.to(SettingsScreen());
               },
             ),
-
             ListTile(
               leading: Icon(Icons.lock_person_rounded,
                   size: _drawerIconSize,
@@ -137,8 +139,11 @@ class DriverDrawer extends StatelessWidget {
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),
               ),
-              onTap: () {
-                Get.find<AuthControllerImp>().signout();
+              onTap: () async {
+                await AppSharedPrefernces.appSharedPrefernces
+                    .deleteData('role');
+                await FirebaseAuthApp.firebaseAuthApp.signout();
+                Get.offAll(() => const Signin());
               },
             ),
           ],

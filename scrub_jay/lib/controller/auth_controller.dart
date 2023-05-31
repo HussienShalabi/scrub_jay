@@ -172,7 +172,7 @@ class AuthControllerImp extends AuthController {
 
   @override
   Future<void> driverSignup() async {
-    isLoading = false;
+    isLoading = true;
     update();
 
     final bool isValid = signupDriverKey.currentState!.validate();
