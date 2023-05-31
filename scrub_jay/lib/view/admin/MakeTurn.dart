@@ -105,14 +105,18 @@ class _MakeTurnState extends State<MakeTurn> {
                               return DriverInfoCard(
                                 key: Key(controller.drivers[index].id ?? ''),
                                 leadingIcon: Icons.taxi_alert_rounded,
-                                title:
-                                    controller.drivers[index].fullname ?? " ",
-                                driverPhoneNumber:
-                                    controller.drivers[index].phoneNumber ??
-                                        " ",
+                                title: controller.trips.isEmpty
+                                    ? controller.drivers[index].fullname ?? ''
+                                    : controller.trips[index].driverName ?? '',
+                                driverPhoneNumber: controller.trips.isEmpty
+                                    ? controller.drivers[index].phoneNumber ??
+                                        ''
+                                    : controller.trips[index].phone ?? '',
                               );
                             },
-                            itemCount: controller.drivers.length,
+                            itemCount: controller.trips.isEmpty
+                                ? controller.drivers.length
+                                : controller.trips.length,
                             onReorder: (oldIndex, newIndex) =>
                                 controller.reorder(oldIndex, newIndex),
                           );

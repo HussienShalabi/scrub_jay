@@ -46,7 +46,7 @@ class TripCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "$driverName",
+                driverName,
                 style: TextStyle(
                   color: Colors.yellow.shade700,
                   fontSize: 18.sp,
@@ -85,7 +85,7 @@ class TripCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "$availableSeats ",
+                    "$availableSeats",
                     style: TextStyle(
                       color: Colors.yellow.shade700,
                       fontSize: 18.sp,

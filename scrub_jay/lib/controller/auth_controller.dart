@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ import '../core/app_shared_preferences.dart';
 import '../core/firebase_app_auth.dart';
 import '../model/driver.dart';
 import '../model/passenger.dart';
-import '../model/user.dart';
+import '../model/user.dart' as user;
 import '../view/Driver/DriverMainScreen.dart';
 import '../view/passenger/choose_trip.dart';
 
@@ -76,7 +77,7 @@ class AuthControllerImp extends AuthController {
 
       if (uid != null) {
         final DatabaseReference? databaseReference =
-            await User.getUser(uid, role: roleSelected.value);
+            await user.User.getUser(uid, role: roleSelected.value);
 
         if (databaseReference == null) {
           getxSnackbar('Failed Sign In', 'An error has occurred');
@@ -241,6 +242,30 @@ class AuthControllerImp extends AuthController {
     update();
   }
 
+  Future<void> forgetPassword() async {
+    isLoading = true;
+    update();
+
+    final List<String> list = await FirebaseAuth.instance
+        .fetchSignInMethodsForEmail(emailAddress!.text);
+
+    if (list.isEmpty) {
+      isLoading = false;
+      update();
+      getxSnackbar('Error', 'Email not found');
+      return;
+    } else {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailAddress!.text);
+
+      isLoading = false;
+      update();
+      getxSnackbar('Success', 'We send link password reset to your email',
+          backgroundColor: Colors.green);
+      Get.off(() => const Signin());
+    }
+  }
+
   void updateSelectedValue(int value) {
     roleSelected.value = value;
     update();
@@ -250,11 +275,5 @@ class AuthControllerImp extends AuthController {
   void onInit() {
     super.onInit();
     initilizeData();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    clearData();
   }
 }

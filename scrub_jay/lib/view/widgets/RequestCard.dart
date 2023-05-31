@@ -102,7 +102,7 @@ class RequestCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "$passengerLocation ",
+                  passengerLocation,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,

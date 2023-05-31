@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
@@ -27,6 +28,11 @@ class PassengerControllerImp extends PassengerController {
   LatLng? currentLocation;
   LatLng? destinationLocation;
   Passenger? currentPassenger;
+
+  final GlobalKey<FormState> formKeyEdit = GlobalKey<FormState>();
+  final TextEditingController fullName = TextEditingController();
+  final TextEditingController emailAddress = TextEditingController();
+  final TextEditingController phoneNumber = TextEditingController();
 
   bool done = false;
 
@@ -88,6 +94,65 @@ class PassengerControllerImp extends PassengerController {
         update();
       },
     );
+  }
+
+  Future<void> editData() async {
+    Passenger? editedUser = Passenger();
+
+    if (fullName.text.trim() != '') {
+      currentPassenger!.fullname = fullName.text.trim();
+    }
+
+    if (emailAddress.text.trim() != '') {
+      currentPassenger!.emailAddress = emailAddress.text.trim();
+    }
+
+    if (phoneNumber.text.trim() != '') {
+      currentPassenger!.phoneNumber = phoneNumber.text.trim();
+    }
+
+    // currentPassenger!.fullname = fullName.text.trim() != ''
+    //     ? fullName.text.trim()
+    //     : editedUser.fullname =
+    //         currentPassenger!.fullname == fullName.text.trim()
+    //             ? null
+    //             : fullName.text.trim();
+    // editedUser.phoneNumber =
+    //     currentPassenger!.phoneNumber == phoneNumber.text.trim()
+    //         ? null
+    //         : phoneNumber.text.trim();
+    // editedUser.emailAddress =
+    //     currentPassenger!.emailAddress == emailAddress.text.trim()
+    //         ? null
+    //         : emailAddress.text.trim();
+
+    final bool isValid = formKeyEdit.currentState!.validate();
+    isLoading = true;
+    if (isValid) {
+      try {
+        // Update the user's email
+        User? userauth = await FirebaseAuthApp.firebaseAuthApp.currentUser();
+        if (userauth != null && emailAddress.text.trim().isNotEmpty) {
+          await userauth.updateEmail(emailAddress.text.trim());
+          // await userauth.updatePassword(password.text);
+        }
+
+        // Update the user's password
+        // await FirebaseAuth.instance.currentUser!.updatePassword(password.text);
+
+        await FirebaseDatabaseApp.firebaseDatabase.updateData(
+            'users/passengers/${currentPassenger!.id}',
+            currentPassenger!.toJson());
+
+        isLoading = false;
+        update();
+        Get.snackbar('Success', 'Profile has been updated');
+      } on FirebaseAuthException catch (e) {
+        Get.snackbar('Error', e.message ?? 'An error occurred');
+      } catch (e) {
+        Get.snackbar('Error', e.toString());
+      }
+    }
   }
 
   Future<void> selectDestination(LatLng position) async {

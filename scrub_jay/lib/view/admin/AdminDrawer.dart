@@ -59,7 +59,10 @@ class AdminDrawer extends StatelessWidget {
                         height: 50,
                       ),
                       Text(
-                        controllerImp.currentAdmin!.fullname ?? 'username',
+                        controllerImp.currentAdmin == null
+                            ? 'username'
+                            : controllerImp.currentAdmin!.fullname ??
+                                'username',
                         style: const TextStyle(
                           fontSize: 20,
                           color: Colors.white,
@@ -127,29 +130,25 @@ class AdminDrawer extends StatelessWidget {
                 Get.to(() => const chooseLang());
               },
             ),
-            GetBuilder<AuthControllerImp>(
-                init: AuthControllerImp(),
-                builder: (controller) {
-                  return ListTile(
-                    leading: Icon(
-                      Icons.logout_rounded,
-                      size: _drawerIconSize,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                    title: Text(
-                      'Log out'.tr,
-                      style: TextStyle(
-                          fontSize: _drawerFontSize,
-                          color: Theme.of(context).colorScheme.secondary),
-                    ),
-                    onTap: () async {
-                      await AppSharedPrefernces.appSharedPrefernces
-                          .deleteData('role');
-                      await FirebaseAuthApp.firebaseAuthApp.signout();
-                      Get.offAll(() => const Signin());
-                    },
-                  );
-                }),
+            ListTile(
+              leading: Icon(
+                Icons.logout_rounded,
+                size: _drawerIconSize,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              title: Text(
+                'Log out'.tr,
+                style: TextStyle(
+                    fontSize: _drawerFontSize,
+                    color: Theme.of(context).colorScheme.secondary),
+              ),
+              onTap: () async {
+                await AppSharedPrefernces.appSharedPrefernces
+                    .deleteData('role');
+                await FirebaseAuthApp.firebaseAuthApp.signout();
+                Get.offAll(() => const Signin());
+              },
+            ),
           ],
         ),
       ),
