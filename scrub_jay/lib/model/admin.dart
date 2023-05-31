@@ -14,7 +14,7 @@ class Admin extends User {
     super.id = json['id'];
     super.fullname = json['fullName'];
     super.emailAddress = json['emailAddress'];
-    super.phoneNumber = json['phoneNumber'];
+    super.phoneNumber = json['phone'];
     super.role = json['role'];
   }
 
@@ -23,7 +23,7 @@ class Admin extends User {
     data['id'] = super.id;
     data['fullName'] = super.fullname;
     data['emailAddress'] = super.emailAddress;
-    data['phoneNumber'] = super.phoneNumber;
+    data['phone'] = super.phoneNumber;
     data['role'] = super.role;
     return data;
   }

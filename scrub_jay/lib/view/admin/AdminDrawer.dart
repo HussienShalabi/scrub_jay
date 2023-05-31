@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/AdminController.dart';
 import 'package:scrub_jay/controller/auth_controller.dart';
+import 'package:scrub_jay/view/admin/AdminProfile.dart';
 import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
+import '../../core/app_shared_preferences.dart';
+import '../../core/firebase_app_auth.dart';
 import '../common_screens/EditPassword.dart';
+import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
 // add file constant
 
@@ -72,7 +76,21 @@ class AdminDrawer extends StatelessWidget {
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
               title: Text(
-                'Account Management'.tr,
+                'Profile page'.tr,
+                style: TextStyle(
+                    fontSize: _drawerFontSize,
+                    color: Theme.of(context).colorScheme.secondary),
+              ),
+              onTap: () {
+                Get.to(AdminProfile());
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).colorScheme.secondary),
+              title: Text(
+                'Account management'.tr,
                 style: TextStyle(
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),
@@ -106,7 +124,7 @@ class AdminDrawer extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.to(chooseLang());
+                Get.to(() => const chooseLang());
               },
             ),
             GetBuilder<AuthControllerImp>(
@@ -124,7 +142,12 @@ class AdminDrawer extends StatelessWidget {
                           fontSize: _drawerFontSize,
                           color: Theme.of(context).colorScheme.secondary),
                     ),
-                    onTap: () => controller.signout(),
+                    onTap: () async {
+                      await AppSharedPrefernces.appSharedPrefernces
+                          .deleteData('role');
+                      await FirebaseAuthApp.firebaseAuthApp.signout();
+                      Get.offAll(() => const Signin());
+                    },
                   );
                 }),
           ],

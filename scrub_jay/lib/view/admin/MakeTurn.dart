@@ -112,7 +112,7 @@ class _MakeTurnState extends State<MakeTurn> {
                                         " ",
                               );
                             },
-                            itemCount: controller.trips.length,
+                            itemCount: controller.drivers.length,
                             onReorder: (oldIndex, newIndex) =>
                                 controller.reorder(oldIndex, newIndex),
                           );

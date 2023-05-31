@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/auth_controller.dart';
+import 'package:scrub_jay/view/driver/DriverProfile.dart';
 import '../../controller/driver_controller.dart';
+import '../../core/app_shared_preferences.dart';
+import '../../core/firebase_app_auth.dart';
 import '../common_screens/EditPassword.dart';
+import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
 import '../common_screens/settingsScreen.dart';
 import 'DriverMainScreen.dart';
@@ -68,6 +72,20 @@ class DriverDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
+              leading: Icon(Icons.person,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).colorScheme.secondary),
+              title: Text(
+                'Profile page'.tr,
+                style: TextStyle(
+                    fontSize: _drawerFontSize,
+                    color: Theme.of(context).colorScheme.secondary),
+              ),
+              onTap: () {
+                Get.to(DriverProfile());
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.settings,
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
@@ -79,20 +97,6 @@ class DriverDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Get.to(SettingsScreen());
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.drive_eta_rounded,
-                  size: _drawerIconSize,
-                  color: Theme.of(context).colorScheme.secondary),
-              title: Text(
-                'Driver main page'.tr,
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).colorScheme.secondary),
-              ),
-              onTap: () {
-                Get.to(DriverMainScreen());
               },
             ),
             ListTile(
@@ -135,8 +139,11 @@ class DriverDrawer extends StatelessWidget {
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),
               ),
-              onTap: () {
-                Get.find<AuthControllerImp>().signout();
+              onTap: () async {
+                await AppSharedPrefernces.appSharedPrefernces
+                    .deleteData('role');
+                await FirebaseAuthApp.firebaseAuthApp.signout();
+                Get.offAll(() => const Signin());
               },
             ),
           ],

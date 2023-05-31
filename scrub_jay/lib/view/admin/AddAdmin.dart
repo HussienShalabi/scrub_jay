@@ -110,7 +110,7 @@ class AddAdmin extends StatelessWidget {
                                 formValidation(value, 'username'),
                             controller: adminController.fullName,
                             decoration: ThemeHelper().textInputDecoration(
-                                'Full Name'.tr, 'Enter your full name'.tr),
+                                'Full Name'.tr, 'Enter full name'.tr),
                           ),
                         ),
                         const SizedBox(
@@ -123,8 +123,8 @@ class AddAdmin extends StatelessWidget {
                             validator: (value) =>
                                 formValidation(value, 'email'),
                             decoration: ThemeHelper().textInputDecoration(
-                                'Email Address'.tr,
-                                'Enter your email address'.tr),
+                                'Email address'.tr,
+                                'Enter email address'.tr),
                           ),
                         ),
                         const SizedBox(height: 20.0),
@@ -139,7 +139,7 @@ class AddAdmin extends StatelessWidget {
                             ],
                             decoration: ThemeHelper().textInputDecoration(
                                 "Mobile Number".tr,
-                                "Enter your mobile number".tr),
+                                "Enter mobile number".tr),
                             keyboardType: TextInputType.phone,
                           ),
                         ),
@@ -152,7 +152,7 @@ class AddAdmin extends StatelessWidget {
                                 formValidation(value, 'password', 8, 30),
                             obscureText: true,
                             decoration: ThemeHelper().textInputDecoration(
-                                "Password*".tr, "Enter your password".tr),
+                                "Password*".tr, "Enter password".tr),
                           ),
                         ),
                         const SizedBox(height: 20.0),
@@ -167,13 +167,13 @@ class AddAdmin extends StatelessWidget {
                               }
                               if (adminController.password.text.trim() !=
                                   adminController.rewritePassword.text.trim()) {
-                                return 'Passwords don\'t match';
+                                return 'Passwords don\'t match'.tr;
                               }
                               return null;
                             },
                             decoration: ThemeHelper().textInputDecoration(
                                 "ReEnter Password*".tr,
-                                "Enter your password".tr),
+                                "Enter password".tr),
                           ),
                         ),
                         const SizedBox(height: 30.0),
