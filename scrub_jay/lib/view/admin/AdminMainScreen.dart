@@ -133,7 +133,6 @@ class AdminMainScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   onPressed: () {
-                                    //After successful login we will redirect to profile page.
                                     Get.to(DriversList());
                                   },
                                 ),
@@ -154,27 +153,8 @@ class AdminMainScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   onPressed: () {
-                                    //After successful login we will redirect to profile page.
                                     Get.to(const MakeTurn());
                                   },
-                                ),
-                              ),
-                              Container(
-                                decoration:
-                                    ThemeHelper().buttonBoxDecoration(context),
-                                margin: EdgeInsets.symmetric(
-                                    vertical: 10.h, horizontal: 10.w),
-                                child: ElevatedButton(
-                                  style: ThemeHelper().buttonStyle(),
-                                  child: Text(
-                                    'today\'s trip'.tr,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  onPressed: () {},
                                 ),
                               ),
                               Container(
@@ -193,13 +173,11 @@ class AdminMainScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   onPressed: () {
-                                    //After successful login we will redirect to profile page.
                                     Get.to(AddAdmin());
                                   },
                                 ),
                               ),
                               Container(
-                                alignment: Alignment.center,
                                 decoration:
                                     ThemeHelper().buttonBoxDecoration(context),
                                 margin: EdgeInsets.symmetric(
@@ -215,7 +193,6 @@ class AdminMainScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   onPressed: () {
-                                    //After successful login we will redirect to profile page.
                                     Get.to(confirmDriver());
                                   },
                                 ),
@@ -234,8 +211,6 @@ class AdminMainScreen extends StatelessWidget {
                                           color: Colors.white),
                                       textAlign: TextAlign.center),
                                   onPressed: () {
-                                    //After successful login we will redirect to profile page.
-
                                     Get.to(const DeleteDriver());
                                   },
                                 ),

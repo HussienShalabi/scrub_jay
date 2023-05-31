@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/auth_controller.dart';
+import 'package:scrub_jay/view/driver/DriverProfile.dart';
 import '../../controller/driver_controller.dart';
 import '../common_screens/EditPassword.dart';
 import '../common_screens/chooseLang.dart';
@@ -68,6 +69,20 @@ class DriverDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
+              leading: Icon(Icons.person,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).colorScheme.secondary),
+              title: Text(
+                'Profile page'.tr,
+                style: TextStyle(
+                    fontSize: _drawerFontSize,
+                    color: Theme.of(context).colorScheme.secondary),
+              ),
+              onTap: () {
+                Get.to(DriverProfile());
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.settings,
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
@@ -81,20 +96,7 @@ class DriverDrawer extends StatelessWidget {
                 Get.to(SettingsScreen());
               },
             ),
-            ListTile(
-              leading: Icon(Icons.drive_eta_rounded,
-                  size: _drawerIconSize,
-                  color: Theme.of(context).colorScheme.secondary),
-              title: Text(
-                'Driver main page'.tr,
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).colorScheme.secondary),
-              ),
-              onTap: () {
-                Get.to(DriverMainScreen());
-              },
-            ),
+
             ListTile(
               leading: Icon(Icons.lock_person_rounded,
                   size: _drawerIconSize,

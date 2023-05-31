@@ -50,16 +50,20 @@ class Mylocale implements Translations{
       "driver name: ":"اسم السائق: ",
       "available seats: ":"المقاعد المتاحة: ",
       'Register as ...':'التسجيل ك ...',
-      'passenger':'راكب',
+      'Passenger':'راكب',
       'Driver':'سائق',
+      'Admin':'ادمن',
       "I accept all terms and conditions.":"أوافق على جميع الشروط والأحكام.",
       'You need to accept terms and conditions':"أنت بحاجة إلى قبول الشروط والأحكام",
       "Register": "تسجيل",
       'Hello':'مرحبا',
+      'Sign in as:':'تسجيل الدخول ك:',
       'Sign in into your account':'تسجيل الدخول الى حسابك',
       "Email address":"البريد الالكتروني",
       "Enter your email address":"ادخل بريدك الالكتروني",
       'Register as passenger':'انشاء حساب راكب',
+      'Register as driver':'انشاء حساب سائق',
+
       'Full Name':'الاسم الكامل',
       'Enter your Full name':'ادخل اسمك الكامل',
       "this field is required":"هذه الخانة مطلوبة",
@@ -108,8 +112,10 @@ class Mylocale implements Translations{
       'ReEnter new password*':'اعد ادخال كلمة المرور الجديدة*',
       'ReEnter your new password':'اعد ادخال كلمة المرور الجديدة',
       'Change password':'تغيير كلمة المرور',
-
-
+      'Enter full name':'ادخل الاسم الكامل',
+      'Enter email address':'ادخل البريد الالكتروني',
+      "Enter mobile number":"ادخل رقم الهاتف",
+      "Enter password":"ادخل كلمة المرور",
 
 
 
@@ -120,8 +126,8 @@ class Mylocale implements Translations{
       'Sign In':'تسجيل الدخول',
       "User Information":"معلومات المستخدم",
       "About Me":"حول المستخدم",
-      'Enter the phone number associated with your account.':'أدخل رقم الهاتف المرتبط بحسابك.',
-      'We will send to you a verification code to check your authenticity.':'سوف نرسل لك رمز تحقق للتحقق من حسابك.',
+      'Enter the email address associated with your account.':'أدخل رقم الهاتف المرتبط بحسابك.',
+      'We will send to you a verification email to check your authenticity.':'سوف نرسل لك رسالة للتحقق من حسابك.',
       "phone can't be empty":"لا يمكن أن يكون رقم الهاتف المحمول فارغًا",
       "Send":"إرسال",
       "Remember your password? ":"هل تذكرت كلمة المرور الخاصة بك؟ ",
@@ -180,6 +186,7 @@ class Mylocale implements Translations{
       'Last Name':'Last Name',
       'Enter your last name':'Enter your last name',
       'Register as passenger':'Register as passenger',
+      'Register as driver':'Register as driver',
       'Full Name':'Full Name',
       'Enter your Full name':'Enter your Full name',
       "Mobile Number":"Mobile Number",
@@ -232,7 +239,10 @@ class Mylocale implements Translations{
       'ReEnter new password*':'ReEnter new password*',
       'ReEnter your new password':'ReEnter your new password',
       'Change password':'Change password',
-
+      'Enter full name':'Enter full name',
+      'Enter email address':'Enter email address',
+      "Enter mobile number":"Enter mobile number",
+      "Enter password":"Enter password",
 
       "ReEnter Password*":"ReEnter Password*",
       "Are you a driver? ":"Are you a driver? ",
@@ -256,12 +266,19 @@ class Mylocale implements Translations{
       "available seats: ":"available seats: ",
       "OK":"OK",
       'Register as ...':'Register as ...',
-      'passenger':'passenger',
+      'Passenger':'Passenger',
       'Driver':'Driver',
+      'Admin':'Admin',
       "I accept all terms and conditions.":"I accept all terms and conditions.",
       'You need to accept terms and conditions':'You need to accept terms and conditions',
       "Register": "Register",
       'Hello':'Hello',
+      'Sign in as:':'Sign in as:',
+
+
+
+
+
       'Sign in into your account':'Sign in into your account',
       "Forgot your password?":"Forgot your password?",
       "Don\'t have an account? ":"Don\'t have an account? ",
@@ -271,8 +288,8 @@ class Mylocale implements Translations{
       "Enter your email address":"Enter your email address",
       "User Information":"User Information",
       "About Me":"About Me",
-      'Enter the phone number associated with your account.':'Enter the phone number associated with your account.',
-      'We will send to you a verification code to check your authenticity.':'We will send to you a verification code to check your authenticity.',
+      'Enter the email address associated with your account.':'Enter the email address associated with your account.',
+      'We will send to you a verification email to check your authenticity.':'We will send to you a verification email to check your authenticity.',
       "phone can't be empty":"phone can't be empty",
       "Send":"Send",
       "Remember your password? ":"Remember your password? ",

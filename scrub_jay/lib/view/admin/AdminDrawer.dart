@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/controller/AdminController.dart';
 import 'package:scrub_jay/controller/auth_controller.dart';
+import 'package:scrub_jay/view/admin/AdminProfile.dart';
 import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
 import '../common_screens/EditPassword.dart';
 import '../common_screens/chooseLang.dart';
@@ -72,7 +73,21 @@ class AdminDrawer extends StatelessWidget {
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
               title: Text(
-                'Account Management'.tr,
+                'Profile page'.tr,
+                style: TextStyle(
+                    fontSize: _drawerFontSize,
+                    color: Theme.of(context).colorScheme.secondary),
+              ),
+              onTap: () {
+                Get.to(AdminProfile());
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).colorScheme.secondary),
+              title: Text(
+                'Account management'.tr,
                 style: TextStyle(
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),

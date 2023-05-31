@@ -59,7 +59,7 @@ class ForgotPassword extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              'We will send to you a verification message to check your authenticity.'
+                              'We will send to you a verification email to check your authenticity.'
                                   .tr,
                               style: const TextStyle(
                                 color: Colors.black38,

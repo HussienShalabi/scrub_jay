@@ -35,15 +35,6 @@ class PassengerMap extends StatelessWidget {
             ),
           ),
         ),
-        // actions: [
-        //   Container(
-        //     margin: const EdgeInsets.only(
-        //       top: 5,
-        //       right: 16,
-        //     ),
-        //     child: TextButton(onPressed: (){}, child: const Text('Save',style: TextStyle(color: Colors.white, fontSize: 16),))
-        //   )
-        // ],
       ),
       // drawer: const PassengerDrawer(),
       body: Stack(children: [
@@ -53,8 +44,9 @@ class PassengerMap extends StatelessWidget {
             return SizedBox(
               child: FlutterMap(
                 options: MapOptions(
+
                   center: controller.currentLocation != null
-                      ? LatLng(controller.currentLocation!.latitude,
+                      ? LatLng(controller.currentLocation!.latitude, //خطوط الطول والعرض
                           controller.currentLocation!.longitude)
                       : null,
                   zoom: 11,
