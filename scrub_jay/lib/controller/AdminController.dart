@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/core/app_functions.dart';
 import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/trip.dart';
 import '../core/firebase_app_auth.dart';
@@ -34,10 +35,12 @@ class AdminControllerImp extends AbstractAdminController {
   int orderTimes = 1;
 
   GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
+  GlobalKey<FormState> updatePasswordFormKey = GlobalKey<FormState>();
 
   TextEditingController fullName = TextEditingController();
   TextEditingController emailAddress = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
+  TextEditingController oldPasswrod = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController rewritePassword = TextEditingController();
 
@@ -103,6 +106,8 @@ class AdminControllerImp extends AbstractAdminController {
       }
     }
 
+    clearData();
+
     isLoading = false;
     update();
   }
@@ -130,8 +135,18 @@ class AdminControllerImp extends AbstractAdminController {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
-    final Driver item = drivers.removeAt(oldIndex);
-    drivers.insert(newIndex, item);
+
+    if (trips.isNotEmpty) {
+      final Trip trip = trips.removeAt(oldIndex);
+      trips.insert(newIndex, trip);
+    } else {
+      final Driver item = drivers.removeAt(oldIndex);
+      drivers.insert(newIndex, item);
+    }
+
+    for (int i = newIndex; i < trips.length; i++) {
+      trips[i].order = trips[i - 1].order! + 1;
+    }
 
     update();
   }
@@ -141,19 +156,29 @@ class AdminControllerImp extends AbstractAdminController {
     update();
     int index = 1;
 
-    for (var driver in drivers) {
-      Trip trip = Trip(
-        phone: driver.phoneNumber,
-        driverId: driver.id,
-        totalPassengers: 0,
-        order: index,
-      );
-      await FirebaseDatabaseApp.firebaseDatabase.addDataWithKey(
-        'trips',
-        trip.toJson(),
-      );
-      index++;
+    if (trips.isEmpty) {
+      for (Driver driver in drivers) {
+        Trip trip = Trip(
+          phone: driver.phoneNumber,
+          driverId: driver.id,
+          totalPassengers: 0,
+          order: index,
+        );
+        await FirebaseDatabaseApp.firebaseDatabase.addDataWithKey(
+          'trips',
+          trip.toJson(),
+        );
+        index++;
+      }
+    } else {
+      for (Trip trip in trips) {
+        await FirebaseDatabaseApp.firebaseDatabase.updateData(
+          'trips/${trip.id}',
+          trip.toJson(),
+        );
+      }
     }
+
     isLoading = false;
     update();
   }
@@ -205,6 +230,37 @@ class AdminControllerImp extends AbstractAdminController {
         update();
       },
     );
+  }
+
+  Future<void> updatePassword() async {
+    isLoading = true;
+    update();
+    final bool isValid = updatePasswordFormKey.currentState!.validate();
+
+    if (!isValid) {
+      isLoading = false;
+      update();
+      return;
+    }
+
+    final String? uid = await FirebaseAuthApp.firebaseAuthApp.signin(
+      currentAdmin!.emailAddress!,
+      oldPasswrod.text,
+    );
+
+    if (uid != null) {
+      final User? user = await FirebaseAuthApp.firebaseAuthApp.currentUser();
+
+      await user!.updatePassword(password.text);
+      getxSnackbar('Success', 'Done!', backgroundColor: Colors.green);
+
+      oldPasswrod.clear();
+      password.clear();
+      rewritePassword.clear();
+    }
+
+    isLoading = false;
+    update();
   }
 
   @override

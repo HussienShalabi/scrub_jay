@@ -133,7 +133,7 @@ class AdminMainScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   onPressed: () {
-                                    Get.to(DriversList());
+                                    Get.to(() => const DriversList());
                                   },
                                 ),
                               ),

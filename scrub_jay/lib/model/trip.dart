@@ -46,11 +46,9 @@ class Trip {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
 
-    json['id'] = id;
     json['phone'] = phone;
     json['driverId'] = driverId;
     json['passengers'] = passengers;
-    json['driverName'] = driverName;
     json['totalPassengers'] = totalPassengers;
     json['order'] = order;
 

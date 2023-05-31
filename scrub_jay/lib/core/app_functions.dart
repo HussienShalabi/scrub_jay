@@ -8,8 +8,9 @@ String? formValidation(String? text, String type, [int? min, int? max]) {
     return 'this field is required'.tr;
   } else {
     if (type == 'username') {
+      var reg = RegExp(r"^(?:\p{L}\p{Mn}*|)+$", unicode: true);
       text = text.replaceAll(' ', '');
-      if (!isAlpha(text)) {
+      if (!reg.hasMatch(text)) {
         return 'not valid name'.tr;
       }
     } else if (type == 'email') {

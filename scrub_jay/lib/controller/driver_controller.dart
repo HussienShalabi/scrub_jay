@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:scrub_jay/core/app_apis.dart';
+import 'package:scrub_jay/core/app_http.dart';
 import 'package:scrub_jay/core/firebase_database_app.dart';
 import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/passenger.dart';
@@ -73,7 +76,17 @@ class DriverControllerImp extends DriverController {
               .getData('users/passengers/${value['passengerId']}');
 
           passengers = [];
-          await databaseRefrence.get().then((snapshot) {
+
+          final http.Response? response = await AppHttp.appHttp.getRequest(
+            MapApis.geocodingApi(
+              LatLng(value['location']!['latitude'],
+                  value['location']!['longitude']),
+            ),
+          );
+
+          final Map<String, dynamic> m = jsonDecode(response!.body);
+
+          await databaseRefrence.get().then((snapshot) async {
             data = jsonDecode(jsonEncode(snapshot.value));
             data['id'] = snapshot.key;
             data['location'] = {
@@ -83,7 +96,8 @@ class DriverControllerImp extends DriverController {
 
             passengers.add({
               'passenger': Passenger.fromJson(data),
-              'numOfPassenger': value['numOfPassengers']
+              'numOfPassenger': value['numOfPassengers'],
+              'location_name': m['features'][0]['text'],
             });
             getLocations = false;
             update();

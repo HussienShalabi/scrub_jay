@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/AdminController.dart';
 import '../widgets/HeaderWidget.dart';
 import 'theme_helper.dart';
 
 class EditPassword extends StatelessWidget {
+  final AdminControllerImp controllerImp = Get.put(AdminControllerImp());
+
   EditPassword({Key? key}) : super(key: key);
 
   final double _headerHeight = 250;
-
-  final Key _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,8 @@ class EditPassword extends StatelessWidget {
         title: Center(
           child: Text(
             "Edit password".tr,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
         elevation: 0.5,
@@ -90,14 +92,21 @@ class EditPassword extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     Form(
-                      key: _formKey,
+                      key: controllerImp.updatePasswordFormKey,
                       child: Column(
                         children: [
                           const SizedBox(height: 15),
                           Container(
                             decoration:
                                 ThemeHelper().inputBoxDecorationShaddow(),
-                            child: TextField(
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value == '') {
+                                  return 'this field is required';
+                                }
+                                return null;
+                              },
+                              controller: controllerImp.oldPasswrod,
                               obscureText: true,
                               decoration: ThemeHelper().textInputDecoration(
                                   'Old password*'.tr,
@@ -108,8 +117,15 @@ class EditPassword extends StatelessWidget {
                           Container(
                             decoration:
                                 ThemeHelper().inputBoxDecorationShaddow(),
-                            child: TextField(
+                            child: TextFormField(
                               obscureText: true,
+                              validator: (value) {
+                                if (value == '') {
+                                  return 'this field is required';
+                                }
+                                return null;
+                              },
+                              controller: controllerImp.password,
                               decoration: ThemeHelper().textInputDecoration(
                                   'New password*'.tr,
                                   'Enter your new password'.tr),
@@ -119,7 +135,19 @@ class EditPassword extends StatelessWidget {
                           Container(
                             decoration:
                                 ThemeHelper().inputBoxDecorationShaddow(),
-                            child: TextField(
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value == '') {
+                                  return 'this field is required';
+                                }
+
+                                if (controllerImp.password.text !=
+                                    controllerImp.rewritePassword.text) {
+                                  return 'Passwords not match';
+                                }
+                                return null;
+                              },
+                              controller: controllerImp.rewritePassword,
                               obscureText: true,
                               decoration: ThemeHelper().textInputDecoration(
                                   'ReEnter new password*'.tr,
@@ -127,25 +155,36 @@ class EditPassword extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 30),
-                          Container(
-                            decoration:
-                                ThemeHelper().buttonBoxDecoration(context),
-                            child: ElevatedButton(
-                              style: ThemeHelper().buttonStyle(),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                child: Text(
-                                  'Change password'.tr,
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              onPressed: () {},
-                            ),
-                          ),
+                          GetBuilder<AdminControllerImp>(
+                              init: AdminControllerImp(),
+                              builder: (controller) {
+                                return Container(
+                                  decoration: ThemeHelper()
+                                      .buttonBoxDecoration(context),
+                                  child: ElevatedButton(
+                                    onPressed: controller.isLoading
+                                        ? () {}
+                                        : () => controller.updatePassword(),
+                                    style: ThemeHelper().buttonStyle(),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          40, 10, 40, 10),
+                                      child: controller.isLoading
+                                          ? const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            )
+                                          : Text(
+                                              'Change password'.tr,
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ),
+                                    ),
+                                  ),
+                                );
+                              }),
                         ],
                       ),
                     ),

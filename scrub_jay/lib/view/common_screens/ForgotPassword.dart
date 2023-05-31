@@ -1,13 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrub_jay/controller/auth_controller.dart';
 import '../widgets/HeaderWidget.dart';
 import 'Signin.dart';
 import 'ForgotPasswordVerification.dart';
 import 'theme_helper.dart';
 
 class ForgotPassword extends StatelessWidget {
-   ForgotPassword({Key? key}) : super(key: key);
+  ForgotPassword({Key? key}) : super(key: key);
+  final AuthControllerImp adminControllerImp = Get.put(AuthControllerImp());
 
   final _formKey = GlobalKey<FormState>();
 
@@ -78,6 +80,7 @@ class ForgotPassword extends StatelessWidget {
                               decoration:
                                   ThemeHelper().inputBoxDecorationShaddow(),
                               child: TextFormField(
+                                controller: adminControllerImp.emailAddress,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: ThemeHelper().textInputDecoration(
                                     "Email address".tr,
@@ -94,31 +97,48 @@ class ForgotPassword extends StatelessWidget {
                             Container(
                               decoration:
                                   ThemeHelper().buttonBoxDecoration(context),
-                              child: ElevatedButton(
-                                style: ThemeHelper().buttonStyle(),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                  child: Text(
-                                    "Send".tr,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ForgotPasswordVerification()),
+                              child: GetBuilder<AuthControllerImp>(
+                                  init: AuthControllerImp(),
+                                  builder: (controller) {
+                                    return ElevatedButton(
+                                      onPressed: controller.isLoading
+                                          ? () {}
+                                          : () {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                controller.forgetPassword();
+                                              }
+                                            },
+                                      style: ThemeHelper().buttonStyle(),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            40, 10, 40, 10),
+                                        child: controller.isLoading
+                                            ? const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              )
+                                            : Text(
+                                                "Send".tr,
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                      ),
+                                      // {
+                                      //   if (_formKey.currentState!.validate()) {
+                                      //     Navigator.pushReplacement(
+                                      //       context,
+                                      //       MaterialPageRoute(
+                                      //           builder: (context) =>
+                                      //               const ForgotPasswordVerification()),
+                                      //     );
+                                      //   }
+                                      // },
                                     );
-                                  }
-                                },
-                              ),
+                                  }),
                             ),
                             const SizedBox(height: 30.0),
                             Text.rich(

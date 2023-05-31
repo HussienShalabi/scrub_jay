@@ -63,7 +63,10 @@ class DriverMap extends StatelessWidget {
                                                           ['passenger']
                                                       .phoneNumber ??
                                                   '',
-                                              passengerLocation: 'iktaba'),
+                                              passengerLocation:
+                                                  controller.passengers[index]
+                                                          ['location_name'] ??
+                                                      ''),
                                         ),
                                       ),
                               ),

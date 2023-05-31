@@ -63,7 +63,10 @@ class PassengerDrawer extends StatelessWidget {
                         height: 50,
                       ),
                       Text(
-                        controllerImp.currentPassenger!.fullname ?? 'username',
+                        controllerImp.currentPassenger == null
+                            ? 'username'
+                            : controllerImp.currentPassenger!.fullname ??
+                                'username',
                         style: const TextStyle(
                           fontSize: 20,
                           color: Colors.white,
