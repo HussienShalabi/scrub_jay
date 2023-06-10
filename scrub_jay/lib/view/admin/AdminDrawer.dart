@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:scrub_jay/controller/AdminController.dart';
 import 'package:scrub_jay/controller/auth_controller.dart';
 import 'package:scrub_jay/view/admin/AdminProfile.dart';
-import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
 import '../../core/app_shared_preferences.dart';
 import '../../core/firebase_app_auth.dart';
 import '../common_screens/EditPassword.dart';
 import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
+import 'settingsScreen.dart';
 // add file constant
 
 class AdminDrawer extends StatelessWidget {

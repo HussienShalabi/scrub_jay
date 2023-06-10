@@ -20,7 +20,6 @@ class Admin extends User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['id'] = super.id;
     data['fullName'] = super.fullname;
     data['emailAddress'] = super.emailAddress;
     data['phone'] = super.phoneNumber;

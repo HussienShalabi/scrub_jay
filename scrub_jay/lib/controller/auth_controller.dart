@@ -88,6 +88,8 @@ class AuthControllerImp extends AuthController {
 
         if (data.value == null) {
           getxSnackbar('Failed Sign In', 'Your are not allowed to enter');
+          isLoading = false;
+          update();
           return;
         }
 

@@ -34,15 +34,16 @@ class AdminControllerImp extends AbstractAdminController {
   List<Trip> trips = [];
   int orderTimes = 1;
 
-  GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
-  GlobalKey<FormState> updatePasswordFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> createAdminKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> updatePasswordFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyEdit = GlobalKey<FormState>();
 
-  TextEditingController fullName = TextEditingController();
-  TextEditingController emailAddress = TextEditingController();
-  TextEditingController phoneNumber = TextEditingController();
-  TextEditingController oldPasswrod = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController rewritePassword = TextEditingController();
+  final TextEditingController fullName = TextEditingController();
+  final TextEditingController emailAddress = TextEditingController();
+  final TextEditingController phoneNumber = TextEditingController();
+  final TextEditingController oldPasswrod = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController rewritePassword = TextEditingController();
 
   clearData() {
     fullName.dispose();
@@ -230,6 +231,47 @@ class AdminControllerImp extends AbstractAdminController {
         update();
       },
     );
+  }
+
+  Future<void> editData() async {
+    if (fullName.text.trim() != '') {
+      currentAdmin!.fullname = fullName.text.trim();
+    }
+
+    if (emailAddress.text.trim() != '') {
+      currentAdmin!.emailAddress = emailAddress.text.trim();
+    }
+
+    if (phoneNumber.text.trim() != '') {
+      currentAdmin!.phoneNumber = phoneNumber.text.trim();
+    }
+
+    final bool isValid = formKeyEdit.currentState!.validate();
+    isLoading = true;
+    if (isValid) {
+      try {
+        // Update the user's email
+        User? userauth = await FirebaseAuthApp.firebaseAuthApp.currentUser();
+        if (userauth != null && emailAddress.text.trim().isNotEmpty) {
+          await userauth.updateEmail(emailAddress.text.trim());
+          // await userauth.updatePassword(password.text);
+        }
+
+        // Update the user's password
+        // await FirebaseAuth.instance.currentUser!.updatePassword(password.text);
+
+        await FirebaseDatabaseApp.firebaseDatabase.updateData(
+            'users/admins/${currentAdmin!.id}', currentAdmin!.toJson());
+
+        isLoading = false;
+        update();
+        Get.snackbar('Success', 'Profile has been updated');
+      } on FirebaseAuthException catch (e) {
+        Get.snackbar('Error', e.message ?? 'An error occurred');
+      } catch (e) {
+        Get.snackbar('Error', e.toString());
+      }
+    }
   }
 
   Future<void> updatePassword() async {
