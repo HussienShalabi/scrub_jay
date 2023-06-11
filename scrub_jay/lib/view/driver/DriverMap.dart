@@ -108,6 +108,13 @@ class DriverMap extends StatelessWidget {
                   ),
             appBar: AppBar(
               centerTitle: true,
+              title: Text(
+                'My trip'.tr,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                     gradient: LinearGradient(

@@ -96,7 +96,7 @@ class _MakeTurnState extends State<MakeTurn> {
                       height: 20,
                     ),
                     SizedBox(
-                      height: 600,
+                      height: 500,
                       child: GetBuilder<AdminControllerImp>(
                         init: AdminControllerImp(),
                         builder: (controller) {

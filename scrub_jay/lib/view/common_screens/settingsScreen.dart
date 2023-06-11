@@ -23,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Center(
           child: Text(
-            "Account management".tr,
+            "Edit profile".tr,
             style: const TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold),
           ),

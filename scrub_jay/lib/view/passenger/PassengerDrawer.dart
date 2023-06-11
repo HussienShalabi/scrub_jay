@@ -79,33 +79,6 @@ class PassengerDrawer extends StatelessWidget {
               ),
             ),
 
-            // ListTile(
-            //   leading: Icon(Icons.person,
-            //       size: _drawerIconSize,
-            //       color: Theme.of(context).colorScheme.secondary),
-            //   title: Text(
-            //     'Profile Page'.tr,
-            //     style: TextStyle(
-            //         fontSize: _drawerFontSize,
-            //         color: Theme.of(context).colorScheme.secondary),
-            //   ),
-            //   onTap: () {},
-            // ),
-            // ListTile(
-            //   leading: Icon(Icons.lock_person_rounded,
-            //       size: _drawerIconSize,
-            //       color: Theme.of(context).colorScheme.secondary),
-            //   title: Text(
-            //     'Edit password'.tr,
-            //     style: TextStyle(
-            //         fontSize: _drawerFontSize,
-            //         color: Theme.of(context).colorScheme.secondary),
-            //   ),
-            //   onTap: () {
-            //     Get.to( EditPassword());
-            //   },
-            // ),
-
             ListTile(
               leading: Icon(Icons.person,
                   size: _drawerIconSize,
@@ -125,13 +98,27 @@ class PassengerDrawer extends StatelessWidget {
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
               title: Text(
-                'Account management'.tr,
+                'Edit profile'.tr,
                 style: TextStyle(
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
                 Get.to(SettingsScreen());
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.lock_person_rounded,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).colorScheme.secondary),
+              title: Text(
+                'Edit password'.tr,
+                style: TextStyle(
+                    fontSize: _drawerFontSize,
+                    color: Theme.of(context).colorScheme.secondary),
+              ),
+              onTap: () {
+                Get.to(EditPassword());
               },
             ),
 
