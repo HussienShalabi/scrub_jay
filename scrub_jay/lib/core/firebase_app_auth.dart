@@ -54,13 +54,13 @@ class FirebaseAuthApp {
       final UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
 
-      if (!userCredential.user!.emailVerified &&
-          userCredential.user!.email != 'anas_ashker_2000_ps@yahoo.com') {
-        userCredential.user!.sendEmailVerification();
+      // if (!userCredential.user!.emailVerified &&
+      //     userCredential.user!.email != 'anas_ashker_2000_ps@yahoo.com') {
+      //   userCredential.user!.sendEmailVerification();
 
-        getxSnackbar('error', 'your account not verified');
-        return null;
-      }
+      //   getxSnackbar('error', 'your account not verified');
+      //   return null;
+      // }
 
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {

@@ -65,8 +65,11 @@ class DriverControllerImp extends DriverController {
     trips.removeAt(indexTrip);
     trips.add(trip);
     indexTrip = trips.length - 1;
-    await FirebaseDatabaseApp.firebaseDatabase.updateData(
-        'trips/$myTripId', {'order': trip.order, 'totalPassengers': 0});
+    await FirebaseDatabaseApp.firebaseDatabase.updateData('trips/$myTripId', {
+      'order': trip.order,
+      'totalPassengers': 0,
+      'passengers': [],
+    });
 
     await FirebaseDatabaseApp.firebaseDatabase
         .deleteData('trips/$myTripId/passengers');

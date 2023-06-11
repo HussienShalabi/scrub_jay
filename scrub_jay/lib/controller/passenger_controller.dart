@@ -11,6 +11,7 @@ import 'package:scrub_jay/model/order.dart';
 import 'package:scrub_jay/model/user.dart' as user;
 import 'package:scrub_jay/model/passenger.dart';
 import 'package:scrub_jay/model/trip.dart';
+import '../core/app_functions.dart';
 import '../model/map.dart' as map;
 
 abstract class PassengerController extends GetxController {
@@ -30,9 +31,13 @@ class PassengerControllerImp extends PassengerController {
   Passenger? currentPassenger;
 
   final GlobalKey<FormState> formKeyEdit = GlobalKey<FormState>();
+  final GlobalKey<FormState> updatePasswordFormKey = GlobalKey<FormState>();
   final TextEditingController fullName = TextEditingController();
   final TextEditingController emailAddress = TextEditingController();
   final TextEditingController phoneNumber = TextEditingController();
+  final TextEditingController oldPasswrod = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController rewritePassword = TextEditingController();
 
   bool done = false;
 
@@ -136,6 +141,37 @@ class PassengerControllerImp extends PassengerController {
         Get.snackbar('Error', e.toString());
       }
     }
+  }
+
+  Future<void> updatePassword() async {
+    isLoading = true;
+    update();
+    final bool isValid = updatePasswordFormKey.currentState!.validate();
+
+    if (!isValid) {
+      isLoading = false;
+      update();
+      return;
+    }
+
+    final String? uid = await FirebaseAuthApp.firebaseAuthApp.signin(
+      currentPassenger!.emailAddress!,
+      oldPasswrod.text,
+    );
+
+    if (uid != null) {
+      final User? user = await FirebaseAuthApp.firebaseAuthApp.currentUser();
+
+      await user!.updatePassword(password.text);
+      getxSnackbar('Success', 'Done!', backgroundColor: Colors.green);
+
+      oldPasswrod.clear();
+      password.clear();
+      rewritePassword.clear();
+    }
+
+    isLoading = false;
+    update();
   }
 
   Future<void> selectDestination(LatLng position) async {

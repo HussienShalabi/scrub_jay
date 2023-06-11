@@ -92,9 +92,10 @@ class DriverMap extends StatelessWidget {
                                             child: Text(
                                               'Start the trip'.tr,
                                               style: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
                                   ),

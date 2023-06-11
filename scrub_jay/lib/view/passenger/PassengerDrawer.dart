@@ -1,18 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:scrub_jay/controller/auth_controller.dart';
 import 'package:scrub_jay/controller/passenger_controller.dart';
 import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/core/firebase_app_auth.dart';
-import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
-import 'package:scrub_jay/view/common_screens/EditPassword.dart';
 import 'package:scrub_jay/view/common_screens/settingsScreen.dart';
-import 'package:scrub_jay/view/passenger/PassengerMap.dart';
 import 'package:scrub_jay/view/passenger/PassengerProfile.dart';
 import '../common_screens/Signin.dart';
 import '../common_screens/chooseLang.dart';
+import 'EditPassword.dart';
 
 class PassengerDrawer extends StatelessWidget {
   const PassengerDrawer({super.key});
@@ -133,7 +128,7 @@ class PassengerDrawer extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary),
               ),
               onTap: () {
-                Get.to(chooseLang());
+                Get.to(() => const chooseLang());
               },
             ),
             // ListTile(

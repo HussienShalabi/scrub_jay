@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/app_functions.dart';
+import 'package:scrub_jay/core/firebase_database_app.dart';
 import 'package:scrub_jay/model/admin.dart';
 import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
 import 'package:scrub_jay/view/common_screens/Signin.dart';
@@ -14,6 +15,7 @@ import '../core/app_shared_preferences.dart';
 import '../core/firebase_app_auth.dart';
 import '../model/driver.dart';
 import '../model/passenger.dart';
+import '../model/trip.dart';
 import '../model/user.dart' as user;
 import '../view/Driver/DriverMainScreen.dart';
 import '../view/passenger/choose_trip.dart';
@@ -191,8 +193,34 @@ class AuthControllerImp extends AuthController {
         role: 1,
       );
 
+      final DatabaseReference databaseReference =
+          await FirebaseDatabaseApp.firebaseDatabase.getData('maxOrder');
+      final DataSnapshot dataSnapshot = await databaseReference.get();
+      int? maxOrder = dataSnapshot.value as int?;
+
+      if (maxOrder == null) {
+        maxOrder = 1;
+        await FirebaseDatabase.instance.ref('maxOrder').set(maxOrder);
+      } else {
+        maxOrder = maxOrder + 1;
+      }
+
+      await FirebaseDatabase.instance.ref('maxOrder').set(maxOrder);
+
       final String? uid = await FirebaseAuthApp.firebaseAuthApp
           .signup(1, newDriver.toJson(), password!.text);
+
+      Trip trip = Trip(
+        phone: newDriver.phoneNumber,
+        driverId: uid,
+        totalPassengers: 0,
+        order: maxOrder,
+      );
+
+      await FirebaseDatabaseApp.firebaseDatabase.addDataWithKey(
+        'trips',
+        trip.toJson(),
+      );
 
       await FirebaseAuthApp.firebaseAuthApp.signout();
 
@@ -273,9 +301,22 @@ class AuthControllerImp extends AuthController {
     update();
   }
 
+  Future<void> f() async {
+    final DatabaseReference databaseReference =
+        await FirebaseDatabaseApp.firebaseDatabase.getData('maxOrder');
+    final DataSnapshot dataSnapshot = await databaseReference.get();
+    int? maxOrder = dataSnapshot.value as int?;
+
+    if (maxOrder == null) {
+      maxOrder = 1;
+      await FirebaseDatabase.instance.ref('maxOrder').set(maxOrder);
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
     initilizeData();
+    f();
   }
 }
