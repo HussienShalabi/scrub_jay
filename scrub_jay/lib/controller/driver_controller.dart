@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -12,6 +13,8 @@ import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/passenger.dart';
 import 'package:scrub_jay/model/trip.dart';
 import 'package:scrub_jay/model/user.dart' as user;
+import '../core/app_functions.dart';
+import '../core/firebase_app_auth.dart';
 import '../model/map.dart' as map;
 
 abstract class DriverController extends GetxController {
@@ -33,6 +36,15 @@ class DriverControllerImp extends DriverController {
   int indexTrip = 0;
   String myTripId = '';
   bool isGetInformation = false;
+
+  final GlobalKey<FormState> updatePasswordFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyEdit = GlobalKey<FormState>();
+  final TextEditingController oldPasswrod = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController rewritePassword = TextEditingController();
+  final TextEditingController fullName = TextEditingController();
+  final TextEditingController emailAddress = TextEditingController();
+  final TextEditingController phoneNumber = TextEditingController();
 
   @override
   Future<void> determineCurrentLocation() async {
@@ -163,6 +175,78 @@ class DriverControllerImp extends DriverController {
     isGetInformation = false;
     update();
     getTrips();
+  }
+
+  Future<void> editData() async {
+    if (fullName.text.trim() != '') {
+      currentDriver!.fullname = fullName.text.trim();
+    }
+
+    if (emailAddress.text.trim() != '') {
+      currentDriver!.emailAddress = emailAddress.text.trim();
+    }
+
+    if (phoneNumber.text.trim() != '') {
+      currentDriver!.phoneNumber = phoneNumber.text.trim();
+    }
+
+    final bool isValid = formKeyEdit.currentState!.validate();
+    isLoading = true;
+    if (isValid) {
+      try {
+        // Update the user's email
+        User? userauth = await FirebaseAuthApp.firebaseAuthApp.currentUser();
+        if (userauth != null && emailAddress.text.trim().isNotEmpty) {
+          await userauth.updateEmail(emailAddress.text.trim());
+          // await userauth.updatePassword(password.text);
+        }
+
+        // Update the user's password
+        // await FirebaseAuth.instance.currentUser!.updatePassword(password.text);
+
+        await FirebaseDatabaseApp.firebaseDatabase.updateData(
+            'users/drivers/${currentDriver!.id}', currentDriver!.toJson());
+
+        isLoading = false;
+        update();
+        Get.snackbar('Success', 'Profile has been updated');
+      } on FirebaseAuthException catch (e) {
+        Get.snackbar('Error', e.message ?? 'An error occurred');
+      } catch (e) {
+        Get.snackbar('Error', e.toString());
+      }
+    }
+  }
+
+  Future<void> updatePassword() async {
+    isLoading = true;
+    update();
+    final bool isValid = updatePasswordFormKey.currentState!.validate();
+
+    if (!isValid) {
+      isLoading = false;
+      update();
+      return;
+    }
+
+    final String? uid = await FirebaseAuthApp.firebaseAuthApp.signin(
+      currentDriver!.emailAddress!,
+      oldPasswrod.text,
+    );
+
+    if (uid != null) {
+      final User? user = await FirebaseAuthApp.firebaseAuthApp.currentUser();
+
+      await user!.updatePassword(password.text);
+      getxSnackbar('Success', 'Done!', backgroundColor: Colors.green);
+
+      oldPasswrod.clear();
+      password.clear();
+      rewritePassword.clear();
+    }
+
+    isLoading = false;
+    update();
   }
 
   @override

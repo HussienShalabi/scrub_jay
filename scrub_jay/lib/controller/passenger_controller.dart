@@ -97,8 +97,6 @@ class PassengerControllerImp extends PassengerController {
   }
 
   Future<void> editData() async {
-    Passenger? editedUser = Passenger();
-
     if (fullName.text.trim() != '') {
       currentPassenger!.fullname = fullName.text.trim();
     }
@@ -110,21 +108,6 @@ class PassengerControllerImp extends PassengerController {
     if (phoneNumber.text.trim() != '') {
       currentPassenger!.phoneNumber = phoneNumber.text.trim();
     }
-
-    // currentPassenger!.fullname = fullName.text.trim() != ''
-    //     ? fullName.text.trim()
-    //     : editedUser.fullname =
-    //         currentPassenger!.fullname == fullName.text.trim()
-    //             ? null
-    //             : fullName.text.trim();
-    // editedUser.phoneNumber =
-    //     currentPassenger!.phoneNumber == phoneNumber.text.trim()
-    //         ? null
-    //         : phoneNumber.text.trim();
-    // editedUser.emailAddress =
-    //     currentPassenger!.emailAddress == emailAddress.text.trim()
-    //         ? null
-    //         : emailAddress.text.trim();
 
     final bool isValid = formKeyEdit.currentState!.validate();
     isLoading = true;
