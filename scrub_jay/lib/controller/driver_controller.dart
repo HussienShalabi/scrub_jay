@@ -147,11 +147,13 @@ class DriverControllerImp extends DriverController {
 
           final DataSnapshot dataSnapshot = await databaseReference!.get();
 
-          trip['driverName'] =
-              (dataSnapshot.value as Map<dynamic, dynamic>)['fullName'];
-          trip['id'] = child.key;
-          trips.add(Trip.fromJson(trip));
-          count++;
+          if (dataSnapshot.value != null) {
+            trip['driverName'] =
+                (dataSnapshot.value as Map<dynamic, dynamic>)['fullName'];
+            trip['id'] = child.key;
+            trips.add(Trip.fromJson(trip));
+            count++;
+          }
         }
         isLoading = false;
         update();

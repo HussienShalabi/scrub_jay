@@ -90,10 +90,12 @@ class PassengerControllerImp extends PassengerController {
 
           final DataSnapshot dataSnapshot = await databaseReference!.get();
 
-          trip['driverName'] =
-              (dataSnapshot.value as Map<dynamic, dynamic>)['fullName'];
-          trip['id'] = child.key;
-          trips.add(Trip.fromJson(trip));
+          if (dataSnapshot.value != null) {
+            trip['driverName'] =
+                (dataSnapshot.value as Map<dynamic, dynamic>)['fullName'];
+            trip['id'] = child.key;
+            trips.add(Trip.fromJson(trip));
+          }
         }
         isLoading = false;
         update();
