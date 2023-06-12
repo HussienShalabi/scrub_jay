@@ -28,34 +28,39 @@ class Order {
   }
 
   static Future<int?> addOrder(List<Trip> trips, Order order) async {
-    String? tripId;
+    Trip? trip;
     int index = 0;
     int totalPassengers = 0;
 
-    for (var trip in trips) {
-      if (order.numOfPassengers! <= (7 - trip.totalPassengers!)) {
-        tripId = trip.id;
+    for (var t in trips) {
+      if (order.numOfPassengers! <= (7 - t.totalPassengers!)) {
+        trip = t;
         totalPassengers =
-            (order.numOfPassengers ?? 1) + (trip.totalPassengers ?? 0);
-        trip.totalPassengers = totalPassengers;
+            (order.numOfPassengers ?? 1) + (t.totalPassengers ?? 0);
+        t.totalPassengers = totalPassengers;
         break;
       }
       index++;
     }
-    if (tripId == null) {
+    if (trip == null) {
       return null;
     }
 
     await FirebaseDatabaseApp.firebaseDatabase.addDataWithKey(
-      'trips/$tripId/passengers',
+      'trips/${trip.id}/passengers',
       order.toJson(),
     );
 
     await FirebaseDatabaseApp.firebaseDatabase.updateData(
-      'trips/$tripId',
+      'trips/${trip.id}',
       {
         'totalPassengers': totalPassengers,
       },
+    );
+
+    await FirebaseDatabaseApp.firebaseDatabase.addDataWithKey(
+      'notifications/${trip.driverId}',
+      {'title': 'Scrub Jay', 'message': 'There are new passengers', 'read': 0},
     );
 
     return index;

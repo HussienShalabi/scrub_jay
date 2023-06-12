@@ -51,6 +51,18 @@ class FirebaseDatabaseApp {
     }
   }
 
+  Future<bool> setData(String path, Object? data) async {
+    try {
+      final DatabaseReference ref = await getDatabaseReference(path);
+      await ref.set(data);
+
+      return true;
+    } catch (e) {
+      getxSnackbar('Error', 'An error occurred');
+      return false;
+    }
+  }
+
   Future<void> updateData(String path, Map<String, dynamic> data) async {
     final DatabaseReference ref = await getDatabaseReference(path);
     await ref.update(data);

@@ -1,0 +1,43 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "scrub_jay",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "scrub_jay (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "scrub_jay (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "iPhone 11 Pro",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "0171D200-B312-4520-8968-6069529E393C"
+        },
+        {
+            "name": "iPhone 14 Pro Max",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "8522C5F1-B148-4407-A5BC-9148947EFD16"
+        },
+    ],
+    "compounds": [
+        {
+          "name": "All Devices",
+          "configurations": ["iPhone 11 Pro", "iPhone 14 Pro Max"]
+        }
+    ]
+}

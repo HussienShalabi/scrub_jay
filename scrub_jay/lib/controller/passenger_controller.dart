@@ -12,6 +12,7 @@ import 'package:scrub_jay/model/user.dart' as user;
 import 'package:scrub_jay/model/passenger.dart';
 import 'package:scrub_jay/model/trip.dart';
 import '../core/app_functions.dart';
+import '../core/app_notifications.dart';
 import '../model/map.dart' as map;
 
 abstract class PassengerController extends GetxController {
@@ -201,6 +202,7 @@ class PassengerControllerImp extends PassengerController {
     });
 
     await Order.addOrder(trips, order);
+
     isLoading = false;
     update();
     Get.back();
@@ -216,11 +218,31 @@ class PassengerControllerImp extends PassengerController {
     update();
   }
 
+  Future<void> getNotifications() async {
+    final DatabaseReference databaseReference = await FirebaseDatabaseApp
+        .firebaseDatabase
+        .getData('notifications/${currentPassenger!.id}');
+
+    databaseReference.onValue.listen((event) {
+      for (var noti in event.snapshot.children) {
+        Map<String, dynamic> data = jsonDecode(jsonEncode(noti.value));
+        if (data['read'] == 0) {
+          AppNotifications.appNotifications
+              .showNotification(title: data['title'], body: data['message']);
+          FirebaseDatabaseApp.firebaseDatabase.updateData(
+              'notifications/${currentPassenger!.id}/${noti.key}', {'read': 1});
+        }
+      }
+    });
+  }
+
   @override
   void onInit() {
     super.onInit();
-    getInformation();
-    getTrips();
     determineCurrentLocation();
+    getTrips();
+    getInformation().then((value) {
+      getNotifications();
+    });
   }
 }

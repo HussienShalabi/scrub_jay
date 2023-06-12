@@ -102,7 +102,9 @@ class RequestCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  passengerLocation,
+                  passengerLocation.length > 15
+                      ? '${passengerLocation.substring(0, 15)}...'
+                      : passengerLocation,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,

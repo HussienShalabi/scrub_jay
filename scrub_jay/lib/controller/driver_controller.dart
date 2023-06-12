@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:scrub_jay/core/app_apis.dart';
 import 'package:scrub_jay/core/app_http.dart';
+import 'package:scrub_jay/core/app_notifications.dart';
 import 'package:scrub_jay/core/firebase_database_app.dart';
 import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/passenger.dart';
@@ -60,19 +61,31 @@ class DriverControllerImp extends DriverController {
     save = true;
     update();
     Trip trip = trips[indexTrip];
-
     trip.order = trips[trips.length - 1].order! + 1;
-    trips.removeAt(indexTrip);
-    trips.add(trip);
-    indexTrip = trips.length - 1;
+    trip.totalPassengers = 0;
+
     await FirebaseDatabaseApp.firebaseDatabase.updateData('trips/$myTripId', {
       'order': trip.order,
       'totalPassengers': 0,
       'passengers': [],
     });
 
-    await FirebaseDatabaseApp.firebaseDatabase
-        .deleteData('trips/$myTripId/passengers');
+    await FirebaseDatabaseApp.firebaseDatabase.setData(
+      'maxOrder',
+      trip.order,
+    );
+
+    trip.passengers!.forEach((key, value) async {
+      await FirebaseDatabaseApp.firebaseDatabase.addDataWithKey(
+        'notifications/${value['passengerId']}',
+        {'title': 'Scrub Jay', 'message': 'The driver on way', 'read': 0},
+      );
+    });
+
+    trip.passengers = {};
+    trips.removeAt(indexTrip);
+    trips.add(trip);
+    indexTrip = trips.length - 1;
 
     save = false;
     update();
@@ -254,11 +267,31 @@ class DriverControllerImp extends DriverController {
     update();
   }
 
+  Future<void> getNotifications() async {
+    final DatabaseReference databaseReference = await FirebaseDatabaseApp
+        .firebaseDatabase
+        .getData('notifications/${currentDriver!.id}');
+
+    databaseReference.onValue.listen((event) {
+      for (var noti in event.snapshot.children) {
+        Map<String, dynamic> data = jsonDecode(jsonEncode(noti.value));
+        if (data['read'] == 0) {
+          AppNotifications.appNotifications
+              .showNotification(title: data['title'], body: data['message']);
+          FirebaseDatabaseApp.firebaseDatabase.updateData(
+              'notifications/${currentDriver!.id}/${noti.key}', {'read': 1});
+        }
+      }
+    });
+  }
+
   @override
   void onInit() {
     super.onInit();
-    getDriverData();
-    // getTrips();
     determineCurrentLocation();
+    getDriverData().then((value) {
+      getNotifications();
+    });
+    // getTrips();
   }
 }
