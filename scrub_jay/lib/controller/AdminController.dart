@@ -94,8 +94,11 @@ class AdminControllerImp extends AbstractAdminController {
 
         await FirebaseAuthApp.firebaseAuthApp.signout();
 
-        final String pass = await AppSharedPrefernces.appSharedPrefernces
-            .getDate('pass') as String;
+        final String pass =
+            AppSharedPrefernces.appSharedPrefernces.getDate('pass') as String;
+
+        await FirebaseAuthApp.firebaseAuthApp
+            .signin(currentAdmin!.emailAddress!, pass);
 
         if (uid != null) {
           isLoading = false;
