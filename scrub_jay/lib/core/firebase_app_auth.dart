@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'app_functions.dart';
 import 'firebase_database_app.dart';
 
@@ -54,13 +55,15 @@ class FirebaseAuthApp {
       final UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
 
-      // if (!userCredential.user!.emailVerified &&
-      //     userCredential.user!.email != 'anas_ashker_2000_ps@yahoo.com') {
-      //   userCredential.user!.sendEmailVerification();
+      if (!userCredential.user!.emailVerified &&
+          userCredential.user!.email != 'anas_ashker_2000_ps@yahoo.com') {
+        userCredential.user!.sendEmailVerification();
 
-      //   getxSnackbar('error', 'your account not verified');
-      //   return null;
-      // }
+        getxSnackbar('error', 'your account not verified');
+        return null;
+      }
+
+      await AppSharedPrefernces.appSharedPrefernces.setData('pass', password);
 
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (error) {

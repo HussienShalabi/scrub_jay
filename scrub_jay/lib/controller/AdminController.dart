@@ -6,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrub_jay/core/app_functions.dart';
+import 'package:scrub_jay/core/app_shared_preferences.dart';
 import 'package:scrub_jay/model/driver.dart';
 import 'package:scrub_jay/model/trip.dart';
 import '../core/firebase_app_auth.dart';
@@ -46,11 +47,11 @@ class AdminControllerImp extends AbstractAdminController {
   final TextEditingController rewritePassword = TextEditingController();
 
   clearData() {
-    fullName.dispose();
-    emailAddress.dispose();
-    phoneNumber.dispose();
-    password.dispose();
-    rewritePassword.dispose();
+    fullName.clear();
+    emailAddress.clear();
+    phoneNumber.clear();
+    password.clear();
+    rewritePassword.clear();
   }
 
   Future<void> getInformation() async {
@@ -92,6 +93,9 @@ class AdminControllerImp extends AbstractAdminController {
             .signup(0, newAdmin.toJson(), password.text);
 
         await FirebaseAuthApp.firebaseAuthApp.signout();
+
+        final String pass = await AppSharedPrefernces.appSharedPrefernces
+            .getDate('pass') as String;
 
         if (uid != null) {
           isLoading = false;

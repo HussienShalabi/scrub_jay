@@ -6,6 +6,7 @@ import 'package:scrub_jay/bindings.dart';
 import 'package:scrub_jay/core/app_midleware.dart';
 import 'package:scrub_jay/core/app_notifications.dart';
 import 'package:scrub_jay/core/app_shared_preferences.dart';
+import 'package:scrub_jay/core/firebase_app_auth.dart';
 import 'package:scrub_jay/firebase_options.dart';
 import 'package:scrub_jay/view/Driver/DriverMainScreen.dart';
 import 'package:scrub_jay/view/admin/AdminMainScreen.dart';
