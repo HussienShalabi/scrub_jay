@@ -15,12 +15,11 @@ class EditPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            "Edit password".tr,
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold),
-          ),
+        centerTitle: true,
+        title: Text(
+          "Edit password".tr,
+          style: const TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold),
         ),
         elevation: 0.5,
         iconTheme: const IconThemeData(color: Colors.white),
@@ -34,41 +33,7 @@ class EditPassword extends StatelessWidget {
                 Theme.of(context).colorScheme.secondary,
               ])),
         ),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(
-              top: 16,
-              right: 16,
-            ),
-            child: Stack(
-              children: <Widget>[
-                const Icon(Icons.notifications),
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: const Text(
-                      '5',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(

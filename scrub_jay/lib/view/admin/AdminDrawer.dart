@@ -93,7 +93,7 @@ class AdminDrawer extends StatelessWidget {
                   size: _drawerIconSize,
                   color: Theme.of(context).colorScheme.secondary),
               title: Text(
-                'Account management'.tr,
+                'Edit profile'.tr,
                 style: TextStyle(
                     fontSize: _drawerFontSize,
                     color: Theme.of(context).colorScheme.secondary),

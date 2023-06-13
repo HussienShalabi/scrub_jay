@@ -126,41 +126,7 @@ class DriverMap extends StatelessWidget {
                       Theme.of(context).colorScheme.secondary,
                     ])),
               ),
-              actions: [
-                Container(
-                  margin: const EdgeInsets.only(
-                    top: 16,
-                    right: 16,
-                  ),
-                  child: Stack(
-                    children: <Widget>[
-                      const Icon(Icons.notifications),
-                      Positioned(
-                        right: 0,
-                        child: Container(
-                          padding: const EdgeInsets.all(1),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          constraints: const BoxConstraints(
-                            minWidth: 12,
-                            minHeight: 12,
-                          ),
-                          child: const Text(
-                            '5',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 8,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
+
             ),
             drawer: const DriverDrawer(),
             body: controller.isLoading
