@@ -116,6 +116,19 @@ class Mylocale implements Translations{
       'Enter email address':'ادخل البريد الالكتروني',
       "Enter mobile number":"ادخل رقم الهاتف",
       "Enter password":"ادخل كلمة المرور",
+      'Profile page':'الصفحة الشخصية',
+      'Edit profile':'تعديل البيانات الشخصية',
+      "full name:":"اسم المستخدم:",
+      "email address:":"البريد الالكتروني :",
+      "phone number:":"رقم الهاتف :",
+      'My trip':'الرحلة الحالية',
+      'Save':'حفظ',
+      'Vehicle Number:':'رقم السيارة:',
+      'Identity Number:':'رقم الهوية:',
+      'Driver License Number:':'رخصة السائق:',
+
+
+
 
 
 
@@ -243,6 +256,16 @@ class Mylocale implements Translations{
       'Enter email address':'Enter email address',
       "Enter mobile number":"Enter mobile number",
       "Enter password":"Enter password",
+      'Profile page':'Profile page',
+      'Edit profile':'Edit profile',
+      "full name:":"full name:",
+      "email address:":"email address:",
+      "phone number:":"phone number:",
+      'My trip':'My trip',
+      'Save':'Save',
+      'Vehicle Number:':'Vehicle Number:',
+      'Identity Number:':'Identity Number:',
+      'Driver License Number:':'Driver License Number:',
 
       "ReEnter Password*":"ReEnter Password*",
       "Are you a driver? ":"Are you a driver? ",

@@ -49,7 +49,7 @@ class DriverRequestCard extends StatelessWidget {
             color: Colors.white,
           ),
           SizedBox(
-            height: 220.h,
+            height: 245.h,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +64,7 @@ class DriverRequestCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'phone: '.tr,
+                  "phone number:".tr,
                   style: TextStyle(
                     fontSize: 17.sp,
                     color: Colors.white,
@@ -82,7 +82,7 @@ class DriverRequestCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'email: '.tr,
+                  "email address:".tr,
                   style: TextStyle(
                     fontSize: 17.sp,
                     color: Colors.white,
@@ -100,7 +100,7 @@ class DriverRequestCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Vehicle Number: '.tr,
+                  'Vehicle Number:'.tr,
                   style: TextStyle(
                     fontSize: 17.sp,
                     color: Colors.white,
@@ -118,7 +118,7 @@ class DriverRequestCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Identity Number: '.tr,
+                  'Identity Number:'.tr,
                   style: TextStyle(
                     fontSize: 17.sp,
                     color: Colors.white,
@@ -136,7 +136,7 @@ class DriverRequestCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Driver License Number: '.tr,
+                  'Driver License Number:'.tr,
                   style: TextStyle(
                     fontSize: 17.sp,
                     color: Colors.white,

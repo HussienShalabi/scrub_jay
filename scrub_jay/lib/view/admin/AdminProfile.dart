@@ -102,17 +102,17 @@ class AdminProfile extends StatelessWidget {
                                       tiles: [
                                         ListTile(
                                           leading: Icon(Icons.person),
-                                          title: Text("full name".tr),
+                                          title: Text("full name:".tr),
                                           subtitle: Text(controllerImp.currentAdmin!.fullname ?? 'fullName'),
                                         ),
                                         ListTile(
                                           leading: Icon(Icons.email),
-                                          title: Text("email address ".tr),
+                                          title: Text("email address:".tr),
                                           subtitle:  Text(controllerImp.currentAdmin!.emailAddress ?? 'emailAddress'),
                                         ),
                                         ListTile(
                                           leading: Icon(Icons.phone),
-                                          title: Text("phone: ".tr),
+                                          title: Text("phone number:".tr),
                                           subtitle:  Text(controllerImp.currentAdmin!.phoneNumber ?? 'phoneNumber'),
                                         ),
 
