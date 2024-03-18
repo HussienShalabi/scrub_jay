@@ -14,7 +14,7 @@ class _favoritesPageState extends State<favoritesPage> {
     final favoriteFood = food.where((food) => food.isFavorite).toList();
     return Scaffold(
       body: favoriteFood.isEmpty?
-      Center(child: Text('No favorites added'),)
+      Center(child: Text('No favorites addedgit'),)
           : ListView.builder(
               itemCount: favoriteFood.length,
               itemBuilder: (context, index) {
